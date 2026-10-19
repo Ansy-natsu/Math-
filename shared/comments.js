@@ -68,6 +68,17 @@
     });
   }
 
+  function applyMutation(panel, body) {
+    panel.dataset.loaded = '1';
+    panel._comments = body.comments || [];
+    panel._total = Number(body.total || panel._comments.length);
+    panel._hasMore = Boolean(body.hasMore);
+    renderComments(panel);
+    countsCache.set(panel.dataset.sectionKey, panel._total);
+    countsLoadedAt = Date.now();
+    updateCounts();
+  }
+
   function updateCounts() {
     document.querySelectorAll('.section-comment-trigger').forEach(function (button) {
       var count = countsCache.get(button.dataset.sectionKey) || 0;
@@ -319,19 +330,19 @@
     submit.disabled = true;
     status.textContent = '发布中…';
     try {
-      await post({
+      var body = await post({
         action: 'add',
         sectionKey: panel.dataset.sectionKey,
         chapter: panel.dataset.chapter,
         section: panel.dataset.section,
         nickname: nickname,
-        text: text
+        text: text,
+        sort: panel.dataset.sort
       });
       textarea.value = '';
       form.querySelector('.cmt-counter').textContent = '0/' + MAX_COMMENT;
       status.textContent = '已发布';
-      await loadPanel(panel, true, false);
-      loadCounts(true);
+      applyMutation(panel, body);
     } catch (error) {
       status.textContent = error.message;
       status.classList.add('error');
@@ -354,17 +365,17 @@
     submit.disabled = true;
     status.textContent = '发布中…';
     try {
-      await post({
+      var body = await post({
         action: 'reply',
         sectionKey: panel.dataset.sectionKey,
         chapter: panel.dataset.chapter,
         section: panel.dataset.section,
         commentId: form.dataset.commentId,
         nickname: identity().name,
-        text: text
+        text: text,
+        sort: panel.dataset.sort
       });
-      await loadPanel(panel, true, false);
-      loadCounts(true);
+      applyMutation(panel, body);
     } catch (error) {
       status.textContent = error.message;
       status.classList.add('error');
@@ -374,15 +385,16 @@
 
   async function toggleLike(panel, commentId, replyId) {
     try {
-      await post({
+      var body = await post({
         action: 'like',
         sectionKey: panel.dataset.sectionKey,
         chapter: panel.dataset.chapter,
         section: panel.dataset.section,
         commentId: commentId,
-        replyId: replyId
+        replyId: replyId,
+        sort: panel.dataset.sort
       });
-      await loadPanel(panel, true, false);
+      applyMutation(panel, body);
     } catch (error) {
       var list = panel.querySelector('.cmt-list');
       var tip = document.createElement('div');
@@ -395,16 +407,16 @@
   async function withdraw(panel, commentId, replyId) {
     if (!window.confirm(replyId ? '确定撤回这条回复吗？' : '确定撤回这条批注吗？')) return;
     try {
-      await post({
+      var body = await post({
         action: 'delete',
         sectionKey: panel.dataset.sectionKey,
         chapter: panel.dataset.chapter,
         section: panel.dataset.section,
         commentId: commentId,
-        replyId: replyId
+        replyId: replyId,
+        sort: panel.dataset.sort
       });
-      await loadPanel(panel, true, false);
-      loadCounts(true);
+      applyMutation(panel, body);
     } catch (error) {
       var list = panel.querySelector('.cmt-list');
       var tip = document.createElement('div');

@@ -330,7 +330,19 @@ async function handleComments(req, res, config, requestUrl) {
     }
 
     writeComments(config, comments);
-    sendJson(res, 200, { ok: true });
+    const sort = body.sort === 'hot' ? 'hot' : 'time';
+    const resultList = comments
+      .filter((comment) => comment.sectionKey === sectionKey)
+      .sort(sort === 'hot'
+        ? (a, b) => commentHeat(b) - commentHeat(a) || String(b.createdAt).localeCompare(String(a.createdAt))
+        : (a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+    const total = resultList.length;
+    sendJson(res, 200, {
+      ok: true,
+      total,
+      hasMore: total > 20,
+      comments: resultList.slice(0, 20).map((comment) => publicComment(comment, clientId))
+    });
   } catch (error) {
     sendJson(res, 400, { ok: false, error: error.message });
   }

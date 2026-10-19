@@ -201,7 +201,16 @@ export async function handleComments(site, request) {
     if (total) countIndex[sectionKey] = total;
     else delete countIndex[sectionKey];
     await store.setJSON(countsKey(site), countIndex);
-    return json(200, { ok: true });
+    const sort = body.sort === 'hot' ? 'hot' : 'time';
+    comments.sort(sort === 'hot'
+      ? (a, b) => heat(b) - heat(a) || String(b.createdAt).localeCompare(String(a.createdAt))
+      : (a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+    return json(200, {
+      ok: true,
+      total,
+      hasMore: total > 20,
+      comments: comments.slice(0, 20).map((comment) => publicComment(comment, clientId))
+    });
   } catch (error) {
     return json(400, { ok: false, error: error.message });
   }
