@@ -1,10 +1,503 @@
 const BANK = {
   "problems": [
     {
+      "id": "2025-QZ-03",
+      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第3题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.1 函数与初等函数",
+      "statement": "函数 $f(x)=\\arcsin(\\sin x)+\\arccos(\\cos x)$ 在 $[0,\\pi]$ 上的表达式为（　）。\\nA. $f(x)=\\pi$　B. $f(x)=2\\pi$　C. $f(x)=2x\\ (0\\le x\\le\\pi/2),\\ \\pi-x\\ (\\pi/2<x\\le\\pi)$　D. $f(x)=2x\\ (0\\le x\\le\\pi/2),\\ \\pi\\ (\\pi/2<x\\le\\pi)$。",
+      "type": "单选题",
+      "topics": [
+        "反三角函数",
+        "分段函数",
+        "arcsin(sin x)",
+        "arccos(cos x)"
+      ],
+      "difficulty": 3,
+      "tags": [
+        "2025小测",
+        "反三角",
+        "分段",
+        "单选"
+      ],
+      "right_answer": "D",
+      "key_points": [
+        "$\\arcsin(\\sin x)=x$（$0\\le x\\le\\pi/2$），等于 $\\pi-x$（$\\pi/2<x\\le\\pi$）",
+        "$\\arccos(\\cos x)=x$（$0\\le x\\le\\pi$）"
+      ],
+      "solutions": [
+        {
+          "name": "分段讨论",
+          "steps": [
+            "当 $0\\le x\\le\\pi/2$ 时，$\\arcsin(\\sin x)=x$，$\\arccos(\\cos x)=x$，所以 $f(x)=2x$。",
+            "当 $\\pi/2<x\\le\\pi$ 时，$\\arcsin(\\sin x)=\\pi-x$，$\\arccos(\\cos x)=x$，所以 $f(x)=\\pi$。",
+            "对应选项 D。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "在 $[0,\\pi]$ 上错误地使用 $\\arcsin(\\sin x)=x$",
+        "把 $\\arccos(\\cos x)$ 在 $[0,\\pi]$ 上也分段。"
+      ],
+      "related": [
+        "§1.1 反三角函数"
+      ],
+      "added": "2026-10-19"
+    },
+    {
+      "id": "2025-QZ-07",
+      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第7题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.1 函数与初等函数",
+      "statement": "设 $f(x)$ 和 $g(x)$ 均为定义在 $\\mathbb R$ 上的函数，则下列陈述错误的是（不定项）\\nA. 若 $f$ 是周期函数，则 $g(f(x))$ 是周期函数；\\nB. 若 $f,g$ 都是周期函数，则 $f+g$ 是周期函数；\\nC. 若 $f,g$ 都是奇函数，则 $f(g(x))$ 是偶函数；\\nD. 若 $f,g$ 都单调递减，则 $f(x)g(x)$ 单调递增。",
+      "type": "多项选择题",
+      "topics": [
+        "周期函数",
+        "奇偶函数",
+        "单调性",
+        "函数复合"
+      ],
+      "difficulty": 3,
+      "tags": [
+        "2025小测",
+        "不定项",
+        "函数性质",
+        "反例"
+      ],
+      "right_answer": "B、C、D",
+      "key_points": [
+        "周期函数的复合仍以原周期为周期",
+        "两个周期函数的周期不一定可比",
+        "奇函数复合仍是奇函数",
+        "递减函数乘积单调性不固定"
+      ],
+      "solutions": [
+        {
+          "name": "逐项判定",
+          "steps": [
+            "A 正确：若 $f(x+T)=f(x)$，则 $g(f(x+T))=g(f(x))$。",
+            "B 错误：$\\sin x+\\sin(\\pi x)$ 不是周期函数。",
+            "C 错误：$f(g(-x))=f(-g(x))=-f(g(x))$，所以是奇函数。",
+            "D 错误：取 $f(x)=g(x)=-x$，二者递减，但乘积 $x^2$ 在 $\\mathbb R$ 上不单调递增。",
+            "错误项为 B、C、D。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "把两个奇函数的复合误认为偶函数",
+        "忽略乘积函数中符号变化对单调性的影响",
+        "认为任意两个周期函数的和仍具有共同周期。"
+      ],
+      "related": [
+        "§1.1 函数性质"
+      ],
+      "added": "2026-10-19"
+    },
+    {
+      "id": "经典-01",
+      "source": "第一章经典难题（递推数列）",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.2 数列极限存在的准则",
+      "statement": "设 $x_1=1$，$x_{n+1}=x_n+\\dfrac{1}{x_n}$（$n=1,2,\\cdots$）。(1) 证明 $\\lim\\limits_{n\\to\\infty}x_n=+\\infty$；(2) 求 $\\lim\\limits_{n\\to\\infty}\\dfrac{x_n}{\\sqrt{2n}}$。",
+      "type": "证明题 + 计算题",
+      "topics": [
+        "单调有界准则",
+        "反证法排除有界",
+        "平方后构造可累加的递推式",
+        "夹逼定理",
+        "初等裂项 $\\frac1k\\le 2(\\sqrt k-\\sqrt{k-1})$"
+      ],
+      "difficulty": 5,
+      "tags": [
+        "经典难题",
+        "递推数列",
+        "四工具串联",
+        "题眼：先平方"
+      ],
+      "key_points": [
+        "第(1)问的坑：**单调递增 ≠ 发散**（$1-\\frac1n$ 就递增但有界），必须反设**有界**、用单调有界准则导出 $L=L+\\frac1L$ 的矛盾",
+        "第(2)问的题眼：递推式里 $x_{n+1}$ 与 $x_n$ 不是线性关系，**直接累加不了**；先**平方**才出现可累加的常数项 $+2$",
+        "夹逼 $\\sum\\frac{1}{x_k^2}$ 时用初等裂项 $\\frac1k\\le 2(\\sqrt k-\\sqrt{k-1})$，避免引用对数不等式（防超纲）",
+        "最后开方要说明 $x_n>0$ 且 $\\sqrt{\\ }$ 连续（极限符号可与它交换）"
+      ],
+      "solutions": [
+        {
+          "name": "(1) 单调 + 反证有界",
+          "steps": [
+            "由 $x_1=1>0$ 与递推式归纳得 $x_n>0$，故 $x_{n+1}-x_n=\\dfrac{1}{x_n}>0$，$\\{x_n\\}$ 严格递增。",
+            "反设 $\\{x_n\\}$ 有界。由单调有界准则存在有限极限 $L$。",
+            "在 $x_{n+1}=x_n+\\dfrac1{x_n}$ 两端令 $n\\to\\infty$（两端极限均存在，可用四则运算）得 $L=L+\\dfrac1L$，即 $\\dfrac1L=0$，与 $L\\ge1>0$ 矛盾。",
+            "故 $\\{x_n\\}$ 无界；又单调递增，所以 $x_n\\to+\\infty$。"
+          ]
+        },
+        {
+          "name": "(2) 平方累加 + 夹逼",
+          "steps": [
+            "平方：$x_{n+1}^2=x_n^2+2+\\dfrac{1}{x_n^2}$。",
+            "累加（$k=1$ 到 $n-1$）得 $x_n^2=x_1^2+2(n-1)+\\sum\\limits_{k=1}^{n-1}\\dfrac{1}{x_k^2}=2n-1+\\sum\\limits_{k=1}^{n-1}\\dfrac{1}{x_k^2}$。",
+            "下界：$\\dfrac{x_n^2}{2n}>\\dfrac{2n-1}{2n}=1-\\dfrac{1}{2n}$。",
+            "上界：由 $x_k^2>2k-1\\ge k$ 得 $\\dfrac{1}{x_k^2}\\le\\dfrac1k$；又 $\\dfrac1k\\le2(\\sqrt k-\\sqrt{k-1})$，裂项相消得 $\\sum\\limits_{k=1}^{n-1}\\dfrac1k\\le2\\sqrt{n-1}$。",
+            "故 $1-\\dfrac{1}{2n}<\\dfrac{x_n^2}{2n}\\le1-\\dfrac{1}{2n}+\\dfrac{\\sqrt{n-1}}{n}$，两端都 $\\to1$，由夹逼定理 $\\dfrac{x_n^2}{2n}\\to1$。",
+            "由 $x_n>0$ 及 $\\sqrt{\\ }$ 连续，开方得 $\\dfrac{x_n}{\\sqrt{2n}}\\to1$。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "第(1)问直接说「单调递增所以趋于 $+\\infty$」——递增不一定发散，必须反证排除有界",
+        "第(2)问对 $x_{n+1}=x_n+\\frac1{x_n}$ 直接累加——它不是线性关系，累加不出简单式子",
+        "用 $\\sum\\frac1k\\le1+\\ln n$ 估计——需要对数不等式，本章未必已证（易错点 E-006），本题的裂项法纯初等更稳",
+        "开方时不说明 $x_n>0$ 与 $\\sqrt{\\ }$ 连续"
+      ],
+      "related": [
+        "题库易错点 E-006（不能引用未证结论）",
+        "题库知识点「10.14」九、题型三（取整夹逼）",
+        "小测 Q9"
+      ],
+      "added": "2026-10-16"
+    },
+    {
+      "id": "经典-02",
+      "source": "第一章经典难题（夹逼求最大）",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.2 数列极限存在的准则",
+      "statement": "设 $a_1,a_2,\\cdots,a_m$ 均为正数，求 $\\lim\\limits_{n\\to\\infty}\\left(\\dfrac{a_1^n+a_2^n+\\cdots+a_m^n}{m}\\right)^{\\frac1n}$。",
+      "type": "计算题",
+      "topics": [
+        "夹逼定理",
+        "最大项主导",
+        "$m^{1/n}\\to1$"
+      ],
+      "difficulty": 5,
+      "tags": [
+        "经典难题",
+        "题眼：只留最大项",
+        "三行解决"
+      ],
+      "key_points": [
+        "题眼：**别管那些较小的项，最大的那一项主导一切**，只用 $M=\\max\\{a_i\\}$ 就能同时卡住上下界",
+        "上界：$a_i\\le M\\Rightarrow\\sum a_i^n\\le mM^n\\Rightarrow$ 原式 $\\le M$",
+        "下界：$\\sum a_i^n\\ge M^n\\Rightarrow$ 原式 $\\ge\\dfrac{M}{m^{1/n}}$",
+        "$m$ 固定，$m^{1/n}=e^{\\frac{\\ln m}{n}}\\to e^0=1$（用 $e^x$ 连续），故左端 $\\to M$"
+      ],
+      "solutions": [
+        {
+          "name": "双侧夹逼",
+          "steps": [
+            "记 $M=\\max\\{a_1,\\cdots,a_m\\}$。",
+            "上界：每个 $a_i\\le M$，故 $a_1^n+\\cdots+a_m^n\\le mM^n$，于是 $\\left(\\dfrac{\\sum a_i^n}{m}\\right)^{1/n}\\le M$。",
+            "下界：$\\sum a_i^n\\ge M^n$，故 $\\left(\\dfrac{\\sum a_i^n}{m}\\right)^{1/n}\\ge\\left(\\dfrac{M^n}{m}\\right)^{1/n}=\\dfrac{M}{m^{1/n}}$。",
+            "合起来 $\\dfrac{M}{m^{1/n}}\\le\\left(\\dfrac{\\sum a_i^n}{m}\\right)^{1/n}\\le M$。",
+            "由 $m^{1/n}\\to1$ 得左端 $\\to M$，由夹逼定理极限为 $M$。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "以为 $(a_1^n+\\cdots+a_m^n)^{1/n}=a_1+\\cdots+a_m$——幂不能这样分配",
+        "误当 $1^\\infty$ 型套推广式——这里底数趋于 $\\frac{M^n+\\cdots}{m}$（发散），不是趋于 1",
+        "忘记交代 $m^{1/n}\\to1$ 的理由"
+      ],
+      "related": [
+        "题库题目 1-综.3(2)（$x\\to0$ 取几何平均，可作对照）",
+        "§2.3 夹逼定理",
+        "小测 Q10"
+      ],
+      "added": "2026-10-16"
+    },
+    {
+      "id": "经典-03",
+      "source": "第一章经典难题（$\\sqrt[n]{n}\\to1$）",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.2 数列极限存在的准则",
+      "statement": "求 $\\lim\\limits_{n\\to\\infty}\\sqrt[n]{n}$。",
+      "type": "计算题",
+      "topics": [
+        "二项式定理放缩",
+        "夹逼定理",
+        "均值不等式"
+      ],
+      "difficulty": 4,
+      "tags": [
+        "经典难题",
+        "题眼：二项式留二次项"
+      ],
+      "key_points": [
+        "题眼：把 $\\sqrt[n]{n}$ 写成 $1+t_n$（$t_n\\ge0$），则 $n=(1+t_n)^n$；**二项式展开只留能压住 $t_n$ 的那一项**",
+        "留 $C_n^1t_n$ 只能得 $t_n\\le1$（不够）；**留 $C_n^2t_n^2$** 得 $n\\ge\\dfrac{n(n-1)}{2}t_n^2$，即 $t_n^2\\le\\dfrac{2}{n-1}$",
+        "于是 $0\\le t_n\\le\\sqrt{\\dfrac{2}{n-1}}\\to0$，由夹逼定理 $t_n\\to0$"
+      ],
+      "solutions": [
+        {
+          "name": "二项式放缩 + 夹逼",
+          "steps": [
+            "$n\\ge1$ 时 $\\sqrt[n]{n}\\ge1$，记 $t_n=\\sqrt[n]{n}-1\\ge0$，则 $n=(1+t_n)^n$。",
+            "由二项式定理（$n\\ge2$）：$n=(1+t_n)^n=\\sum\\limits_{k=0}^{n}C_n^kt_n^k\\ge C_n^2t_n^2=\\dfrac{n(n-1)}{2}t_n^2$。",
+            "两边除以 $\\dfrac{n(n-1)}{2}$ 得 $t_n^2\\le\\dfrac{2}{n-1}$。",
+            "所以 $0\\le t_n\\le\\sqrt{\\dfrac{2}{n-1}}\\to0$，由夹逼定理 $t_n\\to0$。",
+            "故 $\\sqrt[n]{n}=1+t_n\\to1$。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "用 $\\sqrt[n]{n}=e^{\\frac{\\ln n}{n}}$ 后直接说 $\\frac{\\ln n}{n}\\to0$——**这本身就是要证的结论**，属循环论证（除非书上已有 $\\lim\\frac{n^k}{a^n}=0$ 类结论）",
+        "二项式只留 $t_n$ 那一项，得到 $t_n\\le1$，证不出趋于 0",
+        "忘记说明 $t_n\\ge0$"
+      ],
+      "related": [
+        "题库题目 经典-01（同样用放缩 + 夹逼）",
+        "题库易错点 E-006",
+        "小测 Q11"
+      ],
+      "added": "2026-10-16"
+    },
+    {
+      "id": "经典-04",
+      "source": "第一章经典难题（Wallis 型）",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.2 数列极限存在的准则",
+      "statement": "求 $\\lim\\limits_{n\\to\\infty}\\dfrac{1\\cdot3\\cdot5\\cdots(2n-1)}{2\\cdot4\\cdot6\\cdots(2n)}$。",
+      "type": "计算题",
+      "topics": [
+        "平方构造",
+        "夹逼定理",
+        "项数配平"
+      ],
+      "difficulty": 4,
+      "tags": [
+        "经典难题",
+        "题眼：先平方",
+        "Wallis"
+      ],
+      "key_points": [
+        "题眼：直接放缩只能得「$\\le1$」，证不出 0；必须**平方**，让每个因子变成 $\\dfrac{4k^2-1}{4k^2}<1$ 的形式",
+        "平方时**分子每个 $(2k-1)^2$ 要换成 $(2k-1)(2k+1)$**，多出来的因子最后用 $\\dfrac{1}{2n+1}$ 配平项数",
+        "结果：$0<P_n^2<\\dfrac{1}{2n+1}$，开方得 $0<P_n<\\dfrac{1}{\\sqrt{2n+1}}\\to0$"
+      ],
+      "solutions": [
+        {
+          "name": "平方 + 因子配对 + 夹逼",
+          "steps": [
+            "记 $P_n=\\dfrac{1\\cdot3\\cdots(2n-1)}{2\\cdot4\\cdots(2n)}>0$。",
+            "平方并配平项数：$P_n^2=\\dfrac{1\\cdot3}{2^2}\\cdot\\dfrac{3\\cdot5}{4^2}\\cdots\\dfrac{(2n-1)(2n+1)}{(2n)^2}\\cdot\\dfrac{1}{2n+1}$。",
+            "每个因子 $\\dfrac{(2k-1)(2k+1)}{(2k)^2}=\\dfrac{4k^2-1}{4k^2}<1$，故 $0<P_n^2<\\dfrac{1}{2n+1}$。",
+            "开方得 $0<P_n<\\dfrac{1}{\\sqrt{2n+1}}$，右端 $\\to0$，由夹逼定理 $P_n\\to0$。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "只写 $P_n<\\dfrac{2n-1}{2n}\\to1$——这只说明 $P_n\\le1$，**证不出极限为 0**",
+        "平方后忘记配平项数（分子多出一个 $(2n+1)$，必须乘回 $\\dfrac{1}{2n+1}$）",
+        "忘记说明 $P_n>0$ 才能开方取正"
+      ],
+      "related": [
+        "题库题目 经典-03（同为放缩 + 夹逼）",
+        "§2.3 夹逼定理",
+        "小测 Q12"
+      ],
+      "added": "2026-10-16"
+    },
+    {
+      "id": "2025-MT-01",
+      "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第1题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.2 数列极限存在的准则",
+      "statement": "利用 $\\varepsilon-N$ 定义证明：若数列 $\\{a_n^3\\}$ 收敛，则 $\\{a_n\\}$ 必收敛。",
+      "type": "证明题",
+      "topics": [
+        "数列极限的 ε-N 定义",
+        "立方差因式分解",
+        "极限与连续函数"
+      ],
+      "difficulty": 4,
+      "tags": [
+        "2025期中",
+        "ε-N",
+        "立方差",
+        "证明题"
+      ],
+      "key_points": [
+        "设 $a_n^3\\to A$，则 $A\\ge0$，目标极限为 $\\sqrt[3]{A}$",
+        "分 $A>0$ 与 $A=0$ 两种情况处理",
+        "利用 $a^3-b^3=(a-b)(a^2+ab+b^2)$ 控制差"
+      ],
+      "solutions": [
+        {
+          "name": "ε-N 证明",
+          "steps": [
+            "设 $a_n^3\\to A$，记 $b=\\sqrt[3]{A}\\ge0$。",
+            "若 $A=0$，对任意 $\\varepsilon>0$，取 $N$ 使 $n>N$ 时 $|a_n^3|<\\varepsilon^3$，于是 $|a_n|<\\varepsilon$。",
+            "若 $A>0$，则 $b>0$，且当 $n$ 足够大时 $a_n^3>A/2>0$，从而 $a_n>0$。",
+            "由 $a_n^3-b^3=(a_n-b)(a_n^2+a_nb+b^2)$，有 $|a_n-b|=\\dfrac{|a_n^3-b^3|}{a_n^2+a_nb+b^2}\\le\\dfrac{|a_n^3-A|}{b^2}$。",
+            "对任意 $\\varepsilon>0$，取 $N$ 使 $n>N$ 时 $|a_n^3-A|<b^2\\varepsilon$，则 $|a_n-b|<\\varepsilon$。",
+            "故 $a_n\\to b=\\sqrt[3]{A}$，即 $\\{a_n\\}$ 收敛。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "只证明“有界”而没有回到 $\\varepsilon-N$ 定义",
+        "$A=0$ 时错误地把立方根写成负数或忽略符号",
+        "把立方差公式写成平方差公式。"
+      ],
+      "related": [
+        "§2.3 数列极限存在的准则",
+        "§4.1 连续函数的性质"
+      ],
+      "added": "2026-10-19"
+    },
+    {
+      "id": "2025-MT-02",
+      "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第2题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.2 数列极限存在的准则",
+      "statement": "利用夹逼定理求极限：$\\displaystyle\\lim_{n\\to\\infty}\\dfrac{(2n-1)!!}{(2n)!!}$。其中奇数双阶乘 $(2n-1)!!=1\\cdot3\\cdots(2n-1)$，偶数双阶乘 $(2n)!!=2\\cdot4\\cdots(2n)$。",
+      "type": "计算题",
+      "topics": [
+        "夹逼定理",
+        "双阶乘",
+        "平方构造",
+        " Telescoping 不等式"
+      ],
+      "difficulty": 3,
+      "tags": [
+        "2025期中",
+        "夹逼定理",
+        "双阶乘",
+        "必刷"
+      ],
+      "key_points": [
+        "记 $P_n=\\frac{(2n-1)!!}{(2n)!!}$，显然 $P_n>0$",
+        "利用 $\\left(\\frac{2k-1}{2k}\\right)^2<\\frac{2k-1}{2k+1}$",
+        "乘起来后右侧望远镜相消，得到 $P_n^2<\\frac1{2n+1}$"
+      ],
+      "solutions": [
+        {
+          "name": "平方 + 夹逼",
+          "steps": [
+            "记 $P_n=\\prod_{k=1}^n\\frac{2k-1}{2k}>0$。",
+            "因为 $\\left(\\frac{2k-1}{2k}\\right)^2<\\frac{2k-1}{2k+1}$，所以 $P_n^2<\\prod_{k=1}^n\\frac{2k-1}{2k+1}$。",
+            "右侧望远镜相消：$\\prod_{k=1}^n\\frac{2k-1}{2k+1}=\\frac1{2n+1}$。",
+            "于是 $0<P_n<\\frac1{\\sqrt{2n+1}}$，右端趋于 $0$，由夹逼定理得极限为 $0$。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "把双阶乘当成普通阶乘的平方",
+        "平方后忘记配平多出来的 $(2n+1)$",
+        "只给出下界 $0$，没有能收敛到同一值的上界。"
+      ],
+      "related": [
+        "§2.3 夹逼定理",
+        "题库经典-04 Wallis 型"
+      ],
+      "added": "2026-10-19"
+    },
+    {
+      "id": "2025-MT-09",
+      "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第9题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.2 数列极限存在的准则",
+      "statement": "设 $a_n=1+\\dfrac1{3^2}+\\dfrac1{5^2}+\\cdots+\\dfrac1{(2n-1)^2}$，分别用单调有界定理、柯西收敛准则两种方法证明：数列 $\\{a_n\\}$ 收敛。",
+      "type": "证明题",
+      "topics": [
+        "单调有界定理",
+        "柯西收敛准则",
+        "裂项放缩"
+      ],
+      "difficulty": 3,
+      "tags": [
+        "2025期中",
+        "单调有界",
+        "柯西准则",
+        "裂项"
+      ],
+      "key_points": [
+        "$a_n$ 显然单调递增",
+        "$\\frac1{(2k-1)^2}\\le\\frac1{4k(k-1)}$（$k\\ge2$）可裂项",
+        "柯西差 $a_m-a_n$ 的上界趋于 $0$"
+      ],
+      "solutions": [
+        {
+          "name": "方法一：单调有界",
+          "steps": [
+            "由于每项为正，$a_{n+1}-a_n=\\frac1{(2n+1)^2}>0$，所以 $\\{a_n\\}$ 单调递增。",
+            "当 $k\\ge2$ 时，$\\frac1{(2k-1)^2}\\le\\frac1{4k(k-1)}=\\frac14\\left(\\frac1{k-1}-\\frac1k\\right)$。",
+            "于是 $a_n\\le1+\\frac14\\sum_{k=2}^n\\left(\\frac1{k-1}-\\frac1k\\right)<\\frac54$。",
+            "数列单调递增且有上界，由单调有界定理收敛。"
+          ]
+        },
+        {
+          "name": "方法二：柯西准则",
+          "steps": [
+            "对 $m>n$，$0<a_m-a_n=\\sum_{k=n+1}^m\\frac1{(2k-1)^2}$。",
+            "用同样的裂项估计，$a_m-a_n\\le\\frac14\\sum_{k=n+1}^m\\left(\\frac1{k-1}-\\frac1k\\right)=\\frac14\\left(\\frac1n-\\frac1m\\right)<\\frac1{4n}$。",
+            "对任意 $\\varepsilon>0$，取 $N>\\frac1{4\\varepsilon}$，当 $m>n>N$ 时 $|a_m-a_n|<\\varepsilon$。由柯西收敛准则，数列收敛。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "只证明单调，没有给出上界",
+        "放缩成调和级数后失去收敛性",
+        "柯西准则中把 $m>n$ 错写成 $m<n$。"
+      ],
+      "related": [
+        "§2.3 数列极限存在准则"
+      ],
+      "added": "2026-10-19"
+    },
+    {
+      "id": "2025-QZ-02",
+      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第2题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.2 数列极限存在的准则",
+      "statement": "下列陈述错误的是（不定项）\\nA. 若 $\\{a_{2n-1}\\}$ 与 $\\{a_{2n}\\}$ 都收敛，则 $\\{a_n\\}$ 收敛；\\nB. 若存在 $\\varepsilon_0>0$，对任意 $N>0$，存在 $n_0>N$ 使 $|a_{n_0}-A|\\ge\\varepsilon_0$，则 $\\{a_n\\}$ 收敛；\\nC. 设 $a_1=2$，$a_{n+1}=3a_n-\\dfrac4{a_n+1}$，则 $\\lim a_n=1$；\\nD. 若 $a_n\\to A$，则存在 $N>0$，使对任意 $\\varepsilon>0$，当 $n>N$ 时 $|a_n-A|<\\varepsilon$。",
+      "type": "多项选择题",
+      "topics": [
+        "子列极限",
+        "极限定义量词顺序",
+        "递推数列",
+        "反例"
+      ],
+      "difficulty": 4,
+      "tags": [
+        "2025小测",
+        "不定项",
+        "子列",
+        "量词"
+      ],
+      "right_answer": "A、B、C、D 均错误",
+      "key_points": [
+        "奇、偶子列必须收敛到同一极限才能推出原数列收敛",
+        "B 的量词描述的是“不收敛”，不是收敛",
+        "C 从 $a_1=2$ 出发数列递增且趋于 $+\\infty$",
+        "D 中 $N$ 必须依赖于 $\\varepsilon$"
+      ],
+      "solutions": [
+        {
+          "name": "逐项举反例或分析量词",
+          "steps": [
+            "A 错：取 $a_{2n-1}=1$、$a_{2n}=0$，奇偶子列均收敛，但原数列不收敛。",
+            "B 错：该条件恰说明 $a_n$ 不收敛到 $A$，不能推出收敛。",
+            "C 错：$a_1=2$，$a_2=14/3$，$a_3=226/17$，数列递增；若 $a_n\\to L$，则 $L=3L-4/(L+1)$，得 $L=1$ 或 $-2$，与递增起点 $2$ 矛盾，故发散。",
+            "D 错：收敛定义要求对每个 $\\varepsilon>0$ 存在相应的 $N(\\varepsilon)$，不能把 $N$ 提前固定为与 $\\varepsilon$ 无关的常数。",
+            "因此四项均错误。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "看到两个子列都收敛就默认极限相同",
+        "把“某个 ε0 不满足”误读成收敛",
+        "D 中忽略 $N$ 依赖于 $\\varepsilon$。"
+      ],
+      "related": [
+        "§2.3 数列极限",
+        "§4.1 量词与逻辑"
+      ],
+      "added": "2026-10-19"
+    },
+    {
       "id": "1-3.5(4)",
       "source": "习题1-3 第5题(4)",
       "chapter": "第一章 函数与极限",
-      "section": "§3.3 函数极限存在的准则",
+      "section": "§1.3 函数极限存在的准则",
       "statement": "证明 $\\lim\\limits_{x\\to 0} e^{1/x}$ 不存在。",
       "type": "证明题",
       "topics": [
@@ -69,10 +562,149 @@ const BANK = {
       "added": "2026-10-12"
     },
     {
+      "id": "错-1-3.2",
+      "source": "第一章作业 习题1-3 第2题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.3 函数极限存在的准则",
+      "statement": "设 $D(x)=1$（$x$ 为有理数），$D(x)=0$（$x$ 为无理数），证明 $D(x)$ 在每一点极限都不存在。",
+      "type": "证明题",
+      "topics": [
+        "归结原则（海涅定理）",
+        "有理数与无理数的稠密性",
+        "极限不存在的证明"
+      ],
+      "difficulty": 3,
+      "tags": [
+        "错题",
+        "构造漏洞",
+        "狄利克雷函数"
+      ],
+      "my_answer": "取 $x_n'=x_0+\\dfrac1n$、$x_n''=x_0+\\dfrac1{\\sqrt n}$，断言前者有理、后者无理",
+      "right_answer": "用稠密性：在 $(x_0,x_0+\\frac1n)$ 内分别取有理数 $r_n$ 与无理数 $s_n$",
+      "error_analysis": "两处构造都站不住：① $x_0$ **无理**时 $x_0+\\frac1n$ 也无理，$D(x_n')\\to1$ 就不成立；② $n$ 为完全平方数时 $\\frac1{\\sqrt n}$ 是**有理数**，$x_n''$ 未必无理。所以数列根本不具备所需性质，只在个别情形下碰巧成立。",
+      "key_points": [
+        "归结原则要求：$\\{x_n\\}\\subset\\mathring U(x_0)$、$x_n\\to x_0$，且**函数值确实趋于两个不同的常数**",
+        "构造之前先想清楚：这个数列真的能保证落在「有理数」/「无理数」集合里吗？",
+        "最稳的做法是**直接用稠密性**：任何区间内既有无理数又有有理数，取一串即可，不必猜显式公式",
+        "$x_0$ 是任意的，所以构造必须对一切 $x_0\\in\\mathbb R$ 都有效"
+      ],
+      "solutions": [
+        {
+          "name": "用稠密性构造",
+          "steps": [
+            "任取 $x_0\\in\\mathbb R$。对每个 $n$，由有理数稠密性，在 $(x_0,x_0+\\frac1n)$ 内取有理数 $r_n$（自然 $r_n\\ne x_0$）。",
+            "同样由无理数稠密性，在同一区间内取无理数 $s_n$。",
+            "于是 $r_n\\to x_0$、$s_n\\to x_0$，而 $D(r_n)=1\\to1$、$D(s_n)=0\\to0$。",
+            "由归结原则，$\\lim\\limits_{x\\to x_0}D(x)$ 不可能存在（否则两条路径必给同一极限）。由 $x_0$ 任意，$D$ 处处无极限。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "凭直觉写 $x_0+\\frac1n$、$x_0+\\frac1{\\sqrt n}$ 并断言其有理/无理——性质依赖于 $x_0$ 与 $n$，一般不对"
+      ],
+      "related": [
+        "题库易错点 E-005（构造数列必须验证其性质）",
+        "§3.3 归结原则"
+      ],
+      "added": "2026-10-16"
+    },
+    {
+      "id": "错-1-3.6",
+      "source": "第一章作业 习题1-3 第6题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.3 函数极限存在的准则",
+      "statement": "利用 $\\lim\\limits_{n\\to\\infty}\\dfrac{n^k}{a^n}=0$（$a>1$ 为常数，$k$ 为常数），证明 $\\lim\\limits_{x\\to+\\infty}\\dfrac{x^k}{a^x}=0$（提示：用夹逼定理）。",
+      "type": "证明题",
+      "topics": [
+        "夹逼定理",
+        "取整夹逼（数列极限推函数极限）",
+        "单调性"
+      ],
+      "difficulty": 3,
+      "tags": [
+        "错题",
+        "引用未证结论",
+        "夹逼"
+      ],
+      "my_answer": "证 $x^k/a^x$ 单调递减，然后直接说极限为 0",
+      "right_answer": "用取整做双边夹逼",
+      "error_analysis": "两个问题：① 引用了 $\\dfrac{x_1-x_2}{\\ln x_1-\\ln x_2}>\\sqrt{x_1x_2}$（对数平均 > 几何平均）——本章**没讲、我也没证**；② 更根本的是，**单调递减只能说明极限存在，不能说明极限等于 0**（还要证明下确界为 0）。此外 $k\\le0$ 的情形没讨论，$[x]$ 也没说明是取整。",
+      "key_points": [
+        "本题的提示是**夹逼定理**，思路应是把函数夹在两个数列之间",
+        "取 $n=\\lfloor x\\rfloor$，则 $n\\le x<n+1$，于是 $\\dfrac{n^k}{a^{n+1}}\\le\\dfrac{x^k}{a^x}\\le\\dfrac{(n+1)^k}{a^n}$",
+        "两端都化归为已知的数列极限：$\\dfrac{n^k}{a^{n+1}}=\\dfrac1a\\cdot\\dfrac{n^k}{a^n}\\to0$，$\\dfrac{(n+1)^k}{a^n}=a\\cdot\\dfrac{(n+1)^k}{a^{n+1}}\\to0$",
+        "「单调有界」只能保证极限存在，要定出极限值必须另有工具"
+      ],
+      "solutions": [
+        {
+          "name": "取整 + 双边夹逼（按提示）",
+          "steps": [
+            "对 $x>1$ 记 $n=\\lfloor x\\rfloor$（$x$ 的整数部分），则 $n\\le x<n+1$，且 $x\\to+\\infty$ 时 $n\\to\\infty$。",
+            "因 $a>1$，$a^n\\le a^x$，故 $\\dfrac{x^k}{a^x}\\ge\\dfrac{n^k}{a^{n+1}}=\\dfrac1a\\cdot\\dfrac{n^k}{a^n}$（$k>0$ 时；$k\\le0$ 时同理可得）。",
+            "又 $a^x>a^{n}$ 且 $x<n+1$，故 $\\dfrac{x^k}{a^x}\\le\\dfrac{(n+1)^k}{a^{n}}=a\\cdot\\dfrac{(n+1)^k}{a^{n+1}}$。",
+            "由已知的数列极限，两端都 $\\to0$（$\\dfrac1a\\cdot0=0$，$a\\cdot0=0$）。",
+            "由夹逼定理，$\\lim\\limits_{x\\to+\\infty}\\dfrac{x^k}{a^x}=0$。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "引用未在书上证明的不等式（对数平均不等式）",
+        "把「单调有界 ⇒ 极限存在」误当成「极限 = 0」"
+      ],
+      "related": [
+        "题库易错点 E-006（不能引用未证的结论）",
+        "§3.6 夹逼定理"
+      ],
+      "added": "2026-10-16"
+    },
+    {
+      "id": "2025-QZ-09",
+      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第9题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.4 无穷小量阶的比较",
+      "statement": "设 $\\alpha(x)=\\dfrac{1-x}{3+x}$，$\\beta(x)=1-\\sqrt[4]{x}$，当 $x\\to1$ 时，下列陈述正确的是（　）。\\nA. 同阶非等价无穷小　B. 等价无穷小　C. $\\alpha$ 比 $\\beta$ 低阶　D. $\\alpha$ 比 $\\beta$ 高阶。",
+      "type": "单选题",
+      "topics": [
+        "无穷小阶的比较",
+        "等价无穷小",
+        "变量替换"
+      ],
+      "difficulty": 2,
+      "tags": [
+        "2025小测",
+        "无穷小比阶",
+        "等价量",
+        "单选"
+      ],
+      "right_answer": "B",
+      "key_points": [
+        "令 $h=x-1\\to0$",
+        "$\\alpha\\sim-h/4$，$\\beta\\sim-h/4$"
+      ],
+      "solutions": [
+        {
+          "name": "在 $x=1$ 处展开",
+          "steps": [
+            "令 $x=1+h$，则 $\\alpha=\\frac{-h}{4+h}\\sim-\\frac h4$。",
+            "$\\beta=1-(1+h)^{1/4}\\sim-\\frac h4$。",
+            "二者之比趋于 $1$，故为等价无穷小，选 B。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "在 $x\\to0$ 处套用等价无穷小公式",
+        "忽略 $\\sqrt[4]{x}$ 在 $x=1$ 处的线性化系数。"
+      ],
+      "related": [
+        "§3.5 无穷小量阶的比较"
+      ],
+      "added": "2026-10-19"
+    },
+    {
       "id": "10.14-E",
       "source": "10.14 练习 E",
       "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（等价量替换）",
+      "section": "§1.5 两个重要极限",
       "statement": "当 $x\\to 0$ 时，$\\alpha(x)=kx^2$，$\\beta(x)=\\sqrt{1+x\\arcsin x}-\\sqrt{\\cos x}$。若 $\\alpha(x)\\sim\\beta(x)$，求常数 $k$。",
       "type": "计算题（含待定常数）",
       "topics": [
@@ -132,7 +764,7 @@ const BANK = {
       "id": "10.14-D",
       "source": "10.14 练习 D",
       "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（等价量替换）",
+      "section": "§1.5 两个重要极限",
       "statement": "求 $\\lim\\limits_{x\\to 0}\\dfrac{1-\\cos(1-\\cos 2x)}{x^4}$。",
       "type": "计算题",
       "topics": [
@@ -176,7 +808,7 @@ const BANK = {
       "id": "10.14-C",
       "source": "10.14 练习 C",
       "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（等价量替换）",
+      "section": "§1.5 两个重要极限",
       "statement": "求 $\\lim\\limits_{x\\to\\alpha}\\dfrac{\\sin x-\\sin\\alpha}{x-\\alpha}$。",
       "type": "计算题",
       "topics": [
@@ -225,7 +857,7 @@ const BANK = {
       "id": "1-4.12(2)",
       "source": "习题1-4 第12题(2)",
       "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（等价量替换）",
+      "section": "§1.5 两个重要极限",
       "statement": "求 $\\lim\\limits_{x\\to a}\\dfrac{x^\\alpha-a^\\alpha}{x^\\beta-a^\\beta}$（$a>0$，$\\beta\\neq 0$）。",
       "type": "计算题（含参数）",
       "topics": [
@@ -287,7 +919,7 @@ const BANK = {
       "id": "1-4.12(5)",
       "source": "习题1-4 第12题(5)",
       "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（等价量替换）",
+      "section": "§1.5 两个重要极限",
       "statement": "求 $\\lim\\limits_{x\\to+\\infty}\\dfrac{\\ln(1+3^x)}{\\ln(1+2^x)}$。",
       "type": "计算题",
       "topics": [
@@ -348,7 +980,7 @@ const BANK = {
       "id": "1-4.12(8)",
       "source": "习题1-4 第12题(8)",
       "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（等价量替换）",
+      "section": "§1.5 两个重要极限",
       "statement": "求 $\\lim\\limits_{x\\to+\\infty}\\left[\\sin\\ln(x+1)-\\sin\\ln x\\right]$。",
       "type": "计算题",
       "topics": [
@@ -405,7 +1037,7 @@ const BANK = {
       "id": "1-综.3(2)",
       "source": "第一章综合题 第3题(2)",
       "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（$1^\\infty$ 型）",
+      "section": "§1.5 两个重要极限",
       "statement": "求 $\\lim\\limits_{x\\to0}\\left(\\dfrac{a_1^x+a_2^x+\\cdots+a_n^x}{n}\\right)^{\\frac{1}{x}}$（$a_1,a_2,\\cdots,a_n$ 均为正数）。",
       "type": "计算题（含参数，$1^\\infty$ 型）",
       "topics": [
@@ -468,7 +1100,7 @@ const BANK = {
       "id": "错-1-3.8(8)",
       "source": "第一章作业 习题1-3 第8题(8)",
       "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（等价量替换）",
+      "section": "§1.5 两个重要极限",
       "statement": "求 $\\lim\\limits_{x\\to1}\\dfrac{x^{n+1}-(n+1)x+n}{(x-1)^2}$（$n$ 为正整数）。",
       "type": "计算题",
       "topics": [
@@ -514,7 +1146,7 @@ const BANK = {
       "id": "错-1-3.12(4)",
       "source": "第一章作业 习题1-3 第12题(4)",
       "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（$o$ 记号）",
+      "section": "§1.5 两个重要极限",
       "statement": "证明 $o(x^n)\\cdot o(x^m)=o(x^{m+n})$（$x\\to0$）。",
       "type": "证明题",
       "topics": [
@@ -560,7 +1192,7 @@ const BANK = {
       "id": "错-1-3.16(2)",
       "source": "第一章作业 习题1-3 第16题(2)",
       "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（等价量替换）",
+      "section": "§1.5 两个重要极限",
       "statement": "求 $\\lim\\limits_{x\\to0}\\dfrac{\\sin(\\tan^2x)}{\\sqrt[n]{1+x^2}-1}$。",
       "type": "计算题",
       "topics": [
@@ -604,57 +1236,10 @@ const BANK = {
       "added": "2026-10-16"
     },
     {
-      "id": "错-1-4.3(3)",
-      "source": "第一章作业 习题1-4 第3题(3)",
-      "chapter": "第一章 函数与极限",
-      "section": "§4.1 函数连续的概念",
-      "statement": "指出 $f(x)=e^{1/x}$ 的间断点，并判断其类型。",
-      "type": "讨论题",
-      "topics": [
-        "间断点的分类",
-        "第一类（可去、跳跃）与第二类（无穷、振荡）",
-        "单侧极限的求法"
-      ],
-      "difficulty": 3,
-      "tags": [
-        "错题",
-        "间断点分类",
-        "经典反例"
-      ],
-      "my_answer": "跳跃间断点",
-      "right_answer": "$x=0$ 是**第二类无穷间断点**",
-      "error_analysis": "跳跃间断点要求**两个单侧极限都存在**（且不相等）。而这里 $\\lim\\limits_{x\\to0^+}e^{1/x}=+\\infty$——右极限根本不存在，所以不是第一类。我只写了类型结论、没写单侧极限，错误因此没被自己发现。",
-      "key_points": [
-        "判类型**必须先把两个单侧极限求出来**，再对照定义分类",
-        "$x\\to0^+$ 时 $1/x\\to+\\infty$，$e^{1/x}\\to+\\infty$；$x\\to0^-$ 时 $1/x\\to-\\infty$，$e^{1/x}\\to0$",
-        "分类口诀：两侧都有限但不等 → 跳跃；一侧为 $\\infty$ → 无穷（第二类）；一列点振荡无极限 → 振荡（第二类）；两侧相等但 $\\ne f(x_0)$ → 可去"
-      ],
-      "solutions": [
-        {
-          "name": "标准流程",
-          "steps": [
-            "$f$ 在 $x=0$ 无定义，故 $x=0$ 是间断点。",
-            "算右极限：$\\lim\\limits_{x\\to0^+}e^{1/x}=+\\infty$（因 $1/x\\to+\\infty$）。",
-            "算左极限：$\\lim\\limits_{x\\to0^-}e^{1/x}=0$（因 $1/x\\to-\\infty$）。",
-            "右极限不是有限数（极限不存在），故 $x=0$ 是**第二类无穷间断点**。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "只写结论不写单侧极限",
-        "把「一侧为 $\\infty$」误判为跳跃——跳跃要求两侧极限都是有限数"
-      ],
-      "related": [
-        "题库题目 1-3.5(4)（同一函数的极限不存在）",
-        "题库易错点 E-004"
-      ],
-      "added": "2026-10-16"
-    },
-    {
       "id": "错-1-综.3(1)",
       "source": "第一章作业 第一章综合题 第3题(1)",
       "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（等价量替换）",
+      "section": "§1.5 两个重要极限",
       "statement": "求 $\\lim\\limits_{x\\to0}\\dfrac{3\\sin x+x^2\\cos\\frac1x}{(1+\\cos x)\\ln(1+x)}$。",
       "type": "计算题",
       "topics": [
@@ -700,106 +1285,493 @@ const BANK = {
       "added": "2026-10-16"
     },
     {
-      "id": "错-1-3.2",
-      "source": "第一章作业 习题1-3 第2题",
+      "id": "错-1-4.12(1)",
+      "source": "第一章作业 习题1-4 第12题(1)",
       "chapter": "第一章 函数与极限",
-      "section": "§3.3 函数极限存在的准则",
-      "statement": "设 $D(x)=1$（$x$ 为有理数），$D(x)=0$（$x$ 为无理数），证明 $D(x)$ 在每一点极限都不存在。",
-      "type": "证明题",
+      "section": "§1.5 两个重要极限",
+      "statement": "求 $\\lim\\limits_{x\\to0}\\dfrac{(1+\\alpha x)^a-(1+\\beta x)^b}{x}$。",
+      "type": "计算题（含参数）",
       "topics": [
-        "归结原则（海涅定理）",
-        "有理数与无理数的稠密性",
-        "极限不存在的证明"
+        "等价量替换",
+        "$(1+u)^\\lambda-1\\sim\\lambda u$",
+        "$0/0$ 型"
       ],
       "difficulty": 3,
       "tags": [
         "错题",
-        "构造漏洞",
-        "狄利克雷函数"
+        "超纲用广义二项式"
       ],
-      "my_answer": "取 $x_n'=x_0+\\dfrac1n$、$x_n''=x_0+\\dfrac1{\\sqrt n}$，断言前者有理、后者无理",
-      "right_answer": "用稠密性：在 $(x_0,x_0+\\frac1n)$ 内分别取有理数 $r_n$ 与无理数 $s_n$",
-      "error_analysis": "两处构造都站不住：① $x_0$ **无理**时 $x_0+\\frac1n$ 也无理，$D(x_n')\\to1$ 就不成立；② $n$ 为完全平方数时 $\\frac1{\\sqrt n}$ 是**有理数**，$x_n''$ 未必无理。所以数列根本不具备所需性质，只在个别情形下碰巧成立。",
+      "my_answer": "按 $C_a^1,C_a^2,\\cdots$ 展开成幂级数后取常数项，得 $a\\alpha-b\\beta$（答案对）",
+      "right_answer": "$a\\alpha-b\\beta$，但应用 $(1+u)^\\lambda-1=\\lambda u+o(u)$",
+      "error_analysis": "答案正确，但**对非整数指数使用广义二项式 $C_a^k$ 属于超纲**（本章没有二项式级数），而且写成 $\\cdots$ 没有控制余项，证明不完整。",
       "key_points": [
-        "归结原则要求：$\\{x_n\\}\\subset\\mathring U(x_0)$、$x_n\\to x_0$，且**函数值确实趋于两个不同的常数**",
-        "构造之前先想清楚：这个数列真的能保证落在「有理数」/「无理数」集合里吗？",
-        "最稳的做法是**直接用稠密性**：任何区间内既有无理数又有有理数，取一串即可，不必猜显式公式",
-        "$x_0$ 是任意的，所以构造必须对一切 $x_0\\in\\mathbb R$ 都有效"
+        "第一章的合法工具：$(1+u)^\\lambda-1\\sim\\lambda u$（$u\\to0$，$\\lambda$ 任意实数）",
+        "把分子拆成两个等价量之和：$(1+\\alpha x)^a-1\\sim a\\alpha x$，$(1+\\beta x)^b-1\\sim b\\beta x$",
+        "注意这是**相减**结构，不能分别替换后相减了事，应先合并成**因式**或用 $o$ 记号：分子 $=a\\alpha x-b\\beta x+o(x)$",
+        "最后除以 $x$ 得 $a\\alpha-b\\beta$"
       ],
       "solutions": [
         {
-          "name": "用稠密性构造",
+          "name": "用 $(1+u)^\\lambda-1=\\lambda u+o(u)$",
           "steps": [
-            "任取 $x_0\\in\\mathbb R$。对每个 $n$，由有理数稠密性，在 $(x_0,x_0+\\frac1n)$ 内取有理数 $r_n$（自然 $r_n\\ne x_0$）。",
-            "同样由无理数稠密性，在同一区间内取无理数 $s_n$。",
-            "于是 $r_n\\to x_0$、$s_n\\to x_0$，而 $D(r_n)=1\\to1$、$D(s_n)=0\\to0$。",
-            "由归结原则，$\\lim\\limits_{x\\to x_0}D(x)$ 不可能存在（否则两条路径必给同一极限）。由 $x_0$ 任意，$D$ 处处无极限。"
+            "$(1+\\alpha x)^a=1+a\\alpha x+o(x)$（因为 $\\alpha x\\to0$，用 $(1+u)^\\lambda-1=\\lambda u+o(u)$）。",
+            "同理 $(1+\\beta x)^b=1+b\\beta x+o(x)$。",
+            "相减：分子 $=a\\alpha x-b\\beta x+o(x)=(a\\alpha-b\\beta)x+o(x)$。",
+            "除以 $x$：原式 $=a\\alpha-b\\beta+o(1)\\to a\\alpha-b\\beta$。"
           ]
         }
       ],
       "pitfalls": [
-        "凭直觉写 $x_0+\\frac1n$、$x_0+\\frac1{\\sqrt n}$ 并断言其有理/无理——性质依赖于 $x_0$ 与 $n$，一般不对"
+        "对非整数指数用广义二项式展开（超纲）",
+        "用 $\\cdots$ 代替余项控制",
+        "在相减结构里分别替换却不注明 $o(x)$"
       ],
       "related": [
-        "题库易错点 E-005（构造数列必须验证其性质）",
-        "§3.3 归结原则"
+        "题库题目 1-4.12(2)（同类：含参数）",
+        "题库易错点 E-003"
       ],
       "added": "2026-10-16"
     },
     {
-      "id": "错-1-3.6",
-      "source": "第一章作业 习题1-3 第6题",
+      "id": "2025-MT-08",
+      "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第8题",
       "chapter": "第一章 函数与极限",
-      "section": "§3.3 函数极限存在的准则",
-      "statement": "利用 $\\lim\\limits_{n\\to\\infty}\\dfrac{n^k}{a^n}=0$（$a>1$ 为常数，$k$ 为常数），证明 $\\lim\\limits_{x\\to+\\infty}\\dfrac{x^k}{a^x}=0$（提示：用夹逼定理）。",
-      "type": "证明题",
+      "section": "§1.5 两个重要极限",
+      "statement": "求下列极限：\\n（1）$\\displaystyle\\lim_{x\\to0}\\dfrac{(2^x-1)\\sin x\\ln(1+x)}{\\tan x-\\sin x}$；\\n（2）$\\displaystyle\\lim_{x\\to0}(\\cos x)^{\\csc^2x}$。",
+      "type": "计算题",
       "topics": [
-        "夹逼定理",
-        "取整夹逼（数列极限推函数极限）",
-        "单调性"
+        "等价无穷小",
+        "指数函数",
+        "三角函数",
+        "幂指函数极限"
       ],
       "difficulty": 3,
       "tags": [
-        "错题",
-        "引用未证结论",
-        "夹逼"
+        "2025期中",
+        "等价量",
+        "1^∞型",
+        "双小问"
       ],
-      "my_answer": "证 $x^k/a^x$ 单调递减，然后直接说极限为 0",
-      "right_answer": "用取整做双边夹逼",
-      "error_analysis": "两个问题：① 引用了 $\\dfrac{x_1-x_2}{\\ln x_1-\\ln x_2}>\\sqrt{x_1x_2}$（对数平均 > 几何平均）——本章**没讲、我也没证**；② 更根本的是，**单调递减只能说明极限存在，不能说明极限等于 0**（还要证明下确界为 0）。此外 $k\\le0$ 的情形没讨论，$[x]$ 也没说明是取整。",
       "key_points": [
-        "本题的提示是**夹逼定理**，思路应是把函数夹在两个数列之间",
-        "取 $n=\\lfloor x\\rfloor$，则 $n\\le x<n+1$，于是 $\\dfrac{n^k}{a^{n+1}}\\le\\dfrac{x^k}{a^x}\\le\\dfrac{(n+1)^k}{a^n}$",
-        "两端都化归为已知的数列极限：$\\dfrac{n^k}{a^{n+1}}=\\dfrac1a\\cdot\\dfrac{n^k}{a^n}\\to0$，$\\dfrac{(n+1)^k}{a^n}=a\\cdot\\dfrac{(n+1)^k}{a^{n+1}}\\to0$",
-        "「单调有界」只能保证极限存在，要定出极限值必须另有工具"
+        "$2^x-1\\sim x\\ln2$，$\\sin x\\sim x$，$\\ln(1+x)\\sim x$",
+        "$\\tan x-\\sin x\\sim\\frac{x^3}{2}$",
+        "幂指型用取对数或 $\\lim u^v=e^{\\lim v\\ln u}$"
       ],
       "solutions": [
         {
-          "name": "取整 + 双边夹逼（按提示）",
+          "name": "逐题替换",
           "steps": [
-            "对 $x>1$ 记 $n=\\lfloor x\\rfloor$（$x$ 的整数部分），则 $n\\le x<n+1$，且 $x\\to+\\infty$ 时 $n\\to\\infty$。",
-            "因 $a>1$，$a^n\\le a^x$，故 $\\dfrac{x^k}{a^x}\\ge\\dfrac{n^k}{a^{n+1}}=\\dfrac1a\\cdot\\dfrac{n^k}{a^n}$（$k>0$ 时；$k\\le0$ 时同理可得）。",
-            "又 $a^x>a^{n}$ 且 $x<n+1$，故 $\\dfrac{x^k}{a^x}\\le\\dfrac{(n+1)^k}{a^{n}}=a\\cdot\\dfrac{(n+1)^k}{a^{n+1}}$。",
-            "由已知的数列极限，两端都 $\\to0$（$\\dfrac1a\\cdot0=0$，$a\\cdot0=0$）。",
-            "由夹逼定理，$\\lim\\limits_{x\\to+\\infty}\\dfrac{x^k}{a^x}=0$。"
+            "（1）分子 $\\sim(x\\ln2)\\cdot x\\cdot x=x^3\\ln2$，分母 $\\tan x-\\sin x\\sim\\frac{x^3}{2}$，故原式 $=2\\ln2=\\ln4$。",
+            "（2）设 $L=\\lim_{x\\to0}(\\cos x)^{\\csc^2x}$，取对数：$\\ln L=\\lim\\dfrac{\\ln\\cos x}{\\sin^2x}$。",
+            "$\\ln\\cos x\\sim-\\frac{x^2}{2}$，$\\sin^2x\\sim x^2$，所以 $\\ln L=-\\frac12$。",
+            "故 $L=e^{-1/2}$。"
           ]
         }
       ],
       "pitfalls": [
-        "引用未在书上证明的不等式（对数平均不等式）",
-        "把「单调有界 ⇒ 极限存在」误当成「极限 = 0」"
+        "把 $(2^x-1)$ 写成 $x$ 而漏掉 $\\ln2$",
+        "把 $\\tan x-\\sin x$ 用等价量逐项替换成 $0$",
+        "幂指型极限误写成 $e^{\\lim \\frac{\\ln\\cos x}{\\sin x}}$。"
       ],
       "related": [
-        "题库易错点 E-006（不能引用未证的结论）",
-        "§3.6 夹逼定理"
+        "题库易错点 E-001",
+        "§3.6 两个重要极限"
+      ],
+      "added": "2026-10-19"
+    },
+    {
+      "id": "2025-QZ-04",
+      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第4题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.5 两个重要极限",
+      "statement": "下列结论中，正确的个数有_____个。\\n① $\\displaystyle\\lim_{x\\to0}\\frac{\\sin(x\\sin(1/x))}{x\\sin(1/x)}=1$；\\n② 若 $0<a<1$，则 $\\displaystyle\\lim_{n\\to\\infty}(1-a^n)=1$；\\n③ $\\displaystyle\\lim_{n\\to\\infty}\\sqrt[n]{1+\\frac1{\\sqrt2}+\\cdots+\\frac1{\\sqrt n}}=1$；\\n④ $\\displaystyle\\lim_{n\\to\\infty}(n!)^{1/n^2}=1$。\\nA. 4　B. 3　C. 2　D. 1。",
+      "type": "单选题",
+      "topics": [
+        "重要极限",
+        "数列极限",
+        "n 次根",
+        "对数化"
+      ],
+      "difficulty": 3,
+      "tags": [
+        "2025小测",
+        "重要极限",
+        "n次根",
+        "单选"
+      ],
+      "right_answer": "A. 4",
+      "key_points": [
+        "令 $u=x\\sin(1/x)\\to0$，用 $\\sin u/u\\to1$",
+        "$a^n\\to0$（$0<a<1$）",
+        "根号和的增长为 $O(\\sqrt n)$，故 $n$ 次根趋于 $1$",
+        "对 $n!$ 取对数：$\\ln(n!)/n^2\\to0$"
+      ],
+      "solutions": [
+        {
+          "name": "逐项验证",
+          "steps": [
+            "① 令 $u=x\\sin(1/x)$，在 $u\\ne0$ 的趋近点上有 $\\sin u/u\\to1$，正确。",
+            "② $0<a<1$ 时 $a^n\\to0$，故 $1-a^n\\to1$，正确。",
+            "③ 括号和介于 $1$ 与 $2\\sqrt n$ 之间，而 $(2\\sqrt n)^{1/n}\\to1$，故原极限为 $1$，正确。",
+            "④ $\\ln((n!)^{1/n^2})=\\frac1{n^2}\\ln(n!)$，由 $\\ln(n!)\\le n\\ln n$ 得该式 $\\le\\frac{\\ln n}{n}\\to0$，故极限为 $e^0=1$，正确。",
+            "四项均正确，选 A。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "① 中错误地把分母在某些点为零视为极限不存在",
+        "③ 中只观察被开方数发散，没有看根指数也增长",
+        "④ 中把 $n!$ 的增量误当成线性增长。"
+      ],
+      "related": [
+        "§2.3 数列极限",
+        "§3.6 重要极限"
+      ],
+      "added": "2026-10-19"
+    },
+    {
+      "id": "2025-QZ-05",
+      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第5题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.5 两个重要极限",
+      "statement": "下列关于极限计算正确的是（不定项）\\nA. $\\displaystyle\\lim_{x\\to0}(\\sqrt{\\cos2x})^{1/x^2}=e^{-1}$；\\nB. $\\displaystyle\\lim_{x\\to+\\infty}\\left(\\frac{2x+3}{2x+1}\\right)^x=e$；\\nC. $\\displaystyle\\lim_{x\\to0}\\left(\\frac{3x-1}{x-1}\\right)^{1/x}=e^{-2}$；\\nD. $\\displaystyle\\lim_{x\\to+\\infty}(1+x)^{1/x}=e$。",
+      "type": "多项选择题",
+      "topics": [
+        "1^∞ 型极限",
+        "取对数",
+        "重要极限",
+        "等价无穷小"
+      ],
+      "difficulty": 4,
+      "tags": [
+        "2025小测",
+        "不定项",
+        "1^∞",
+        "取对数"
+      ],
+      "right_answer": "A、B、C",
+      "key_points": [
+        "幂指型极限统一用 $\\ln L=\\lim v\\ln u$",
+        "A 中 $\\ln\\cos2x\\sim-2x^2$",
+        "C 中 $\\ln\\frac{3x-1}{x-1}\\sim-2x$"
+      ],
+      "solutions": [
+        {
+          "name": "逐项取对数",
+          "steps": [
+            "A：$\\ln L=\\lim_{x\\to0}\\frac{\\ln(\\sqrt{\\cos2x})}{x^2}=\\lim\\frac{\\ln\\cos2x}{2x^2}=-1$，故 $L=e^{-1}$，正确。",
+            "B：$\\ln L=\\lim x\\ln(1+\\frac2{2x+1})=1$，故 $L=e$，正确。",
+            "C：$\\frac{3x-1}{x-1}=\\frac{1-3x}{1-x}$，$\\ln L=\\lim\\frac{\\ln(1-3x)-\\ln(1-x)}x=-3+1=-2$，故 $L=e^{-2}$，正确。",
+            "D：$\\ln L=\\lim\\frac{\\ln(1+x)}x=0$，故 $L=1$，不是 $e$，错误。",
+            "正确答案为 A、B、C。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "把 $(1+x)^{1/x}$ 在 $x\\to0$ 的重要极限直接搬到 $x\\to+\\infty$",
+        "A 中漏掉根号带来的 $\\frac12$",
+        "C 中把 $\\ln\\frac{3x-1}{x-1}$ 的极限误算为 $3$ 或 $1$。"
+      ],
+      "related": [
+        "§3.6 重要极限",
+        "题库 2025-MT-08"
+      ],
+      "added": "2026-10-19"
+    },
+    {
+      "id": "2025-QZ-06",
+      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第6题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.5 两个重要极限",
+      "statement": "极限 $\\displaystyle\\lim_{x\\to+\\infty}x\\left(\\sqrt[5]{x^5+10x^3-7}-\\sqrt[3]{x^3-3x+4}\\right)=$_____。\\nA. $\\frac{23}{15}$　B. $3$　C. $\\frac{16}{15}$　D. $2$。",
+      "type": "单选题",
+      "topics": [
+        "广义二项式展开",
+        "渐近展开",
+        "根式差"
+      ],
+      "difficulty": 4,
+      "tags": [
+        "2025小测",
+        "渐近展开",
+        "根式差",
+        "单选"
+      ],
+      "right_answer": "B. $3$",
+      "key_points": [
+        "分别提出 $x$ 后做 $(1+u)^a=1+au+o(u)$",
+        "两次展开的一次项分别是 $2/x^2$ 与 $-1/x^2$",
+        "差值乘以外层 $x$ 得到 $3$"
+      ],
+      "solutions": [
+        {
+          "name": "根式渐近展开",
+          "steps": [
+            "$\\sqrt[5]{x^5+10x^3-7}=x(1+10/x^2-7/x^5)^{1/5}=x+2/x+o(1/x)$。",
+            "$\\sqrt[3]{x^3-3x+4}=x(1-3/x^2+4/x^3)^{1/3}=x-1/x+o(1/x)$。",
+            "两式相减得 $3/x+o(1/x)$。",
+            "乘以外层 $x$，极限为 $3$，选 B。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "只保留 $x-x=0$，忽略下一阶项",
+        "把 $(1+u)^{1/5}$ 的系数 $1/5$ 漏掉",
+        "把第二个根式的一次项符号算反。"
+      ],
+      "related": [
+        "§3.5 无穷小阶的比较",
+        "题库 2025-QZ-04"
+      ],
+      "added": "2026-10-19"
+    },
+    {
+      "id": "错-1-4.3(3)",
+      "source": "第一章作业 习题1-4 第3题(3)",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.7 函数连续的概念",
+      "statement": "指出 $f(x)=e^{1/x}$ 的间断点，并判断其类型。",
+      "type": "讨论题",
+      "topics": [
+        "间断点的分类",
+        "第一类（可去、跳跃）与第二类（无穷、振荡）",
+        "单侧极限的求法"
+      ],
+      "difficulty": 3,
+      "tags": [
+        "错题",
+        "间断点分类",
+        "经典反例"
+      ],
+      "my_answer": "跳跃间断点",
+      "right_answer": "$x=0$ 是**第二类无穷间断点**",
+      "error_analysis": "跳跃间断点要求**两个单侧极限都存在**（且不相等）。而这里 $\\lim\\limits_{x\\to0^+}e^{1/x}=+\\infty$——右极限根本不存在，所以不是第一类。我只写了类型结论、没写单侧极限，错误因此没被自己发现。",
+      "key_points": [
+        "判类型**必须先把两个单侧极限求出来**，再对照定义分类",
+        "$x\\to0^+$ 时 $1/x\\to+\\infty$，$e^{1/x}\\to+\\infty$；$x\\to0^-$ 时 $1/x\\to-\\infty$，$e^{1/x}\\to0$",
+        "分类口诀：两侧都有限但不等 → 跳跃；一侧为 $\\infty$ → 无穷（第二类）；一列点振荡无极限 → 振荡（第二类）；两侧相等但 $\\ne f(x_0)$ → 可去"
+      ],
+      "solutions": [
+        {
+          "name": "标准流程",
+          "steps": [
+            "$f$ 在 $x=0$ 无定义，故 $x=0$ 是间断点。",
+            "算右极限：$\\lim\\limits_{x\\to0^+}e^{1/x}=+\\infty$（因 $1/x\\to+\\infty$）。",
+            "算左极限：$\\lim\\limits_{x\\to0^-}e^{1/x}=0$（因 $1/x\\to-\\infty$）。",
+            "右极限不是有限数（极限不存在），故 $x=0$ 是**第二类无穷间断点**。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "只写结论不写单侧极限",
+        "把「一侧为 $\\infty$」误判为跳跃——跳跃要求两侧极限都是有限数"
+      ],
+      "related": [
+        "题库题目 1-3.5(4)（同一函数的极限不存在）",
+        "题库易错点 E-004"
       ],
       "added": "2026-10-16"
+    },
+    {
+      "id": "错-1-综.17",
+      "source": "第一章作业 第一章综合题 第17题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.7 函数连续的概念",
+      "statement": "设 $f(x)=\\dfrac{\\sqrt{1+\\sin x+\\sin^2x}-(\\alpha+\\beta\\sin x)}{\\sin^2x}$ 在 $x=0$ 处为可去间断点，求 $\\alpha,\\beta$。",
+      "type": "计算题（含待定常数）",
+      "topics": [
+        "可去间断点的充要条件",
+        "两个单侧极限相等",
+        "有理化",
+        "等价量替换",
+        "充分性验证"
+      ],
+      "difficulty": 4,
+      "tags": [
+        "错题",
+        "只求必要条件",
+        "待定常数"
+      ],
+      "my_answer": "$\\alpha=1,\\ \\beta=\\dfrac12$（答案正确，但推导缺一步、也没回代验证）",
+      "right_answer": "$\\alpha=1,\\ \\beta=\\dfrac12$",
+      "error_analysis": "① 由「两个单侧极限相等」到 $2\\beta=1$ 中间少了关键一步：应先**两式相减保留 $t$**，得 $t\\left[\\sqrt{t^2+t+1}-\\sqrt{t^2-t+1}-2\\beta\\right]\\to0$，再由括号内 $\\to1-2\\beta$ 才得 $2\\beta=1$——我直接把 $t$ 约掉了，逻辑上有跳跃；② **只求了必要条件，没有回代验证充分性**。",
+      "key_points": [
+        "可去间断点的条件：两个单侧极限都存在、相等且为有限数（与 $f(0)$ 无关，$f$ 在该点本无定义）",
+        "令 $t=\\sin x$（$x\\to0^\\pm$ 时 $t\\to0^\\pm$），分母 $t^2$，用 $\\sqrt{1+t+t^2}-(\\alpha+\\beta t)$",
+        "为使极限有限，需 $\\alpha=1$（否则分子 $\\to1-\\alpha\\ne0$，商发散）",
+        "代入 $\\alpha=1$ 后，分子的线性项系数必须为零，才得 $\\beta=\\dfrac12$",
+        "**求参数题的最后一步永远是回代验证**：$\\alpha=1,\\beta=\\frac12$ 时两侧极限都是 $\\dfrac38$，有限且相等，确实是可去间断点"
+      ],
+      "solutions": [
+        {
+          "name": "必要条件 + 回代验证",
+          "steps": [
+            "记 $t=\\sin x$，$x\\to0$ 时 $t\\to0$。原式 $=\\dfrac{\\sqrt{1+t+t^2}-\\alpha-\\beta t}{t^2}$。",
+            "若 $\\alpha\\ne1$，分子 $\\to1-\\alpha\\ne0$ 而分母 $\\to0$，商必发散，不是可去间断点。故必须 $\\alpha=1$。",
+            "此时用 $\\sqrt{1+u}=1+\\dfrac u2-\\dfrac{u^2}{8}+o(u^2)$（$u=t+t^2$）：分子 $=1+\\dfrac{t+t^2}{2}-\\dfrac{t^2}{8}-1-\\beta t+o(t^2)=\\left(\\dfrac12-\\beta\\right)t+\\dfrac38t^2+o(t^2)$。",
+            "要使 $\\dfrac{\\text{分子}}{t^2}$ 有有限极限，一次项系数必须为 0：$\\dfrac12-\\beta=0$，即 $\\beta=\\dfrac12$。",
+            "回代验证：$\\alpha=1,\\beta=\\dfrac12$ 时，原式 $=\\dfrac38+o(1)\\to\\dfrac38$，两个单侧极限都是 $\\dfrac38$（有限且相等），确为可去间断点。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "只求必要条件就交卷——必须回代验证",
+        "由「两侧极限相等」到方程组时跳过中间的极限论证"
+      ],
+      "related": [
+        "题库易错点 E-008（求参数必须回代验证）",
+        "题库题目 1-4.12(2)"
+      ],
+      "added": "2026-10-16"
+    },
+    {
+      "id": "2025-MT-13",
+      "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第13题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.7 函数连续的概念",
+      "statement": "设 $f(x)=\\begin{cases}|x|^\\alpha\\sin(x^2),&x\\ne0,\\\\0,&x=0.\\end{cases}$ 问 $\\alpha$ 取何值时，$f(x)$ 在 $x=0$ 处连续？可导？一阶导数连续？",
+      "type": "分类讨论",
+      "topics": [
+        "连续性",
+        "可导性",
+        "导函数连续性",
+        "幂函数与振荡"
+      ],
+      "difficulty": 4,
+      "tags": [
+        "2025期中",
+        "参数讨论",
+        "连续",
+        "可导"
+      ],
+      "key_points": [
+        "连续：$|x|^\\alpha\\sin x^2$ 的阶为 $|x|^{\\alpha+2}$",
+        "可导：差商阶为 $|x|^{\\alpha+1}$",
+        "导数连续：由 $f'$ 的两项阶均为 $|x|^{\\alpha+1}$"
+      ],
+      "solutions": [
+        {
+          "name": "按阶数分类",
+          "steps": [
+            "因 $\\sin(x^2)\\sim x^2$，$|f(x)|=O(|x|^{\\alpha+2})$。故 $f$ 在 $0$ 连续当且仅当 $\\alpha+2>0$，即 $\\alpha>-2$。",
+            "当 $\\alpha>-2$ 时，差商 $\\dfrac{f(h)-f(0)}h=|h|^\\alpha\\dfrac{\\sin h^2}{h}=O(|h|^{\\alpha+1})$，故可导当且仅当 $\\alpha>-1$，且 $f'(0)=0$。",
+            "当 $x\\ne0$ 时，$f'(x)=\\alpha x|x|^{\\alpha-2}\\sin(x^2)+2x|x|^\\alpha\\cos(x^2)$。",
+            "当 $\\alpha>-1$ 时，两项均为 $O(|x|^{\\alpha+1})$，所以 $f'(x)\\to0=f'(0)$，一阶导数连续。",
+            "结论：$\\alpha>-2$ 时连续；$\\alpha>-1$ 时可导；$\\alpha>-1$ 时一阶导数连续。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "只比较 $\\alpha$ 与 $0$，忽略 $\\sin(x^2)$ 已经提供二阶零点",
+        "可导性条件与连续性条件混用",
+        "求 $|x|^\\alpha$ 的导数时漏掉符号或绝对值。"
+      ],
+      "related": [
+        "§4.1 连续与可导",
+        "§2.1 导数定义"
+      ],
+      "added": "2026-10-19"
+    },
+    {
+      "id": "2025-QZ-08",
+      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第8题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.7 函数连续的概念",
+      "statement": "下列陈述正确的是（不定项）\\nA. 若 $f$ 在 $[a,b]$ 上连续，最小值和最大值分别为 $m,M$，则值域为 $[m,M]$；\\nB. 若 $f$ 在 $[a,b]$ 上只有第一类间断点，则 $f$ 在 $[a,b]$ 上有界；\\nC. 若定义在 $[a,b]$ 上的 $f$ 的值域是区间 $[m,n]$，则 $f$ 在 $[a,b]$ 上连续；\\nD. 若 $f$ 在 $(a,b)$ 内连续，且 $f(a+0),f(b-0)$ 均存在，则 $f$ 在 $(a,b)$ 内有界。",
+      "type": "多项选择题",
+      "topics": [
+        "连续函数性质",
+        "介值定理",
+        "有界性",
+        "间断点"
+      ],
+      "difficulty": 4,
+      "tags": [
+        "2025小测",
+        "不定项",
+        "连续",
+        "有界"
+      ],
+      "right_answer": "A、D",
+      "key_points": [
+        "闭区间连续函数由最值定理和介值定理得到值域为 $[m,M]$",
+        "值域为区间不能反推连续",
+        "端点单侧极限存在可连续延拓到闭区间"
+      ],
+      "solutions": [
+        {
+          "name": "逐项判定",
+          "steps": [
+            "A 正确：连续函数取到最小值、最大值，并由介值定理取遍中间值。",
+            "B 错误：可在 $1/n$ 处取值为 $n$、其余为 $0$，每个间断点均为可去型，但函数无界。",
+            "C 错误：值域是区间不保证连续，例如在一点改变取值可破坏连续性。",
+            "D 正确：补充端点值后得到 $[a,b]$ 上的连续函数，故有界。",
+            "正确答案为 A、D。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "认为值域是区间就一定连续",
+        "忽略第一类间断点也可能无限多个并导致无界",
+        "D 中没有利用端点极限进行连续延拓。"
+      ],
+      "related": [
+        "§4.3 闭区间连续函数性质"
+      ],
+      "added": "2026-10-19"
+    },
+    {
+      "id": "2025-QZ-10",
+      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第10题",
+      "chapter": "第一章 函数与极限",
+      "section": "§1.7 函数连续的概念",
+      "statement": "函数 $f(x)=|x-1|^{1/[x(x-2)]}$ 的第一类间断点个数为（　）。\\nA. 0　B. 1　C. 2　D. 3。",
+      "type": "单选题",
+      "topics": [
+        "间断点分类",
+        "单侧极限",
+        "指数型函数"
+      ],
+      "difficulty": 4,
+      "tags": [
+        "2025小测",
+        "间断点",
+        "单侧极限",
+        "单选"
+      ],
+      "right_answer": "C. 2",
+      "key_points": [
+        "定义域排除 $x=0,2$；还要检查 $x=1$",
+        "$x=0,2$ 两侧极限均为 $\\sqrt e$，为可去间断点",
+        "$x=1$ 时 $f\\sim1/|x-1|\\to+\\infty$，为第二类间断点"
+      ],
+      "solutions": [
+        {
+          "name": "逐点求单侧极限",
+          "steps": [
+            "在 $x=0$ 附近，$\\ln|x-1|\\sim-x$，且 $\\frac1{x(x-2)}\\sim-\\frac1{2x}$，乘积趋于 $\\frac12$，故双侧极限为 $\\sqrt e$。",
+            "在 $x=2$ 附近，令 $x=2+h$，$\\ln|x-1|\\sim h$，$\\frac1{x(x-2)}\\sim\\frac1{2h}$，乘积趋于 $\\frac12$，双侧极限也为 $\\sqrt e$。",
+            "因此 $x=0,2$ 是可去间断点，属于第一类。",
+            "在 $x=1$ 处，指数为 $-1$，$f(x)=1/|x-1|\\to+\\infty$，单侧极限为无穷，属第二类间断点。",
+            "所以第一类间断点有 $2$ 个，选 C。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "把 $x=1$ 误认为连续点",
+        "把趋于无穷的间断点归入第一类",
+        "没有分别考察 $x\\to0^\\pm$ 和 $x\\to2^\\pm$。"
+      ],
+      "related": [
+        "§4.1 间断点分类"
+      ],
+      "added": "2026-10-19"
     },
     {
       "id": "错-1-4.9(3)",
       "source": "第一章作业 习题1-4 第9题(3)",
       "chapter": "第一章 函数与极限",
-      "section": "§4.3 闭区间上连续函数的性质",
+      "section": "§1.8 闭区间上连续函数的性质",
       "statement": "证明方程 $x-\\varepsilon\\sin x=1$（$0<\\varepsilon<1$）有且仅有一个实根。",
       "type": "证明题",
       "topics": [
@@ -849,403 +1821,6 @@ const BANK = {
       "added": "2026-10-16"
     },
     {
-      "id": "错-1-4.12(1)",
-      "source": "第一章作业 习题1-4 第12题(1)",
-      "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（等价量替换）",
-      "statement": "求 $\\lim\\limits_{x\\to0}\\dfrac{(1+\\alpha x)^a-(1+\\beta x)^b}{x}$。",
-      "type": "计算题（含参数）",
-      "topics": [
-        "等价量替换",
-        "$(1+u)^\\lambda-1\\sim\\lambda u$",
-        "$0/0$ 型"
-      ],
-      "difficulty": 3,
-      "tags": [
-        "错题",
-        "超纲用广义二项式"
-      ],
-      "my_answer": "按 $C_a^1,C_a^2,\\cdots$ 展开成幂级数后取常数项，得 $a\\alpha-b\\beta$（答案对）",
-      "right_answer": "$a\\alpha-b\\beta$，但应用 $(1+u)^\\lambda-1=\\lambda u+o(u)$",
-      "error_analysis": "答案正确，但**对非整数指数使用广义二项式 $C_a^k$ 属于超纲**（本章没有二项式级数），而且写成 $\\cdots$ 没有控制余项，证明不完整。",
-      "key_points": [
-        "第一章的合法工具：$(1+u)^\\lambda-1\\sim\\lambda u$（$u\\to0$，$\\lambda$ 任意实数）",
-        "把分子拆成两个等价量之和：$(1+\\alpha x)^a-1\\sim a\\alpha x$，$(1+\\beta x)^b-1\\sim b\\beta x$",
-        "注意这是**相减**结构，不能分别替换后相减了事，应先合并成**因式**或用 $o$ 记号：分子 $=a\\alpha x-b\\beta x+o(x)$",
-        "最后除以 $x$ 得 $a\\alpha-b\\beta$"
-      ],
-      "solutions": [
-        {
-          "name": "用 $(1+u)^\\lambda-1=\\lambda u+o(u)$",
-          "steps": [
-            "$(1+\\alpha x)^a=1+a\\alpha x+o(x)$（因为 $\\alpha x\\to0$，用 $(1+u)^\\lambda-1=\\lambda u+o(u)$）。",
-            "同理 $(1+\\beta x)^b=1+b\\beta x+o(x)$。",
-            "相减：分子 $=a\\alpha x-b\\beta x+o(x)=(a\\alpha-b\\beta)x+o(x)$。",
-            "除以 $x$：原式 $=a\\alpha-b\\beta+o(1)\\to a\\alpha-b\\beta$。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "对非整数指数用广义二项式展开（超纲）",
-        "用 $\\cdots$ 代替余项控制",
-        "在相减结构里分别替换却不注明 $o(x)$"
-      ],
-      "related": [
-        "题库题目 1-4.12(2)（同类：含参数）",
-        "题库易错点 E-003"
-      ],
-      "added": "2026-10-16"
-    },
-    {
-      "id": "错-1-综.17",
-      "source": "第一章作业 第一章综合题 第17题",
-      "chapter": "第一章 函数与极限",
-      "section": "§4.1 函数连续的概念",
-      "statement": "设 $f(x)=\\dfrac{\\sqrt{1+\\sin x+\\sin^2x}-(\\alpha+\\beta\\sin x)}{\\sin^2x}$ 在 $x=0$ 处为可去间断点，求 $\\alpha,\\beta$。",
-      "type": "计算题（含待定常数）",
-      "topics": [
-        "可去间断点的充要条件",
-        "两个单侧极限相等",
-        "有理化",
-        "等价量替换",
-        "充分性验证"
-      ],
-      "difficulty": 4,
-      "tags": [
-        "错题",
-        "只求必要条件",
-        "待定常数"
-      ],
-      "my_answer": "$\\alpha=1,\\ \\beta=\\dfrac12$（答案正确，但推导缺一步、也没回代验证）",
-      "right_answer": "$\\alpha=1,\\ \\beta=\\dfrac12$",
-      "error_analysis": "① 由「两个单侧极限相等」到 $2\\beta=1$ 中间少了关键一步：应先**两式相减保留 $t$**，得 $t\\left[\\sqrt{t^2+t+1}-\\sqrt{t^2-t+1}-2\\beta\\right]\\to0$，再由括号内 $\\to1-2\\beta$ 才得 $2\\beta=1$——我直接把 $t$ 约掉了，逻辑上有跳跃；② **只求了必要条件，没有回代验证充分性**。",
-      "key_points": [
-        "可去间断点的条件：两个单侧极限都存在、相等且为有限数（与 $f(0)$ 无关，$f$ 在该点本无定义）",
-        "令 $t=\\sin x$（$x\\to0^\\pm$ 时 $t\\to0^\\pm$），分母 $t^2$，用 $\\sqrt{1+t+t^2}-(\\alpha+\\beta t)$",
-        "为使极限有限，需 $\\alpha=1$（否则分子 $\\to1-\\alpha\\ne0$，商发散）",
-        "代入 $\\alpha=1$ 后，分子的线性项系数必须为零，才得 $\\beta=\\dfrac12$",
-        "**求参数题的最后一步永远是回代验证**：$\\alpha=1,\\beta=\\frac12$ 时两侧极限都是 $\\dfrac38$，有限且相等，确实是可去间断点"
-      ],
-      "solutions": [
-        {
-          "name": "必要条件 + 回代验证",
-          "steps": [
-            "记 $t=\\sin x$，$x\\to0$ 时 $t\\to0$。原式 $=\\dfrac{\\sqrt{1+t+t^2}-\\alpha-\\beta t}{t^2}$。",
-            "若 $\\alpha\\ne1$，分子 $\\to1-\\alpha\\ne0$ 而分母 $\\to0$，商必发散，不是可去间断点。故必须 $\\alpha=1$。",
-            "此时用 $\\sqrt{1+u}=1+\\dfrac u2-\\dfrac{u^2}{8}+o(u^2)$（$u=t+t^2$）：分子 $=1+\\dfrac{t+t^2}{2}-\\dfrac{t^2}{8}-1-\\beta t+o(t^2)=\\left(\\dfrac12-\\beta\\right)t+\\dfrac38t^2+o(t^2)$。",
-            "要使 $\\dfrac{\\text{分子}}{t^2}$ 有有限极限，一次项系数必须为 0：$\\dfrac12-\\beta=0$，即 $\\beta=\\dfrac12$。",
-            "回代验证：$\\alpha=1,\\beta=\\dfrac12$ 时，原式 $=\\dfrac38+o(1)\\to\\dfrac38$，两个单侧极限都是 $\\dfrac38$（有限且相等），确为可去间断点。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "只求必要条件就交卷——必须回代验证",
-        "由「两侧极限相等」到方程组时跳过中间的极限论证"
-      ],
-      "related": [
-        "题库易错点 E-008（求参数必须回代验证）",
-        "题库题目 1-4.12(2)"
-      ],
-      "added": "2026-10-16"
-    },
-    {
-      "id": "经典-01",
-      "source": "第一章经典难题（递推数列）",
-      "chapter": "第一章 函数与极限",
-      "section": "§2.3 数列极限存在的准则",
-      "statement": "设 $x_1=1$，$x_{n+1}=x_n+\\dfrac{1}{x_n}$（$n=1,2,\\cdots$）。(1) 证明 $\\lim\\limits_{n\\to\\infty}x_n=+\\infty$；(2) 求 $\\lim\\limits_{n\\to\\infty}\\dfrac{x_n}{\\sqrt{2n}}$。",
-      "type": "证明题 + 计算题",
-      "topics": [
-        "单调有界准则",
-        "反证法排除有界",
-        "平方后构造可累加的递推式",
-        "夹逼定理",
-        "初等裂项 $\\frac1k\\le 2(\\sqrt k-\\sqrt{k-1})$"
-      ],
-      "difficulty": 5,
-      "tags": [
-        "经典难题",
-        "递推数列",
-        "四工具串联",
-        "题眼：先平方"
-      ],
-      "key_points": [
-        "第(1)问的坑：**单调递增 ≠ 发散**（$1-\\frac1n$ 就递增但有界），必须反设**有界**、用单调有界准则导出 $L=L+\\frac1L$ 的矛盾",
-        "第(2)问的题眼：递推式里 $x_{n+1}$ 与 $x_n$ 不是线性关系，**直接累加不了**；先**平方**才出现可累加的常数项 $+2$",
-        "夹逼 $\\sum\\frac{1}{x_k^2}$ 时用初等裂项 $\\frac1k\\le 2(\\sqrt k-\\sqrt{k-1})$，避免引用对数不等式（防超纲）",
-        "最后开方要说明 $x_n>0$ 且 $\\sqrt{\\ }$ 连续（极限符号可与它交换）"
-      ],
-      "solutions": [
-        {
-          "name": "(1) 单调 + 反证有界",
-          "steps": [
-            "由 $x_1=1>0$ 与递推式归纳得 $x_n>0$，故 $x_{n+1}-x_n=\\dfrac{1}{x_n}>0$，$\\{x_n\\}$ 严格递增。",
-            "反设 $\\{x_n\\}$ 有界。由单调有界准则存在有限极限 $L$。",
-            "在 $x_{n+1}=x_n+\\dfrac1{x_n}$ 两端令 $n\\to\\infty$（两端极限均存在，可用四则运算）得 $L=L+\\dfrac1L$，即 $\\dfrac1L=0$，与 $L\\ge1>0$ 矛盾。",
-            "故 $\\{x_n\\}$ 无界；又单调递增，所以 $x_n\\to+\\infty$。"
-          ]
-        },
-        {
-          "name": "(2) 平方累加 + 夹逼",
-          "steps": [
-            "平方：$x_{n+1}^2=x_n^2+2+\\dfrac{1}{x_n^2}$。",
-            "累加（$k=1$ 到 $n-1$）得 $x_n^2=x_1^2+2(n-1)+\\sum\\limits_{k=1}^{n-1}\\dfrac{1}{x_k^2}=2n-1+\\sum\\limits_{k=1}^{n-1}\\dfrac{1}{x_k^2}$。",
-            "下界：$\\dfrac{x_n^2}{2n}>\\dfrac{2n-1}{2n}=1-\\dfrac{1}{2n}$。",
-            "上界：由 $x_k^2>2k-1\\ge k$ 得 $\\dfrac{1}{x_k^2}\\le\\dfrac1k$；又 $\\dfrac1k\\le2(\\sqrt k-\\sqrt{k-1})$，裂项相消得 $\\sum\\limits_{k=1}^{n-1}\\dfrac1k\\le2\\sqrt{n-1}$。",
-            "故 $1-\\dfrac{1}{2n}<\\dfrac{x_n^2}{2n}\\le1-\\dfrac{1}{2n}+\\dfrac{\\sqrt{n-1}}{n}$，两端都 $\\to1$，由夹逼定理 $\\dfrac{x_n^2}{2n}\\to1$。",
-            "由 $x_n>0$ 及 $\\sqrt{\\ }$ 连续，开方得 $\\dfrac{x_n}{\\sqrt{2n}}\\to1$。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "第(1)问直接说「单调递增所以趋于 $+\\infty$」——递增不一定发散，必须反证排除有界",
-        "第(2)问对 $x_{n+1}=x_n+\\frac1{x_n}$ 直接累加——它不是线性关系，累加不出简单式子",
-        "用 $\\sum\\frac1k\\le1+\\ln n$ 估计——需要对数不等式，本章未必已证（易错点 E-006），本题的裂项法纯初等更稳",
-        "开方时不说明 $x_n>0$ 与 $\\sqrt{\\ }$ 连续"
-      ],
-      "related": [
-        "题库易错点 E-006（不能引用未证结论）",
-        "题库知识点「10.14」九、题型三（取整夹逼）",
-        "小测 Q9"
-      ],
-      "added": "2026-10-16"
-    },
-    {
-      "id": "经典-02",
-      "source": "第一章经典难题（夹逼求最大）",
-      "chapter": "第一章 函数与极限",
-      "section": "§2.3 数列极限存在的准则",
-      "statement": "设 $a_1,a_2,\\cdots,a_m$ 均为正数，求 $\\lim\\limits_{n\\to\\infty}\\left(\\dfrac{a_1^n+a_2^n+\\cdots+a_m^n}{m}\\right)^{\\frac1n}$。",
-      "type": "计算题",
-      "topics": [
-        "夹逼定理",
-        "最大项主导",
-        "$m^{1/n}\\to1$"
-      ],
-      "difficulty": 5,
-      "tags": [
-        "经典难题",
-        "题眼：只留最大项",
-        "三行解决"
-      ],
-      "key_points": [
-        "题眼：**别管那些较小的项，最大的那一项主导一切**，只用 $M=\\max\\{a_i\\}$ 就能同时卡住上下界",
-        "上界：$a_i\\le M\\Rightarrow\\sum a_i^n\\le mM^n\\Rightarrow$ 原式 $\\le M$",
-        "下界：$\\sum a_i^n\\ge M^n\\Rightarrow$ 原式 $\\ge\\dfrac{M}{m^{1/n}}$",
-        "$m$ 固定，$m^{1/n}=e^{\\frac{\\ln m}{n}}\\to e^0=1$（用 $e^x$ 连续），故左端 $\\to M$"
-      ],
-      "solutions": [
-        {
-          "name": "双侧夹逼",
-          "steps": [
-            "记 $M=\\max\\{a_1,\\cdots,a_m\\}$。",
-            "上界：每个 $a_i\\le M$，故 $a_1^n+\\cdots+a_m^n\\le mM^n$，于是 $\\left(\\dfrac{\\sum a_i^n}{m}\\right)^{1/n}\\le M$。",
-            "下界：$\\sum a_i^n\\ge M^n$，故 $\\left(\\dfrac{\\sum a_i^n}{m}\\right)^{1/n}\\ge\\left(\\dfrac{M^n}{m}\\right)^{1/n}=\\dfrac{M}{m^{1/n}}$。",
-            "合起来 $\\dfrac{M}{m^{1/n}}\\le\\left(\\dfrac{\\sum a_i^n}{m}\\right)^{1/n}\\le M$。",
-            "由 $m^{1/n}\\to1$ 得左端 $\\to M$，由夹逼定理极限为 $M$。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "以为 $(a_1^n+\\cdots+a_m^n)^{1/n}=a_1+\\cdots+a_m$——幂不能这样分配",
-        "误当 $1^\\infty$ 型套推广式——这里底数趋于 $\\frac{M^n+\\cdots}{m}$（发散），不是趋于 1",
-        "忘记交代 $m^{1/n}\\to1$ 的理由"
-      ],
-      "related": [
-        "题库题目 1-综.3(2)（$x\\to0$ 取几何平均，可作对照）",
-        "§2.3 夹逼定理",
-        "小测 Q10"
-      ],
-      "added": "2026-10-16"
-    },
-    {
-      "id": "经典-03",
-      "source": "第一章经典难题（$\\sqrt[n]{n}\\to1$）",
-      "chapter": "第一章 函数与极限",
-      "section": "§2.3 数列极限存在的准则",
-      "statement": "求 $\\lim\\limits_{n\\to\\infty}\\sqrt[n]{n}$。",
-      "type": "计算题",
-      "topics": [
-        "二项式定理放缩",
-        "夹逼定理",
-        "均值不等式"
-      ],
-      "difficulty": 4,
-      "tags": [
-        "经典难题",
-        "题眼：二项式留二次项"
-      ],
-      "key_points": [
-        "题眼：把 $\\sqrt[n]{n}$ 写成 $1+t_n$（$t_n\\ge0$），则 $n=(1+t_n)^n$；**二项式展开只留能压住 $t_n$ 的那一项**",
-        "留 $C_n^1t_n$ 只能得 $t_n\\le1$（不够）；**留 $C_n^2t_n^2$** 得 $n\\ge\\dfrac{n(n-1)}{2}t_n^2$，即 $t_n^2\\le\\dfrac{2}{n-1}$",
-        "于是 $0\\le t_n\\le\\sqrt{\\dfrac{2}{n-1}}\\to0$，由夹逼定理 $t_n\\to0$"
-      ],
-      "solutions": [
-        {
-          "name": "二项式放缩 + 夹逼",
-          "steps": [
-            "$n\\ge1$ 时 $\\sqrt[n]{n}\\ge1$，记 $t_n=\\sqrt[n]{n}-1\\ge0$，则 $n=(1+t_n)^n$。",
-            "由二项式定理（$n\\ge2$）：$n=(1+t_n)^n=\\sum\\limits_{k=0}^{n}C_n^kt_n^k\\ge C_n^2t_n^2=\\dfrac{n(n-1)}{2}t_n^2$。",
-            "两边除以 $\\dfrac{n(n-1)}{2}$ 得 $t_n^2\\le\\dfrac{2}{n-1}$。",
-            "所以 $0\\le t_n\\le\\sqrt{\\dfrac{2}{n-1}}\\to0$，由夹逼定理 $t_n\\to0$。",
-            "故 $\\sqrt[n]{n}=1+t_n\\to1$。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "用 $\\sqrt[n]{n}=e^{\\frac{\\ln n}{n}}$ 后直接说 $\\frac{\\ln n}{n}\\to0$——**这本身就是要证的结论**，属循环论证（除非书上已有 $\\lim\\frac{n^k}{a^n}=0$ 类结论）",
-        "二项式只留 $t_n$ 那一项，得到 $t_n\\le1$，证不出趋于 0",
-        "忘记说明 $t_n\\ge0$"
-      ],
-      "related": [
-        "题库题目 经典-01（同样用放缩 + 夹逼）",
-        "题库易错点 E-006",
-        "小测 Q11"
-      ],
-      "added": "2026-10-16"
-    },
-    {
-      "id": "经典-04",
-      "source": "第一章经典难题（Wallis 型）",
-      "chapter": "第一章 函数与极限",
-      "section": "§2.3 数列极限存在的准则",
-      "statement": "求 $\\lim\\limits_{n\\to\\infty}\\dfrac{1\\cdot3\\cdot5\\cdots(2n-1)}{2\\cdot4\\cdot6\\cdots(2n)}$。",
-      "type": "计算题",
-      "topics": [
-        "平方构造",
-        "夹逼定理",
-        "项数配平"
-      ],
-      "difficulty": 4,
-      "tags": [
-        "经典难题",
-        "题眼：先平方",
-        "Wallis"
-      ],
-      "key_points": [
-        "题眼：直接放缩只能得「$\\le1$」，证不出 0；必须**平方**，让每个因子变成 $\\dfrac{4k^2-1}{4k^2}<1$ 的形式",
-        "平方时**分子每个 $(2k-1)^2$ 要换成 $(2k-1)(2k+1)$**，多出来的因子最后用 $\\dfrac{1}{2n+1}$ 配平项数",
-        "结果：$0<P_n^2<\\dfrac{1}{2n+1}$，开方得 $0<P_n<\\dfrac{1}{\\sqrt{2n+1}}\\to0$"
-      ],
-      "solutions": [
-        {
-          "name": "平方 + 因子配对 + 夹逼",
-          "steps": [
-            "记 $P_n=\\dfrac{1\\cdot3\\cdots(2n-1)}{2\\cdot4\\cdots(2n)}>0$。",
-            "平方并配平项数：$P_n^2=\\dfrac{1\\cdot3}{2^2}\\cdot\\dfrac{3\\cdot5}{4^2}\\cdots\\dfrac{(2n-1)(2n+1)}{(2n)^2}\\cdot\\dfrac{1}{2n+1}$。",
-            "每个因子 $\\dfrac{(2k-1)(2k+1)}{(2k)^2}=\\dfrac{4k^2-1}{4k^2}<1$，故 $0<P_n^2<\\dfrac{1}{2n+1}$。",
-            "开方得 $0<P_n<\\dfrac{1}{\\sqrt{2n+1}}$，右端 $\\to0$，由夹逼定理 $P_n\\to0$。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "只写 $P_n<\\dfrac{2n-1}{2n}\\to1$——这只说明 $P_n\\le1$，**证不出极限为 0**",
-        "平方后忘记配平项数（分子多出一个 $(2n+1)$，必须乘回 $\\dfrac{1}{2n+1}$）",
-        "忘记说明 $P_n>0$ 才能开方取正"
-      ],
-      "related": [
-        "题库题目 经典-03（同为放缩 + 夹逼）",
-        "§2.3 夹逼定理",
-        "小测 Q12"
-      ],
-      "added": "2026-10-16"
-    },
-    {
-      "id": "2025-MT-01",
-      "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第1题",
-      "chapter": "第一章 函数与极限",
-      "section": "§2.3 数列极限存在的准则",
-      "statement": "利用 $\\varepsilon-N$ 定义证明：若数列 $\\{a_n^3\\}$ 收敛，则 $\\{a_n\\}$ 必收敛。",
-      "type": "证明题",
-      "topics": [
-        "数列极限的 ε-N 定义",
-        "立方差因式分解",
-        "极限与连续函数"
-      ],
-      "difficulty": 4,
-      "tags": [
-        "2025期中",
-        "ε-N",
-        "立方差",
-        "证明题"
-      ],
-      "key_points": [
-        "设 $a_n^3\\to A$，则 $A\\ge0$，目标极限为 $\\sqrt[3]{A}$",
-        "分 $A>0$ 与 $A=0$ 两种情况处理",
-        "利用 $a^3-b^3=(a-b)(a^2+ab+b^2)$ 控制差"
-      ],
-      "solutions": [
-        {
-          "name": "ε-N 证明",
-          "steps": [
-            "设 $a_n^3\\to A$，记 $b=\\sqrt[3]{A}\\ge0$。",
-            "若 $A=0$，对任意 $\\varepsilon>0$，取 $N$ 使 $n>N$ 时 $|a_n^3|<\\varepsilon^3$，于是 $|a_n|<\\varepsilon$。",
-            "若 $A>0$，则 $b>0$，且当 $n$ 足够大时 $a_n^3>A/2>0$，从而 $a_n>0$。",
-            "由 $a_n^3-b^3=(a_n-b)(a_n^2+a_nb+b^2)$，有 $|a_n-b|=\\dfrac{|a_n^3-b^3|}{a_n^2+a_nb+b^2}\\le\\dfrac{|a_n^3-A|}{b^2}$。",
-            "对任意 $\\varepsilon>0$，取 $N$ 使 $n>N$ 时 $|a_n^3-A|<b^2\\varepsilon$，则 $|a_n-b|<\\varepsilon$。",
-            "故 $a_n\\to b=\\sqrt[3]{A}$，即 $\\{a_n\\}$ 收敛。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "只证明“有界”而没有回到 $\\varepsilon-N$ 定义",
-        "$A=0$ 时错误地把立方根写成负数或忽略符号",
-        "把立方差公式写成平方差公式。"
-      ],
-      "related": [
-        "§2.3 数列极限存在的准则",
-        "§4.1 连续函数的性质"
-      ],
-      "added": "2026-10-19"
-    },
-    {
-      "id": "2025-MT-02",
-      "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第2题",
-      "chapter": "第一章 函数与极限",
-      "section": "§2.3 数列极限存在的准则",
-      "statement": "利用夹逼定理求极限：$\\displaystyle\\lim_{n\\to\\infty}\\dfrac{(2n-1)!!}{(2n)!!}$。其中奇数双阶乘 $(2n-1)!!=1\\cdot3\\cdots(2n-1)$，偶数双阶乘 $(2n)!!=2\\cdot4\\cdots(2n)$。",
-      "type": "计算题",
-      "topics": [
-        "夹逼定理",
-        "双阶乘",
-        "平方构造",
-        " Telescoping 不等式"
-      ],
-      "difficulty": 3,
-      "tags": [
-        "2025期中",
-        "夹逼定理",
-        "双阶乘",
-        "必刷"
-      ],
-      "key_points": [
-        "记 $P_n=\\frac{(2n-1)!!}{(2n)!!}$，显然 $P_n>0$",
-        "利用 $\\left(\\frac{2k-1}{2k}\\right)^2<\\frac{2k-1}{2k+1}$",
-        "乘起来后右侧望远镜相消，得到 $P_n^2<\\frac1{2n+1}$"
-      ],
-      "solutions": [
-        {
-          "name": "平方 + 夹逼",
-          "steps": [
-            "记 $P_n=\\prod_{k=1}^n\\frac{2k-1}{2k}>0$。",
-            "因为 $\\left(\\frac{2k-1}{2k}\\right)^2<\\frac{2k-1}{2k+1}$，所以 $P_n^2<\\prod_{k=1}^n\\frac{2k-1}{2k+1}$。",
-            "右侧望远镜相消：$\\prod_{k=1}^n\\frac{2k-1}{2k+1}=\\frac1{2n+1}$。",
-            "于是 $0<P_n<\\frac1{\\sqrt{2n+1}}$，右端趋于 $0$，由夹逼定理得极限为 $0$。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "把双阶乘当成普通阶乘的平方",
-        "平方后忘记配平多出来的 $(2n+1)$",
-        "只给出下界 $0$，没有能收敛到同一值的上界。"
-      ],
-      "related": [
-        "§2.3 夹逼定理",
-        "题库经典-04 Wallis 型"
-      ],
-      "added": "2026-10-19"
-    },
-    {
       "id": "2025-MT-03",
       "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第3题",
       "chapter": "第二章 导数与微分",
@@ -1289,6 +1864,98 @@ const BANK = {
       "related": [
         "§3.6 等价无穷小替换",
         "题库易错点 E-001"
+      ],
+      "added": "2026-10-19"
+    },
+    {
+      "id": "2025-QZ-01",
+      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第1题",
+      "chapter": "第二章 导数与微分",
+      "section": "§2.1 导数的概念",
+      "statement": "设 $f(x)$ 是周期为 $4$ 的偶函数，且 $f(x)=x^2-2x\\ (0\\le x\\le2)$，则 $f'\\left(\\frac72\\right)=$_____。\\nA. $-2$　B. $-1$　C. $2$　D. $1$。",
+      "type": "单选题",
+      "topics": [
+        "周期函数",
+        "偶函数",
+        "导数",
+        "对称性"
+      ],
+      "difficulty": 2,
+      "tags": [
+        "2025小测",
+        "周期",
+        "偶函数",
+        "单选"
+      ],
+      "right_answer": "D. $1$",
+      "key_points": [
+        "$f'(x+4)=f'(x)$",
+        "偶函数的导数满足 $f'(-x)=-f'(x)$",
+        "$f'(x)=2x-2$（$0<x<2$）"
+      ],
+      "solutions": [
+        {
+          "name": "利用周期与奇偶性",
+          "steps": [
+            "由周期 $4$，$f'\\left(\\frac72\\right)=f'\\left(-\\frac12\\right)$。",
+            "由 $f$ 为偶函数，$f'\\left(-\\frac12\\right)=-f'\\left(\\frac12\\right)$。",
+            "在 $(0,2)$ 上 $f'(x)=2x-2$，故 $f'\\left(\\frac12\\right)=-1$。",
+            "于是 $f'\\left(\\frac72\\right)=1$。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "直接把 $7/2$ 代入 $x^2-2x$，超出给定区间",
+        "偶函数导数误认为仍是偶函数。"
+      ],
+      "related": [
+        "§2.1 导数的概念"
+      ],
+      "added": "2026-10-19"
+    },
+    {
+      "id": "2025-MT-10",
+      "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第10题",
+      "chapter": "第二章 导数与微分",
+      "section": "§2.2 微分中值定理",
+      "statement": "设函数 $f(x)$ 在 $[0,2]$ 上连续，在 $(0,2)$ 上可导，且 $f(0)=0$，$f(1)=f(2)=e$。证明：\\n（1）存在 $\\xi\\in(0,2)$ 使 $f(\\xi)=2$；\\n（2）存在 $\\xi\\in(0,2)$ 使 $f'(\\xi)+f(\\xi)=e$。",
+      "type": "证明题",
+      "topics": [
+        "介值定理",
+        "Rolle 中值定理",
+        "辅助函数"
+      ],
+      "difficulty": 3,
+      "tags": [
+        "2025期中",
+        "中值定理",
+        "辅助函数",
+        "证明题"
+      ],
+      "key_points": [
+        "（1）在 $0$ 与 $1$ 两点间用介值定理",
+        "（2）构造 $F(x)=e^x[f(x)-e]$ 或 $e^xf(x)-e^{x+1}$",
+        "$F(1)=F(2)=0$，再用 Rolle 定理"
+      ],
+      "solutions": [
+        {
+          "name": "介值定理 + Rolle",
+          "steps": [
+            "（1）$f(0)=0<2<e=f(1)$，由连续函数的介值定理，存在 $\\xi\\in(0,1)\\subset(0,2)$ 使 $f(\\xi)=2$。",
+            "（2）令 $F(x)=e^x[f(x)-e]$。因 $f(1)=f(2)=e$，有 $F(1)=F(2)=0$。",
+            "$F$ 在 $[1,2]$ 上满足 Rolle 定理条件，故存在 $\\xi\\in(1,2)$ 使 $F'(\\xi)=0$。",
+            "$F'(x)=e^x[f(x)-e+f'(x)]$，$e^\\xi>0$，所以 $f'(\\xi)+f(\\xi)=e$。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "第（2）问直接对 $f$ 用 Rolle，忽略 $f(1)=f(2)$ 只能得到 $f'=0$",
+        "辅助函数构造后不检查两端相等",
+        "把 $(0,2)$ 与 $(1,2)$ 的区间范围混淆。"
+      ],
+      "related": [
+        "§2.2 微分中值定理",
+        "§4.3 零点定理"
       ],
       "added": "2026-10-19"
     },
@@ -1384,51 +2051,6 @@ const BANK = {
       "added": "2026-10-19"
     },
     {
-      "id": "2025-MT-06",
-      "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第6题",
-      "chapter": "第二章 导数与微分",
-      "section": "§2.5 导数与微分的应用",
-      "statement": "求螺旋线 $C:r=e^{\\theta}$ 在 $\\theta=\\dfrac{\\pi}{2}$ 处的切线方程。",
-      "type": "计算题",
-      "topics": [
-        "极坐标曲线",
-        "切线斜率",
-        "参数方程"
-      ],
-      "difficulty": 3,
-      "tags": [
-        "2025期中",
-        "极坐标",
-        "切线",
-        "几何应用"
-      ],
-      "key_points": [
-        "极坐标切线斜率 $\\frac{dy}{dx}=\\frac{r'\\sin\\theta+r\\cos\\theta}{r'\\cos\\theta-r\\sin\\theta}$",
-        "先求点坐标，再代入斜率"
-      ],
-      "solutions": [
-        {
-          "name": "极坐标参数化",
-          "steps": [
-            "$x=r\\cos\\theta=e^{\\theta}\\cos\\theta$，$y=e^{\\theta}\\sin\\theta$。",
-            "在 $\\theta=\\frac\\pi2$ 时，点为 $\\left(0,e^{\\pi/2}\\right)$。",
-            "切线斜率 $\\frac{dy}{dx}=\\frac{e^\\theta(\\sin\\theta+\\cos\\theta)}{e^\\theta(\\cos\\theta-\\sin\\theta)}$，在 $\\theta=\\frac\\pi2$ 处为 $-1$。",
-            "切线方程：$y-e^{\\pi/2}=-(x-0)$，即 $x+y=e^{\\pi/2}$。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "把 $r=e^{\\pi/2}$ 直接当成直角坐标点的 $y$ 坐标",
-        "斜率公式分子分母写反",
-        "将极坐标的 $r$ 直接当作固定半径求水平切线。"
-      ],
-      "related": [
-        "§2.3 参数方程求导",
-        "§2.5 切线问题"
-      ],
-      "added": "2026-10-19"
-    },
-    {
       "id": "2025-MT-07",
       "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第7题",
       "chapter": "第二章 导数与微分",
@@ -1471,152 +2093,6 @@ const BANK = {
       "related": [
         "§2.3 高阶导数",
         "§2.2 泰勒展开"
-      ],
-      "added": "2026-10-19"
-    },
-    {
-      "id": "2025-MT-08",
-      "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第8题",
-      "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（等价量替换）",
-      "statement": "求下列极限：\\n（1）$\\displaystyle\\lim_{x\\to0}\\dfrac{(2^x-1)\\sin x\\ln(1+x)}{\\tan x-\\sin x}$；\\n（2）$\\displaystyle\\lim_{x\\to0}(\\cos x)^{\\csc^2x}$。",
-      "type": "计算题",
-      "topics": [
-        "等价无穷小",
-        "指数函数",
-        "三角函数",
-        "幂指函数极限"
-      ],
-      "difficulty": 3,
-      "tags": [
-        "2025期中",
-        "等价量",
-        "1^∞型",
-        "双小问"
-      ],
-      "key_points": [
-        "$2^x-1\\sim x\\ln2$，$\\sin x\\sim x$，$\\ln(1+x)\\sim x$",
-        "$\\tan x-\\sin x\\sim\\frac{x^3}{2}$",
-        "幂指型用取对数或 $\\lim u^v=e^{\\lim v\\ln u}$"
-      ],
-      "solutions": [
-        {
-          "name": "逐题替换",
-          "steps": [
-            "（1）分子 $\\sim(x\\ln2)\\cdot x\\cdot x=x^3\\ln2$，分母 $\\tan x-\\sin x\\sim\\frac{x^3}{2}$，故原式 $=2\\ln2=\\ln4$。",
-            "（2）设 $L=\\lim_{x\\to0}(\\cos x)^{\\csc^2x}$，取对数：$\\ln L=\\lim\\dfrac{\\ln\\cos x}{\\sin^2x}$。",
-            "$\\ln\\cos x\\sim-\\frac{x^2}{2}$，$\\sin^2x\\sim x^2$，所以 $\\ln L=-\\frac12$。",
-            "故 $L=e^{-1/2}$。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "把 $(2^x-1)$ 写成 $x$ 而漏掉 $\\ln2$",
-        "把 $\\tan x-\\sin x$ 用等价量逐项替换成 $0$",
-        "幂指型极限误写成 $e^{\\lim \\frac{\\ln\\cos x}{\\sin x}}$。"
-      ],
-      "related": [
-        "题库易错点 E-001",
-        "§3.6 两个重要极限"
-      ],
-      "added": "2026-10-19"
-    },
-    {
-      "id": "2025-MT-09",
-      "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第9题",
-      "chapter": "第一章 函数与极限",
-      "section": "§2.3 数列极限存在的准则",
-      "statement": "设 $a_n=1+\\dfrac1{3^2}+\\dfrac1{5^2}+\\cdots+\\dfrac1{(2n-1)^2}$，分别用单调有界定理、柯西收敛准则两种方法证明：数列 $\\{a_n\\}$ 收敛。",
-      "type": "证明题",
-      "topics": [
-        "单调有界定理",
-        "柯西收敛准则",
-        "裂项放缩"
-      ],
-      "difficulty": 3,
-      "tags": [
-        "2025期中",
-        "单调有界",
-        "柯西准则",
-        "裂项"
-      ],
-      "key_points": [
-        "$a_n$ 显然单调递增",
-        "$\\frac1{(2k-1)^2}\\le\\frac1{4k(k-1)}$（$k\\ge2$）可裂项",
-        "柯西差 $a_m-a_n$ 的上界趋于 $0$"
-      ],
-      "solutions": [
-        {
-          "name": "方法一：单调有界",
-          "steps": [
-            "由于每项为正，$a_{n+1}-a_n=\\frac1{(2n+1)^2}>0$，所以 $\\{a_n\\}$ 单调递增。",
-            "当 $k\\ge2$ 时，$\\frac1{(2k-1)^2}\\le\\frac1{4k(k-1)}=\\frac14\\left(\\frac1{k-1}-\\frac1k\\right)$。",
-            "于是 $a_n\\le1+\\frac14\\sum_{k=2}^n\\left(\\frac1{k-1}-\\frac1k\\right)<\\frac54$。",
-            "数列单调递增且有上界，由单调有界定理收敛。"
-          ]
-        },
-        {
-          "name": "方法二：柯西准则",
-          "steps": [
-            "对 $m>n$，$0<a_m-a_n=\\sum_{k=n+1}^m\\frac1{(2k-1)^2}$。",
-            "用同样的裂项估计，$a_m-a_n\\le\\frac14\\sum_{k=n+1}^m\\left(\\frac1{k-1}-\\frac1k\\right)=\\frac14\\left(\\frac1n-\\frac1m\\right)<\\frac1{4n}$。",
-            "对任意 $\\varepsilon>0$，取 $N>\\frac1{4\\varepsilon}$，当 $m>n>N$ 时 $|a_m-a_n|<\\varepsilon$。由柯西收敛准则，数列收敛。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "只证明单调，没有给出上界",
-        "放缩成调和级数后失去收敛性",
-        "柯西准则中把 $m>n$ 错写成 $m<n$。"
-      ],
-      "related": [
-        "§2.3 数列极限存在准则"
-      ],
-      "added": "2026-10-19"
-    },
-    {
-      "id": "2025-MT-10",
-      "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第10题",
-      "chapter": "第二章 导数与微分",
-      "section": "§2.2 微分中值定理",
-      "statement": "设函数 $f(x)$ 在 $[0,2]$ 上连续，在 $(0,2)$ 上可导，且 $f(0)=0$，$f(1)=f(2)=e$。证明：\\n（1）存在 $\\xi\\in(0,2)$ 使 $f(\\xi)=2$；\\n（2）存在 $\\xi\\in(0,2)$ 使 $f'(\\xi)+f(\\xi)=e$。",
-      "type": "证明题",
-      "topics": [
-        "介值定理",
-        "Rolle 中值定理",
-        "辅助函数"
-      ],
-      "difficulty": 3,
-      "tags": [
-        "2025期中",
-        "中值定理",
-        "辅助函数",
-        "证明题"
-      ],
-      "key_points": [
-        "（1）在 $0$ 与 $1$ 两点间用介值定理",
-        "（2）构造 $F(x)=e^x[f(x)-e]$ 或 $e^xf(x)-e^{x+1}$",
-        "$F(1)=F(2)=0$，再用 Rolle 定理"
-      ],
-      "solutions": [
-        {
-          "name": "介值定理 + Rolle",
-          "steps": [
-            "（1）$f(0)=0<2<e=f(1)$，由连续函数的介值定理，存在 $\\xi\\in(0,1)\\subset(0,2)$ 使 $f(\\xi)=2$。",
-            "（2）令 $F(x)=e^x[f(x)-e]$。因 $f(1)=f(2)=e$，有 $F(1)=F(2)=0$。",
-            "$F$ 在 $[1,2]$ 上满足 Rolle 定理条件，故存在 $\\xi\\in(1,2)$ 使 $F'(\\xi)=0$。",
-            "$F'(x)=e^x[f(x)-e+f'(x)]$，$e^\\xi>0$，所以 $f'(\\xi)+f(\\xi)=e$。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "第（2）问直接对 $f$ 用 Rolle，忽略 $f(1)=f(2)$ 只能得到 $f'=0$",
-        "辅助函数构造后不检查两端相等",
-        "把 $(0,2)$ 与 $(1,2)$ 的区间范围混淆。"
-      ],
-      "related": [
-        "§2.2 微分中值定理",
-        "§4.3 零点定理"
       ],
       "added": "2026-10-19"
     },
@@ -1669,10 +2145,55 @@ const BANK = {
       "added": "2026-10-19"
     },
     {
+      "id": "2025-MT-06",
+      "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第6题",
+      "chapter": "第二章 导数与微分",
+      "section": "§2.4 导数与微分的应用",
+      "statement": "求螺旋线 $C:r=e^{\\theta}$ 在 $\\theta=\\dfrac{\\pi}{2}$ 处的切线方程。",
+      "type": "计算题",
+      "topics": [
+        "极坐标曲线",
+        "切线斜率",
+        "参数方程"
+      ],
+      "difficulty": 3,
+      "tags": [
+        "2025期中",
+        "极坐标",
+        "切线",
+        "几何应用"
+      ],
+      "key_points": [
+        "极坐标切线斜率 $\\frac{dy}{dx}=\\frac{r'\\sin\\theta+r\\cos\\theta}{r'\\cos\\theta-r\\sin\\theta}$",
+        "先求点坐标，再代入斜率"
+      ],
+      "solutions": [
+        {
+          "name": "极坐标参数化",
+          "steps": [
+            "$x=r\\cos\\theta=e^{\\theta}\\cos\\theta$，$y=e^{\\theta}\\sin\\theta$。",
+            "在 $\\theta=\\frac\\pi2$ 时，点为 $\\left(0,e^{\\pi/2}\\right)$。",
+            "切线斜率 $\\frac{dy}{dx}=\\frac{e^\\theta(\\sin\\theta+\\cos\\theta)}{e^\\theta(\\cos\\theta-\\sin\\theta)}$，在 $\\theta=\\frac\\pi2$ 处为 $-1$。",
+            "切线方程：$y-e^{\\pi/2}=-(x-0)$，即 $x+y=e^{\\pi/2}$。"
+          ]
+        }
+      ],
+      "pitfalls": [
+        "把 $r=e^{\\pi/2}$ 直接当成直角坐标点的 $y$ 坐标",
+        "斜率公式分子分母写反",
+        "将极坐标的 $r$ 直接当作固定半径求水平切线。"
+      ],
+      "related": [
+        "§2.3 参数方程求导",
+        "§2.5 切线问题"
+      ],
+      "added": "2026-10-19"
+    },
+    {
       "id": "2025-MT-12",
       "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第12题",
       "chapter": "第二章 导数与微分",
-      "section": "§2.5 导数与微分的应用",
+      "section": "§2.4 导数与微分的应用",
       "statement": "设 $f_n(x)=x^n+2nx-2$（$n$ 为正整数），证明：$f_n(x)=0$ 在 $(0,+\\infty)$ 上有唯一正根 $a_n$，并计算 $\\displaystyle\\lim_{n\\to\\infty}(1+a_n)^n$。",
       "type": "综合题",
       "topics": [
@@ -1714,527 +2235,6 @@ const BANK = {
       "related": [
         "§4.3 零点定理",
         "§3.6 重要极限"
-      ],
-      "added": "2026-10-19"
-    },
-    {
-      "id": "2025-MT-13",
-      "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第13题",
-      "chapter": "第一章 函数与极限",
-      "section": "§4.1 函数连续的概念",
-      "statement": "设 $f(x)=\\begin{cases}|x|^\\alpha\\sin(x^2),&x\\ne0,\\\\0,&x=0.\\end{cases}$ 问 $\\alpha$ 取何值时，$f(x)$ 在 $x=0$ 处连续？可导？一阶导数连续？",
-      "type": "分类讨论",
-      "topics": [
-        "连续性",
-        "可导性",
-        "导函数连续性",
-        "幂函数与振荡"
-      ],
-      "difficulty": 4,
-      "tags": [
-        "2025期中",
-        "参数讨论",
-        "连续",
-        "可导"
-      ],
-      "key_points": [
-        "连续：$|x|^\\alpha\\sin x^2$ 的阶为 $|x|^{\\alpha+2}$",
-        "可导：差商阶为 $|x|^{\\alpha+1}$",
-        "导数连续：由 $f'$ 的两项阶均为 $|x|^{\\alpha+1}$"
-      ],
-      "solutions": [
-        {
-          "name": "按阶数分类",
-          "steps": [
-            "因 $\\sin(x^2)\\sim x^2$，$|f(x)|=O(|x|^{\\alpha+2})$。故 $f$ 在 $0$ 连续当且仅当 $\\alpha+2>0$，即 $\\alpha>-2$。",
-            "当 $\\alpha>-2$ 时，差商 $\\dfrac{f(h)-f(0)}h=|h|^\\alpha\\dfrac{\\sin h^2}{h}=O(|h|^{\\alpha+1})$，故可导当且仅当 $\\alpha>-1$，且 $f'(0)=0$。",
-            "当 $x\\ne0$ 时，$f'(x)=\\alpha x|x|^{\\alpha-2}\\sin(x^2)+2x|x|^\\alpha\\cos(x^2)$。",
-            "当 $\\alpha>-1$ 时，两项均为 $O(|x|^{\\alpha+1})$，所以 $f'(x)\\to0=f'(0)$，一阶导数连续。",
-            "结论：$\\alpha>-2$ 时连续；$\\alpha>-1$ 时可导；$\\alpha>-1$ 时一阶导数连续。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "只比较 $\\alpha$ 与 $0$，忽略 $\\sin(x^2)$ 已经提供二阶零点",
-        "可导性条件与连续性条件混用",
-        "求 $|x|^\\alpha$ 的导数时漏掉符号或绝对值。"
-      ],
-      "related": [
-        "§4.1 连续与可导",
-        "§2.1 导数定义"
-      ],
-      "added": "2026-10-19"
-    },
-    {
-      "id": "2025-QZ-01",
-      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第1题",
-      "chapter": "第二章 导数与微分",
-      "section": "§2.1 导数的概念",
-      "statement": "设 $f(x)$ 是周期为 $4$ 的偶函数，且 $f(x)=x^2-2x\\ (0\\le x\\le2)$，则 $f'\\left(\\frac72\\right)=$_____。\\nA. $-2$　B. $-1$　C. $2$　D. $1$。",
-      "type": "单选题",
-      "topics": [
-        "周期函数",
-        "偶函数",
-        "导数",
-        "对称性"
-      ],
-      "difficulty": 2,
-      "tags": [
-        "2025小测",
-        "周期",
-        "偶函数",
-        "单选"
-      ],
-      "right_answer": "D. $1$",
-      "key_points": [
-        "$f'(x+4)=f'(x)$",
-        "偶函数的导数满足 $f'(-x)=-f'(x)$",
-        "$f'(x)=2x-2$（$0<x<2$）"
-      ],
-      "solutions": [
-        {
-          "name": "利用周期与奇偶性",
-          "steps": [
-            "由周期 $4$，$f'\\left(\\frac72\\right)=f'\\left(-\\frac12\\right)$。",
-            "由 $f$ 为偶函数，$f'\\left(-\\frac12\\right)=-f'\\left(\\frac12\\right)$。",
-            "在 $(0,2)$ 上 $f'(x)=2x-2$，故 $f'\\left(\\frac12\\right)=-1$。",
-            "于是 $f'\\left(\\frac72\\right)=1$。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "直接把 $7/2$ 代入 $x^2-2x$，超出给定区间",
-        "偶函数导数误认为仍是偶函数。"
-      ],
-      "related": [
-        "§2.1 导数的概念"
-      ],
-      "added": "2026-10-19"
-    },
-    {
-      "id": "2025-QZ-02",
-      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第2题",
-      "chapter": "第一章 函数与极限",
-      "section": "§2.3 数列极限存在的准则",
-      "statement": "下列陈述错误的是（不定项）\\nA. 若 $\\{a_{2n-1}\\}$ 与 $\\{a_{2n}\\}$ 都收敛，则 $\\{a_n\\}$ 收敛；\\nB. 若存在 $\\varepsilon_0>0$，对任意 $N>0$，存在 $n_0>N$ 使 $|a_{n_0}-A|\\ge\\varepsilon_0$，则 $\\{a_n\\}$ 收敛；\\nC. 设 $a_1=2$，$a_{n+1}=3a_n-\\dfrac4{a_n+1}$，则 $\\lim a_n=1$；\\nD. 若 $a_n\\to A$，则存在 $N>0$，使对任意 $\\varepsilon>0$，当 $n>N$ 时 $|a_n-A|<\\varepsilon$。",
-      "type": "多项选择题",
-      "topics": [
-        "子列极限",
-        "极限定义量词顺序",
-        "递推数列",
-        "反例"
-      ],
-      "difficulty": 4,
-      "tags": [
-        "2025小测",
-        "不定项",
-        "子列",
-        "量词"
-      ],
-      "right_answer": "A、B、C、D 均错误",
-      "key_points": [
-        "奇、偶子列必须收敛到同一极限才能推出原数列收敛",
-        "B 的量词描述的是“不收敛”，不是收敛",
-        "C 从 $a_1=2$ 出发数列递增且趋于 $+\\infty$",
-        "D 中 $N$ 必须依赖于 $\\varepsilon$"
-      ],
-      "solutions": [
-        {
-          "name": "逐项举反例或分析量词",
-          "steps": [
-            "A 错：取 $a_{2n-1}=1$、$a_{2n}=0$，奇偶子列均收敛，但原数列不收敛。",
-            "B 错：该条件恰说明 $a_n$ 不收敛到 $A$，不能推出收敛。",
-            "C 错：$a_1=2$，$a_2=14/3$，$a_3=226/17$，数列递增；若 $a_n\\to L$，则 $L=3L-4/(L+1)$，得 $L=1$ 或 $-2$，与递增起点 $2$ 矛盾，故发散。",
-            "D 错：收敛定义要求对每个 $\\varepsilon>0$ 存在相应的 $N(\\varepsilon)$，不能把 $N$ 提前固定为与 $\\varepsilon$ 无关的常数。",
-            "因此四项均错误。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "看到两个子列都收敛就默认极限相同",
-        "把“某个 ε0 不满足”误读成收敛",
-        "D 中忽略 $N$ 依赖于 $\\varepsilon$。"
-      ],
-      "related": [
-        "§2.3 数列极限",
-        "§4.1 量词与逻辑"
-      ],
-      "added": "2026-10-19"
-    },
-    {
-      "id": "2025-QZ-03",
-      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第3题",
-      "chapter": "第一章 函数与极限",
-      "section": "§1.1 函数与初等函数",
-      "statement": "函数 $f(x)=\\arcsin(\\sin x)+\\arccos(\\cos x)$ 在 $[0,\\pi]$ 上的表达式为（　）。\\nA. $f(x)=\\pi$　B. $f(x)=2\\pi$　C. $f(x)=2x\\ (0\\le x\\le\\pi/2),\\ \\pi-x\\ (\\pi/2<x\\le\\pi)$　D. $f(x)=2x\\ (0\\le x\\le\\pi/2),\\ \\pi\\ (\\pi/2<x\\le\\pi)$。",
-      "type": "单选题",
-      "topics": [
-        "反三角函数",
-        "分段函数",
-        "arcsin(sin x)",
-        "arccos(cos x)"
-      ],
-      "difficulty": 3,
-      "tags": [
-        "2025小测",
-        "反三角",
-        "分段",
-        "单选"
-      ],
-      "right_answer": "D",
-      "key_points": [
-        "$\\arcsin(\\sin x)=x$（$0\\le x\\le\\pi/2$），等于 $\\pi-x$（$\\pi/2<x\\le\\pi$）",
-        "$\\arccos(\\cos x)=x$（$0\\le x\\le\\pi$）"
-      ],
-      "solutions": [
-        {
-          "name": "分段讨论",
-          "steps": [
-            "当 $0\\le x\\le\\pi/2$ 时，$\\arcsin(\\sin x)=x$，$\\arccos(\\cos x)=x$，所以 $f(x)=2x$。",
-            "当 $\\pi/2<x\\le\\pi$ 时，$\\arcsin(\\sin x)=\\pi-x$，$\\arccos(\\cos x)=x$，所以 $f(x)=\\pi$。",
-            "对应选项 D。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "在 $[0,\\pi]$ 上错误地使用 $\\arcsin(\\sin x)=x$",
-        "把 $\\arccos(\\cos x)$ 在 $[0,\\pi]$ 上也分段。"
-      ],
-      "related": [
-        "§1.1 反三角函数"
-      ],
-      "added": "2026-10-19"
-    },
-    {
-      "id": "2025-QZ-04",
-      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第4题",
-      "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（等价量替换）",
-      "statement": "下列结论中，正确的个数有_____个。\\n① $\\displaystyle\\lim_{x\\to0}\\frac{\\sin(x\\sin(1/x))}{x\\sin(1/x)}=1$；\\n② 若 $0<a<1$，则 $\\displaystyle\\lim_{n\\to\\infty}(1-a^n)=1$；\\n③ $\\displaystyle\\lim_{n\\to\\infty}\\sqrt[n]{1+\\frac1{\\sqrt2}+\\cdots+\\frac1{\\sqrt n}}=1$；\\n④ $\\displaystyle\\lim_{n\\to\\infty}(n!)^{1/n^2}=1$。\\nA. 4　B. 3　C. 2　D. 1。",
-      "type": "单选题",
-      "topics": [
-        "重要极限",
-        "数列极限",
-        "n 次根",
-        "对数化"
-      ],
-      "difficulty": 3,
-      "tags": [
-        "2025小测",
-        "重要极限",
-        "n次根",
-        "单选"
-      ],
-      "right_answer": "A. 4",
-      "key_points": [
-        "令 $u=x\\sin(1/x)\\to0$，用 $\\sin u/u\\to1$",
-        "$a^n\\to0$（$0<a<1$）",
-        "根号和的增长为 $O(\\sqrt n)$，故 $n$ 次根趋于 $1$",
-        "对 $n!$ 取对数：$\\ln(n!)/n^2\\to0$"
-      ],
-      "solutions": [
-        {
-          "name": "逐项验证",
-          "steps": [
-            "① 令 $u=x\\sin(1/x)$，在 $u\\ne0$ 的趋近点上有 $\\sin u/u\\to1$，正确。",
-            "② $0<a<1$ 时 $a^n\\to0$，故 $1-a^n\\to1$，正确。",
-            "③ 括号和介于 $1$ 与 $2\\sqrt n$ 之间，而 $(2\\sqrt n)^{1/n}\\to1$，故原极限为 $1$，正确。",
-            "④ $\\ln((n!)^{1/n^2})=\\frac1{n^2}\\ln(n!)$，由 $\\ln(n!)\\le n\\ln n$ 得该式 $\\le\\frac{\\ln n}{n}\\to0$，故极限为 $e^0=1$，正确。",
-            "四项均正确，选 A。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "① 中错误地把分母在某些点为零视为极限不存在",
-        "③ 中只观察被开方数发散，没有看根指数也增长",
-        "④ 中把 $n!$ 的增量误当成线性增长。"
-      ],
-      "related": [
-        "§2.3 数列极限",
-        "§3.6 重要极限"
-      ],
-      "added": "2026-10-19"
-    },
-    {
-      "id": "2025-QZ-05",
-      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第5题",
-      "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（等价量替换）",
-      "statement": "下列关于极限计算正确的是（不定项）\\nA. $\\displaystyle\\lim_{x\\to0}(\\sqrt{\\cos2x})^{1/x^2}=e^{-1}$；\\nB. $\\displaystyle\\lim_{x\\to+\\infty}\\left(\\frac{2x+3}{2x+1}\\right)^x=e$；\\nC. $\\displaystyle\\lim_{x\\to0}\\left(\\frac{3x-1}{x-1}\\right)^{1/x}=e^{-2}$；\\nD. $\\displaystyle\\lim_{x\\to+\\infty}(1+x)^{1/x}=e$。",
-      "type": "多项选择题",
-      "topics": [
-        "1^∞ 型极限",
-        "取对数",
-        "重要极限",
-        "等价无穷小"
-      ],
-      "difficulty": 4,
-      "tags": [
-        "2025小测",
-        "不定项",
-        "1^∞",
-        "取对数"
-      ],
-      "right_answer": "A、B、C",
-      "key_points": [
-        "幂指型极限统一用 $\\ln L=\\lim v\\ln u$",
-        "A 中 $\\ln\\cos2x\\sim-2x^2$",
-        "C 中 $\\ln\\frac{3x-1}{x-1}\\sim-2x$"
-      ],
-      "solutions": [
-        {
-          "name": "逐项取对数",
-          "steps": [
-            "A：$\\ln L=\\lim_{x\\to0}\\frac{\\ln(\\sqrt{\\cos2x})}{x^2}=\\lim\\frac{\\ln\\cos2x}{2x^2}=-1$，故 $L=e^{-1}$，正确。",
-            "B：$\\ln L=\\lim x\\ln(1+\\frac2{2x+1})=1$，故 $L=e$，正确。",
-            "C：$\\frac{3x-1}{x-1}=\\frac{1-3x}{1-x}$，$\\ln L=\\lim\\frac{\\ln(1-3x)-\\ln(1-x)}x=-3+1=-2$，故 $L=e^{-2}$，正确。",
-            "D：$\\ln L=\\lim\\frac{\\ln(1+x)}x=0$，故 $L=1$，不是 $e$，错误。",
-            "正确答案为 A、B、C。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "把 $(1+x)^{1/x}$ 在 $x\\to0$ 的重要极限直接搬到 $x\\to+\\infty$",
-        "A 中漏掉根号带来的 $\\frac12$",
-        "C 中把 $\\ln\\frac{3x-1}{x-1}$ 的极限误算为 $3$ 或 $1$。"
-      ],
-      "related": [
-        "§3.6 重要极限",
-        "题库 2025-MT-08"
-      ],
-      "added": "2026-10-19"
-    },
-    {
-      "id": "2025-QZ-06",
-      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第6题",
-      "chapter": "第一章 函数与极限",
-      "section": "§3.6 两个重要极限（等价量替换）",
-      "statement": "极限 $\\displaystyle\\lim_{x\\to+\\infty}x\\left(\\sqrt[5]{x^5+10x^3-7}-\\sqrt[3]{x^3-3x+4}\\right)=$_____。\\nA. $\\frac{23}{15}$　B. $3$　C. $\\frac{16}{15}$　D. $2$。",
-      "type": "单选题",
-      "topics": [
-        "广义二项式展开",
-        "渐近展开",
-        "根式差"
-      ],
-      "difficulty": 4,
-      "tags": [
-        "2025小测",
-        "渐近展开",
-        "根式差",
-        "单选"
-      ],
-      "right_answer": "B. $3$",
-      "key_points": [
-        "分别提出 $x$ 后做 $(1+u)^a=1+au+o(u)$",
-        "两次展开的一次项分别是 $2/x^2$ 与 $-1/x^2$",
-        "差值乘以外层 $x$ 得到 $3$"
-      ],
-      "solutions": [
-        {
-          "name": "根式渐近展开",
-          "steps": [
-            "$\\sqrt[5]{x^5+10x^3-7}=x(1+10/x^2-7/x^5)^{1/5}=x+2/x+o(1/x)$。",
-            "$\\sqrt[3]{x^3-3x+4}=x(1-3/x^2+4/x^3)^{1/3}=x-1/x+o(1/x)$。",
-            "两式相减得 $3/x+o(1/x)$。",
-            "乘以外层 $x$，极限为 $3$，选 B。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "只保留 $x-x=0$，忽略下一阶项",
-        "把 $(1+u)^{1/5}$ 的系数 $1/5$ 漏掉",
-        "把第二个根式的一次项符号算反。"
-      ],
-      "related": [
-        "§3.5 无穷小阶的比较",
-        "题库 2025-QZ-04"
-      ],
-      "added": "2026-10-19"
-    },
-    {
-      "id": "2025-QZ-07",
-      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第7题",
-      "chapter": "第一章 函数与极限",
-      "section": "§1.1 函数与初等函数",
-      "statement": "设 $f(x)$ 和 $g(x)$ 均为定义在 $\\mathbb R$ 上的函数，则下列陈述错误的是（不定项）\\nA. 若 $f$ 是周期函数，则 $g(f(x))$ 是周期函数；\\nB. 若 $f,g$ 都是周期函数，则 $f+g$ 是周期函数；\\nC. 若 $f,g$ 都是奇函数，则 $f(g(x))$ 是偶函数；\\nD. 若 $f,g$ 都单调递减，则 $f(x)g(x)$ 单调递增。",
-      "type": "多项选择题",
-      "topics": [
-        "周期函数",
-        "奇偶函数",
-        "单调性",
-        "函数复合"
-      ],
-      "difficulty": 3,
-      "tags": [
-        "2025小测",
-        "不定项",
-        "函数性质",
-        "反例"
-      ],
-      "right_answer": "B、C、D",
-      "key_points": [
-        "周期函数的复合仍以原周期为周期",
-        "两个周期函数的周期不一定可比",
-        "奇函数复合仍是奇函数",
-        "递减函数乘积单调性不固定"
-      ],
-      "solutions": [
-        {
-          "name": "逐项判定",
-          "steps": [
-            "A 正确：若 $f(x+T)=f(x)$，则 $g(f(x+T))=g(f(x))$。",
-            "B 错误：$\\sin x+\\sin(\\pi x)$ 不是周期函数。",
-            "C 错误：$f(g(-x))=f(-g(x))=-f(g(x))$，所以是奇函数。",
-            "D 错误：取 $f(x)=g(x)=-x$，二者递减，但乘积 $x^2$ 在 $\\mathbb R$ 上不单调递增。",
-            "错误项为 B、C、D。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "把两个奇函数的复合误认为偶函数",
-        "忽略乘积函数中符号变化对单调性的影响",
-        "认为任意两个周期函数的和仍具有共同周期。"
-      ],
-      "related": [
-        "§1.1 函数性质"
-      ],
-      "added": "2026-10-19"
-    },
-    {
-      "id": "2025-QZ-08",
-      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第8题",
-      "chapter": "第一章 函数与极限",
-      "section": "§4.1 函数连续的概念",
-      "statement": "下列陈述正确的是（不定项）\\nA. 若 $f$ 在 $[a,b]$ 上连续，最小值和最大值分别为 $m,M$，则值域为 $[m,M]$；\\nB. 若 $f$ 在 $[a,b]$ 上只有第一类间断点，则 $f$ 在 $[a,b]$ 上有界；\\nC. 若定义在 $[a,b]$ 上的 $f$ 的值域是区间 $[m,n]$，则 $f$ 在 $[a,b]$ 上连续；\\nD. 若 $f$ 在 $(a,b)$ 内连续，且 $f(a+0),f(b-0)$ 均存在，则 $f$ 在 $(a,b)$ 内有界。",
-      "type": "多项选择题",
-      "topics": [
-        "连续函数性质",
-        "介值定理",
-        "有界性",
-        "间断点"
-      ],
-      "difficulty": 4,
-      "tags": [
-        "2025小测",
-        "不定项",
-        "连续",
-        "有界"
-      ],
-      "right_answer": "A、D",
-      "key_points": [
-        "闭区间连续函数由最值定理和介值定理得到值域为 $[m,M]$",
-        "值域为区间不能反推连续",
-        "端点单侧极限存在可连续延拓到闭区间"
-      ],
-      "solutions": [
-        {
-          "name": "逐项判定",
-          "steps": [
-            "A 正确：连续函数取到最小值、最大值，并由介值定理取遍中间值。",
-            "B 错误：可在 $1/n$ 处取值为 $n$、其余为 $0$，每个间断点均为可去型，但函数无界。",
-            "C 错误：值域是区间不保证连续，例如在一点改变取值可破坏连续性。",
-            "D 正确：补充端点值后得到 $[a,b]$ 上的连续函数，故有界。",
-            "正确答案为 A、D。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "认为值域是区间就一定连续",
-        "忽略第一类间断点也可能无限多个并导致无界",
-        "D 中没有利用端点极限进行连续延拓。"
-      ],
-      "related": [
-        "§4.3 闭区间连续函数性质"
-      ],
-      "added": "2026-10-19"
-    },
-    {
-      "id": "2025-QZ-09",
-      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第9题",
-      "chapter": "第一章 函数与极限",
-      "section": "§3.5 无穷小量阶的比较",
-      "statement": "设 $\\alpha(x)=\\dfrac{1-x}{3+x}$，$\\beta(x)=1-\\sqrt[4]{x}$，当 $x\\to1$ 时，下列陈述正确的是（　）。\\nA. 同阶非等价无穷小　B. 等价无穷小　C. $\\alpha$ 比 $\\beta$ 低阶　D. $\\alpha$ 比 $\\beta$ 高阶。",
-      "type": "单选题",
-      "topics": [
-        "无穷小阶的比较",
-        "等价无穷小",
-        "变量替换"
-      ],
-      "difficulty": 2,
-      "tags": [
-        "2025小测",
-        "无穷小比阶",
-        "等价量",
-        "单选"
-      ],
-      "right_answer": "B",
-      "key_points": [
-        "令 $h=x-1\\to0$",
-        "$\\alpha\\sim-h/4$，$\\beta\\sim-h/4$"
-      ],
-      "solutions": [
-        {
-          "name": "在 $x=1$ 处展开",
-          "steps": [
-            "令 $x=1+h$，则 $\\alpha=\\frac{-h}{4+h}\\sim-\\frac h4$。",
-            "$\\beta=1-(1+h)^{1/4}\\sim-\\frac h4$。",
-            "二者之比趋于 $1$，故为等价无穷小，选 B。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "在 $x\\to0$ 处套用等价无穷小公式",
-        "忽略 $\\sqrt[4]{x}$ 在 $x=1$ 处的线性化系数。"
-      ],
-      "related": [
-        "§3.5 无穷小量阶的比较"
-      ],
-      "added": "2026-10-19"
-    },
-    {
-      "id": "2025-QZ-10",
-      "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第10题",
-      "chapter": "第一章 函数与极限",
-      "section": "§4.1 函数连续的概念",
-      "statement": "函数 $f(x)=|x-1|^{1/[x(x-2)]}$ 的第一类间断点个数为（　）。\\nA. 0　B. 1　C. 2　D. 3。",
-      "type": "单选题",
-      "topics": [
-        "间断点分类",
-        "单侧极限",
-        "指数型函数"
-      ],
-      "difficulty": 4,
-      "tags": [
-        "2025小测",
-        "间断点",
-        "单侧极限",
-        "单选"
-      ],
-      "right_answer": "C. 2",
-      "key_points": [
-        "定义域排除 $x=0,2$；还要检查 $x=1$",
-        "$x=0,2$ 两侧极限均为 $\\sqrt e$，为可去间断点",
-        "$x=1$ 时 $f\\sim1/|x-1|\\to+\\infty$，为第二类间断点"
-      ],
-      "solutions": [
-        {
-          "name": "逐点求单侧极限",
-          "steps": [
-            "在 $x=0$ 附近，$\\ln|x-1|\\sim-x$，且 $\\frac1{x(x-2)}\\sim-\\frac1{2x}$，乘积趋于 $\\frac12$，故双侧极限为 $\\sqrt e$。",
-            "在 $x=2$ 附近，令 $x=2+h$，$\\ln|x-1|\\sim h$，$\\frac1{x(x-2)}\\sim\\frac1{2h}$，乘积趋于 $\\frac12$，双侧极限也为 $\\sqrt e$。",
-            "因此 $x=0,2$ 是可去间断点，属于第一类。",
-            "在 $x=1$ 处，指数为 $-1$，$f(x)=1/|x-1|\\to+\\infty$，单侧极限为无穷，属第二类间断点。",
-            "所以第一类间断点有 $2$ 个，选 C。"
-          ]
-        }
-      ],
-      "pitfalls": [
-        "把 $x=1$ 误认为连续点",
-        "把趋于无穷的间断点归入第一类",
-        "没有分别考察 $x\\to0^\\pm$ 和 $x\\to2^\\pm$。"
-      ],
-      "related": [
-        "§4.1 间断点分类"
       ],
       "added": "2026-10-19"
     }
@@ -2364,7 +2364,7 @@ const BANK = {
     {
       "id": "EQV-001",
       "chapter": "第一章 函数与极限",
-      "section": "基础等价无穷小变换",
+      "section": "§1.6 基础等价无穷小变换",
       "title": "基本三角等价无穷小",
       "content": "当 $x\\to0$ 时，以下基本三角函数可与 $x$ 等价替换。它们是等价无穷小变换的起点，但只能在乘除因式中直接使用。",
       "formulas": [
@@ -2387,7 +2387,7 @@ const BANK = {
     {
       "id": "EQV-002",
       "chapter": "第一章 函数与极限",
-      "section": "基础等价无穷小变换",
+      "section": "§1.6 基础等价无穷小变换",
       "title": "指数与对数等价无穷小",
       "content": "指数、对数函数的线性化是极限计算中的高频工具。底数不是 $e$ 时，需要补上 $\\ln a$。",
       "formulas": [
@@ -2408,7 +2408,7 @@ const BANK = {
     {
       "id": "EQV-003",
       "chapter": "第一章 函数与极限",
-      "section": "基础等价无穷小变换",
+      "section": "§1.6 基础等价无穷小变换",
       "title": "幂函数与根式等价无穷小",
       "content": "利用 $(1+u)^\\alpha-1\\sim\\alpha u$，可以统一处理根式差、幂函数差和含参数指数。",
       "formulas": [
@@ -2429,7 +2429,7 @@ const BANK = {
     {
       "id": "EQV-004",
       "chapter": "第一章 函数与极限",
-      "section": "基础等价无穷小变换",
+      "section": "§1.6 基础等价无穷小变换",
       "title": "二阶与高阶差型等价量",
       "content": "相减后低阶项抵消时，必须保留下一阶非零项。这些差型等价量常用于分子分母同为高阶小量的极限。",
       "formulas": [
@@ -2451,7 +2451,7 @@ const BANK = {
     {
       "id": "EQV-005",
       "chapter": "第一章 函数与极限",
-      "section": "基础等价无穷小变换",
+      "section": "§1.6 基础等价无穷小变换",
       "title": "替换原则与适用范围",
       "content": "等价无穷小只保证比值趋于 $1$。若被替换部分处在加减结构中，不能单独替换；若有公因子，应先提出公因子或作恒等变形。",
       "formulas": [
@@ -2471,7 +2471,7 @@ const BANK = {
     {
       "id": "EQV-006",
       "chapter": "第一章 函数与极限",
-      "section": "基础等价无穷小变换",
+      "section": "§1.6 基础等价无穷小变换",
       "title": "复合结构等价替换",
       "content": "只要内层函数 $u(x)\\to0$，就可以把基本等价量中的 $x$ 整体替换成 $u(x)$。这是处理复合极限最常用的方法。",
       "formulas": [
@@ -2493,7 +2493,7 @@ const BANK = {
     {
       "id": "EQV-007",
       "chapter": "第一章 函数与极限",
-      "section": "基础等价无穷小变换",
+      "section": "§1.6 基础等价无穷小变换",
       "title": "常用组合与指数幂",
       "content": "组合型极限通常先提取主项或取对数，再把指数、对数、根式转化为熟悉的一阶等价量。",
       "formulas": [
@@ -2515,7 +2515,7 @@ const BANK = {
     {
       "id": "EQV-008",
       "chapter": "第一章 函数与极限",
-      "section": "基础等价无穷小变换",
+      "section": "§1.6 基础等价无穷小变换",
       "title": "等价量替换的检查清单",
       "content": "在提交极限答案前，按“趋近点、整体趋于零、乘除结构、最低阶项、回代检验”五步检查，能排除大多数替换错误。",
       "formulas": [

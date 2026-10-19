@@ -8,6 +8,16 @@
 
   var byChapter = new Map();
 
+  function chapterNumber(value) {
+    var match = String(value || '').match(/第\s*(\d+)\s*章/);
+    return match ? Number(match[1]) : 999;
+  }
+
+  function sectionOrder(value) {
+    var match = String(value || '').match(/§\s*(\d+)\.(\d+)/);
+    return match ? Number(match[1]) * 1000 + Number(match[2]) : 999999;
+  }
+
   function addItem(chapterName, sectionName, item) {
     var chapter = String(chapterName || '').trim() || '未分章';
     var section = String(sectionName || '').trim() || '未分类';
@@ -60,10 +70,12 @@
   var chapterIndex = 0;
   byChapter.forEach(function (group) {
     group.id = 'ch' + chapterIndex;
+    group.outline.sort(function (a, b) { return sectionOrder(a.sec) - sectionOrder(b.sec); });
     delete group.seenSections;
     chapters.push(group);
     chapterIndex += 1;
   });
+  chapters.sort(function (a, b) { return chapterNumber(a.chapter) - chapterNumber(b.chapter); });
 
   window.CHAPS = chapters;
 })();

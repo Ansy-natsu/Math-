@@ -9,6 +9,21 @@
   var chapters = [];
   var chapterMap = new Map();
 
+  function sectionCode(value) {
+    var match = String(value || '').match(/§\s*(\d+)\.(\d+)/);
+    return match ? '§' + Number(match[1]) + '.' + Number(match[2]) : '';
+  }
+
+  function chapterNumber(value) {
+    var match = String(value || '').match(/第\s*(\d+)\s*章/);
+    return match ? Number(match[1]) : 999;
+  }
+
+  function sectionOrder(value) {
+    var match = String(value || '').match(/§\s*(\d+)\.(\d+)/);
+    return match ? Number(match[1]) * 1000 + Number(match[2]) : 999999;
+  }
+
   function addChapter(data) {
     var name = data.chapter;
     if (!chapterMap.has(name)) {
@@ -41,12 +56,17 @@
       });
     }
     var section = item.section || item.sec || '未分类';
-    if (!chapter.sections.some(function (entry) { return entry.sec === section; })) {
-      chapter.sections.push({ sec: section, name: '' });
+    var code = sectionCode(section);
+    var existing = code
+      ? chapter.sections.find(function (entry) { return sectionCode(entry.sec) === code; })
+      : chapter.sections.find(function (entry) { return entry.sec === section; });
+    if (!existing) {
+      existing = { sec: section, name: '' };
+      chapter.sections.push(existing);
     }
     chapter.items.push(Object.assign({}, item, {
       kind: kind,
-      sec: section,
+      sec: existing.sec,
       name: kind === '题目'
         ? (item.id || item.statement || '未命名题目')
         : (item.title || item.name || '未命名条目')
@@ -58,10 +78,12 @@
   pitfalls.forEach(function (item) { addItem('易错点', item); });
 
   chapters.forEach(function (chapter) {
+    chapter.sections.sort(function (a, b) { return sectionOrder(a.sec) - sectionOrder(b.sec); });
     chapter.outline = chapter.sections.map(function (section) {
       return { sec: section.sec, name: section.name || '', subs: [] };
     });
   });
+  chapters.sort(function (a, b) { return chapterNumber(a.chapter) - chapterNumber(b.chapter); });
 
   window.LA_DATA = {
     meta: meta,

@@ -191,6 +191,17 @@
     return text(item.section || item.category || item.sec, '未分类');
   }
 
+  function indexOrder(value, chapterMode) {
+    if (chapterMode) {
+      const cn = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 };
+      const match = String(value || '').match(/第\s*([一二三四五六七八九十]+|\d+)\s*章/);
+      if (!match) return 999999;
+      return /^\d+$/.test(match[1]) ? Number(match[1]) : (cn[match[1]] || 999999);
+    }
+    const match = String(value || '').match(/§\s*(\d+)\.(\d+)/);
+    return match ? Number(match[1]) * 1000 + Number(match[2]) : 999999;
+  }
+
   function chapters() {
     const seen = new Set();
     const result = [];
@@ -201,7 +212,7 @@
         result.push(chapter);
       }
     });
-    return result;
+    return result.sort(function (a, b) { return indexOrder(a, true) - indexOrder(b, true); });
   }
 
   function sections(chapter) {
@@ -215,7 +226,7 @@
         result.push(section);
       }
     });
-    return result;
+    return result.sort(function (a, b) { return indexOrder(a, false) - indexOrder(b, false); });
   }
 
   function defaultChapter() {
@@ -629,7 +640,9 @@
   function viewQuestions() {
     const filters = state.filters;
     const optionsChapters = chapters();
-    const optionsSections = filters.chapter ? sections(filters.chapter) : Array.from(new Set(allItems().map(function (entry) { return itemSection(entry.item); })));
+    const optionsSections = (filters.chapter ? sections(filters.chapter) : Array.from(new Set(allItems().map(function (entry) {
+      return itemSection(entry.item);
+    })))).sort(function (a, b) { return indexOrder(a, false) - indexOrder(b, false); });
     const types = Array.from(new Set(state.data.problems.map(function (item) { return text(item.type); }).filter(Boolean))).sort();
     let list = state.data.problems.filter(function (item) {
       if (filters.chapter && text(item.chapter) !== filters.chapter) return false;

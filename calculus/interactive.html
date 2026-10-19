@@ -425,16 +425,17 @@
           if (section.indexOf('§2.1') === 0) return 0;
           if (section.indexOf('§2.2') === 0) return 1;
           if (section.indexOf('§2.3') === 0) return 2;
-          if (section.indexOf('§2.4') === 0) return 3;
-          if (section.indexOf('§2.5') === 0) return 4;
+          if (section.indexOf('§2.4') === 0) return 4;
           return 0;
         }
         if (section.indexOf('§1.1') === 0) return 0;
-        if (section.indexOf('§2.') === 0) return 1;
-        if (section.indexOf('§3.5') === 0) return 3;
-        if (section.indexOf('§3.') === 0) return 2;
-        if (section.indexOf('§4.') === 0) return 4;
-        return 2;
+        if (section.indexOf('§1.2') === 0) return 1;
+        if (section.indexOf('§1.3') === 0) return 2;
+        if (section.indexOf('§1.4') === 0) return 3;
+        if (section.indexOf('§1.5') === 0) return 2;
+        if (section.indexOf('§1.6') === 0) return 3;
+        if (section.indexOf('§1.7') === 0 || section.indexOf('§1.8') === 0) return 4;
+        return 0;
       }
 
       function assignExamples() {
