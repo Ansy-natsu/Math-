@@ -10,6 +10,13 @@
 - 微积分后台：<https://ansy.netlify.app/calculus/admin.html>
 - 线性代数后台：<https://ansy.netlify.app/linear-algebra/admin.html>
 
+线性代数题库提供与微积分一致的树状题目索引，并增加“交互版”：
+
+- 9 章、52 个小节的教材目录
+- 可折叠的概念、公式与易错提醒
+- 77 个可点击例题及完整讲解
+- “例题速查”弹层，可按当前章节随机抽取例题
+
 ## 本地运行
 
 ```powershell

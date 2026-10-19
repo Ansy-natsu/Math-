@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>线性代数 · 交互导学</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --ink: #1c2420;
+      --muted: #758078;
+      --paper: #faf9f6;
+      --card: #fffefa;
+      --line: #e5dfd4;
+      --accent: #ae5c1d;
+      --accent-soft: #faeede;
+      --green: #2f6249;
+      --green-soft: #edf4ef;
+      --red: #a63f35;
+      --red-soft: #faeeec;
+      --blue: #46647f;
+      --blue-soft: #eef4f8;
+      --sans: "Microsoft YaHei UI", "PingFang SC", sans-serif;
+      --serif: "Songti SC", "SimSun", Georgia, serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      color: var(--ink);
+      background: var(--paper);
+      font: 14px/1.85 var(--serif);
+    }
+    button, select, a { font: inherit; }
+    a { color: inherit; }
+    .bar {
+      flex: none;
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 8px 22px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,254,250,.96);
+      backdrop-filter: blur(14px);
+      z-index: 20;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      flex: none;
+      border-radius: 8px;
+      color: #efc28c;
+      background: #202b25;
+      font: 23px/1 var(--serif);
+    }
+    .brand strong { display: block; font: 14px/1.3 var(--serif); letter-spacing: .04em; }
+    .brand small { display: block; color: var(--muted); font: 9px/1.4 var(--sans); }
+    .bar-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    .btn {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: #526057;
+      background: #fff;
+      font: 10.5px/1 var(--sans);
+      text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn:hover { border-color: #c8ae89; color: var(--accent); }
+    .btn.primary { border-color: var(--accent); color: #fff; background: var(--accent); }
+    .btn.primary:hover { background: #8b4512; color: #fff; }
+    .btn.small { min-height: 27px; padding: 0 9px; font-size: 9.5px; }
+    .mobile-toc { display: none; }
+    .mobile-toc-wrap { display: none; margin-bottom: 16px; }
+    .float-tools {
+      position: fixed;
+      top: 14px;
+      right: 20px;
+      z-index: 30;
+    }
+    .reader {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      max-width: 1420px;
+      display: flex;
+      margin: 0 auto;
+      padding: 0 22px;
+    }
+    #toc {
+      width: 236px;
+      flex: 0 0 236px;
+      overflow: auto;
+      padding: 24px 18px 70px 0;
+      border-right: 1px solid var(--line);
+    }
+    .toc-title {
+      padding: 0 8px 9px;
+      color: #aa9a83;
+      font: 700 9.5px/1.4 var(--sans);
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    #tocNav a {
+      display: block;
+      overflow: hidden;
+      padding: 3px 8px;
+      border-radius: 5px;
+      color: #69736c;
+      font: 11px/1.65 var(--sans);
+      text-decoration: none;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    #tocNav a:hover { color: var(--accent); background: #f5eee4; }
+    #tocNav a.t1 { margin-top: 12px; color: #27332c; font-size: 12px; font-weight: 700; }
+    #tocNav a.t2 { padding-left: 17px; }
+    #tocNav a.active { color: var(--accent); background: var(--accent-soft); }
+    #book {
+      flex: 1;
+      min-width: 0;
+      overflow: auto;
+      scroll-behavior: smooth;
+    }
+    .book-page {
+      width: min(850px, calc(100% - 42px));
+      margin: 0 auto;
+      padding: 34px 0 100px;
+    }
+    .book-head {
+      padding-bottom: 26px;
+      border-bottom: 2px solid #d9c9ae;
+    }
+    .eyebrow {
+      color: var(--accent);
+      font: 700 9.5px/1.4 var(--sans);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .book-head h1 {
+      margin: 9px 0 8px;
+      font: 29px/1.4 var(--serif);
+      letter-spacing: .02em;
+    }
+    .book-head p { margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.8; }
+    .reader-tip {
+      display: flex;
+      gap: 9px;
+      margin-top: 17px;
+      padding: 10px 12px;
+      border: 1px solid #eadcc5;
+      border-radius: 8px;
+      color: #776449;
+      background: #fdf8ef;
+      font: 10.5px/1.7 var(--sans);
+    }
+    .chapter-block { margin-top: 40px; scroll-margin-top: 20px; }
+    .chapter-title {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 8px 0 10px 14px;
+      border-left: 5px solid var(--accent);
+      scroll-margin-top: 20px;
+    }
+    .chapter-title span { color: var(--accent); font: 10.5px/1 var(--sans); letter-spacing: .07em; }
+    .chapter-title h2 { margin: 0; font: 22px/1.45 var(--serif); }
+    .section-block {
+      margin: 22px 0 0 10px;
+      padding: 0 0 20px 17px;
+      border-left: 1px solid #e2d8c7;
+      scroll-margin-top: 20px;
+    }
+    .section-title {
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      margin-bottom: 11px;
+    }
+    .section-title strong { color: #6d5433; font: 15px/1.4 var(--serif); }
+    .section-title span { color: var(--muted); font: 9.5px/1.4 var(--sans); }
+    .section-title .section-count { margin-left: auto; }
+    .concept-list { display: grid; gap: 7px; }
+    details.concept, details.pitfall {
+      border: 1px solid #e7e0d4;
+      border-radius: 8px;
+      background: var(--card);
+    }
+    details.concept > summary, details.pitfall > summary {
+      position: relative;
+      padding: 9px 34px 9px 12px;
+      color: #3e5d4c;
+      font: 11px/1.55 var(--sans);
+      cursor: pointer;
+      list-style: none;
+    }
+    details.concept > summary::-webkit-details-marker,
+    details.pitfall > summary::-webkit-details-marker { display: none; }
+    details.concept > summary::after, details.pitfall > summary::after {
+      content: "+";
+      position: absolute;
+      right: 12px;
+      top: 7px;
+      color: #b4a284;
+      font: 16px/1 var(--sans);
+    }
+    details[open].concept > summary::after,
+    details[open].pitfall > summary::after { content: "−"; }
+    .concept-body, .pitfall-body { padding: 0 14px 14px; }
+    .concept-body .lead { margin: 0 0 9px; color: #3f4b44; font-size: 12.8px; }
+    .concept-body .f {
+      margin: 6px 0;
+      padding: 7px 10px;
+      border-radius: 6px;
+      color: #303e35;
+      background: #f7f4ed;
+      font: 12.3px/1.75 Cambria, "Times New Roman", serif;
+      overflow-wrap: anywhere;
+    }
+    .concept-actions { margin-top: 10px; }
+    .pitfall { margin-top: 7px; }
+    .pitfall summary { color: var(--red) !important; }
+    .rule {
+      margin: 2px 0 8px;
+      padding: 7px 9px;
+      border-left: 3px solid #d0a39d;
+      border-radius: 5px;
+      color: #803a33;
+      background: var(--red-soft);
+      font-size: 11.5px;
+    }
+    .ok, .no {
+      margin: 6px 0;
+      padding: 6px 9px;
+      border-radius: 5px;
+      font-size: 11px;
+    }
+    .ok { color: #285b42; background: var(--green-soft); border-left: 3px solid #9bc8ae; }
+    .no { color: #863a32; background: var(--red-soft); border-left: 3px solid #d9a39d; }
+    .concept-body .rel { margin-top: 9px; color: var(--muted); font-size: 10px; }
+    .example-list { display: grid; gap: 8px; margin-top: 10px; }
+    .example {
+      border: 1px solid #e8e0d3;
+      border-radius: 9px;
+      background: #fff;
+      overflow: hidden;
+    }
+    .example-head {
+      width: 100%;
+      display: grid;
+      grid-template-columns: auto auto minmax(0, 1fr) auto;
+      align-items: start;
+      gap: 9px;
+      padding: 11px 13px;
+      border: 0;
+      color: inherit;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+    }
+    .example-head:hover { background: #fcfaf6; }
+    .ex-num {
+      padding: 1px 7px;
+      border-radius: 5px;
+      color: var(--accent);
+      background: var(--accent-soft);
+      font: 9.5px/1.7 var(--sans);
+      white-space: nowrap;
+    }
+    .ex-stars { color: #c68a32; font: 9.5px/1.7 var(--sans); letter-spacing: -1px; white-space: nowrap; }
+    .ex-title { color: #303b34; font-size: 12.5px; line-height: 1.75; }
+    .ex-toggle { color: #9b8f7c; font: 9.5px/1.7 var(--sans); white-space: nowrap; }
+    .example-detail {
+      display: none;
+      padding: 3px 14px 15px;
+      border-top: 1px dashed #e8e1d5;
+    }
+    .example.is-open .example-detail { display: block; }
+    .k {
+      margin: 12px 0 5px;
+      padding-left: 8px;
+      border-left: 3px solid #d9c39b;
+      color: #7a5f39;
+      font: 700 10px/1.5 var(--sans);
+    }
+    .example-detail ul { margin: 5px 0 5px 19px; padding: 0; }
+    .example-detail li { margin: 3px 0; }
+    .example-detail .rel { margin-top: 9px; color: var(--muted); font-size: 10px; }
+    .example-detail .pit {
+      margin-top: 8px;
+      padding: 7px 9px;
+      border-left: 3px solid #d7a39c;
+      border-radius: 5px;
+      color: #834038;
+      background: var(--red-soft);
+      font-size: 11px;
+    }
+    .empty-section { color: var(--muted); font-size: 11px; }
+    .quick-btn {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 25;
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 14px;
+      border: 1px solid #d5b88e;
+      border-radius: 20px;
+      color: #765025;
+      background: #fffaf1;
+      box-shadow: 0 8px 24px rgba(62,50,32,.13);
+      font: 10.5px/1 var(--sans);
+      cursor: pointer;
+    }
+    .quick-btn:hover { background: #fff2df; }
+    .modal-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      background: rgba(30,35,32,.34);
+    }
+    .modal-layer.is-open { display: flex; }
+    .example-modal {
+      width: min(760px, 100%);
+      max-height: 88vh;
+      overflow: auto;
+      border-radius: 14px;
+      background: #fffefa;
+      box-shadow: 0 24px 70px rgba(30,27,22,.23);
+    }
+    .modal-head {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,254,250,.97);
+    }
+    .modal-head div { flex: 1; }
+    .modal-head h3 { margin: 3px 0 0; font: 19px/1.4 var(--serif); }
+    .modal-close {
+      width: 30px;
+      height: 30px;
+      border: 0;
+      border-radius: 6px;
+      color: var(--muted);
+      background: transparent;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .modal-close:hover { background: #f2eee7; }
+    .modal-body { padding: 20px; }
+    .modal-statement {
+      padding: 10px 0 13px;
+      border-bottom: 1px dashed var(--line);
+      font-size: 13px;
+    }
+    .modal-answer { margin-top: 14px; }
+    .modal-actions { margin-top: 18px; display: flex; gap: 8px; justify-content: flex-end; }
+    @media (max-width: 900px) {
+      .float-tools { top: 10px; right: 12px; }
+      .mobile-toc-wrap { display: block; }
+      .mobile-toc { display: block; width: 100%; height: 34px; border: 1px solid var(--line); border-radius: 7px; background: #fff; font-size: 10px; }
+      .reader { padding: 0; }
+      #toc { display: none; }
+      .book-page { width: auto; margin: 0 15px; padding-top: 24px; }
+      .book-head h1 { font-size: 24px; }
+      .section-block { margin-left: 4px; padding-left: 11px; }
+      .example-head { grid-template-columns: auto minmax(0, 1fr) auto; }
+      .ex-stars { display: none; }
+    }
+  </style>
+  <script src="data.js"></script>
+  <script src="site-data.js"></script>
+  <script>
+    MathJax = {
+      tex: { inlineMath: [['$', '$']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="reader">
+    <aside id="toc">
+      <div class="toc-title">章节目录</div>
+      <nav id="tocNav"></nav>
+    </aside>
+    <main id="book">
+      <div class="book-page">
+        <div class="mobile-toc-wrap"><select class="mobile-toc" id="mobileToc" aria-label="章节目录"></select></div>
+        <header class="book-head">
+          <span class="eyebrow">Interactive Linear Algebra</span>
+          <h1 id="bookTitle">线性代数（第二版）· 交互导学</h1>
+          <p>依据教材九章目录整理核心概念、公式与例题。点击概念或例题可展开讲解；使用右下角“例题速查”随机抽取例题。</p>
+          <div class="reader-tip">
+            <span>i</span>
+            <span>题目、解析与知识卡来自配套题库的原创或改编内容；正文为学习导读，不替代教材原文。</span>
+          </div>
+        </header>
+        <div id="content"></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="float-tools"><button class="btn" id="expandAll">展开全部</button></div>
+  <button class="quick-btn" id="quickFloat">⌕ 例题速查</button>
+  <div class="modal-layer" id="modalLayer" aria-hidden="true"></div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var DATA = window.LA_DATA || { chapters: [], meta: {}, counts: {} };
+      var state = { examples: [], currentSection: null, quickIndex: -1 };
+      var book = document.getElementById('book');
+      var content = document.getElementById('content');
+      var modalLayer = document.getElementById('modalLayer');
+
+      function esc(value) {
+        return String(value == null ? '' : value).replace(/[&<>"']/g, function (ch) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+        });
+      }
+      function md(value) {
+        return esc(value).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+      }
+      function stars(value) {
+        var n = Math.max(1, Math.min(5, Number(value) || 3));
+        return '★'.repeat(n) + '☆'.repeat(5 - n);
+      }
+      function list(values) {
+        return values && values.length
+          ? '<ul>' + values.map(function (item) { return '<li>' + md(item) + '</li>'; }).join('') + '</ul>'
+          : '';
+      }
+      function sectionId(chapterIndex, sectionIndex) {
+        return 'sec-' + chapterIndex + '-' + sectionIndex;
+      }
+      function typeset(root) {
+        if (window.MathJax && MathJax.typesetPromise) {
+          MathJax.typesetPromise([root || document.body]).catch(function () {});
+        }
+      }
+
+      function conceptBlock(item, sectionKey) {
+        var body = '';
+        if (item.content) body += '<p class="lead">' + md(item.content) + '</p>';
+        (item.formulas || []).forEach(function (formula) {
+          body += '<div class="f">' + esc(formula) + '</div>';
+        });
+        if (item.tips && item.tips.length) body += '<div class="k">使用提示</div>' + list(item.tips);
+        if (item.related && item.related.length) body += '<div class="rel">关联：' + esc(item.related.join('；')) + '</div>';
+        body += '<div class="concept-actions"><button class="btn small" data-open-first="' + esc(sectionKey) + '">查看本节例题 →</button></div>';
+        return '<details class="concept"><summary>概念 · ' + esc(item.title || item.name || '核心知识') + '</summary>' +
+          '<div class="concept-body">' + body + '</div></details>';
+      }
+
+      function generatedTheory(questions, sectionKey) {
+        if (!questions.length) return '';
+        var topics = [];
+        var points = [];
+        questions.forEach(function (q) {
+          (q.topics || []).forEach(function (topic) {
+            if (topics.indexOf(topic) < 0) topics.push(topic);
+          });
+          (q.key_points || []).slice(0, 2).forEach(function (point) {
+            if (points.indexOf(point) < 0) points.push(point);
+          });
+        });
+        var body = '<p class="lead">本节的例题围绕以下概念展开。先尝试独立完成，再展开例题核对关键步骤。</p>';
+        if (topics.length) body += '<div class="k">本节关键词</div>' + list(topics.slice(0, 6));
+        if (points.length) body += '<div class="k">方法提示</div>' + list(points.slice(0, 4));
+        body += '<div class="concept-actions"><button class="btn small" data-open-first="' + esc(sectionKey) + '">查看本节例题 →</button></div>';
+        return '<details class="concept"><summary>导读 · 本节核心概念</summary><div class="concept-body">' + body + '</div></details>';
+      }
+
+      function exampleBlock(q, sectionKey, localIndex) {
+        var detail = '<div class="k">考点</div>' + list(q.topics) +
+          '<div class="k">解题关键</div>' + list(q.key_points);
+        (q.solutions || []).forEach(function (solution) {
+          detail += '<div class="k">' + esc(solution.name || '解题过程') + '</div>' + list(solution.steps);
+        });
+        if (q.pitfalls && q.pitfalls.length) {
+          detail += '<div class="k">易错提醒</div>' + q.pitfalls.map(function (pitfall) {
+            return '<div class="pit">' + md(pitfall) + '</div>';
+          }).join('');
+        }
+        if (q.related && q.related.length) detail += '<div class="rel">关联：' + esc(q.related.join('；')) + '</div>';
+        var exampleIndex = state.examples.length;
+        state.examples.push({ id: q.id, question: q, sectionKey: sectionKey });
+        return '<article class="example" id="example-' + esc(q.id) + '" data-example-card="' + exampleIndex + '">' +
+          '<button class="example-head" data-toggle-example="' + exampleIndex + '">' +
+            '<span class="ex-num">例 ' + (localIndex + 1) + ' · ' + esc(q.id) + '</span>' +
+            '<span class="ex-stars">' + stars(q.difficulty) + '</span>' +
+            '<span class="ex-title">' + md(q.statement) + '</span>' +
+            '<span class="ex-toggle">展开讲解 ▾</span>' +
+          '</button>' +
+          '<div class="example-detail">' + detail + '</div></article>';
+      }
+
+      function pitfallBlock(item) {
+        var body = '<div class="rule">' + md(item.rule || '') + '</div>';
+        if (item.why) body += '<div class="k">为什么错</div><p>' + md(item.why) + '</p>';
+        if (item.valid) body += '<div class="ok">✓ ' + md(item.valid) + '</div>';
+        if (item.invalid) body += '<div class="no">✗ ' + md(item.invalid) + '</div>';
+        if (item.remedy) body += '<div class="k">纠正方法</div><p>' + md(item.remedy) + '</p>';
+        return '<details class="pitfall"><summary>易错提醒 · ' + esc(item.title || item.name || '') +
+          '</summary><div class="pitfall-body">' + body + '</div></details>';
+      }
+
+      function buildContent() {
+        var toc = '';
+        var mobileOptions = '<option value="">跳转到章节…</option>';
+        var html = '';
+        DATA.chapters.forEach(function (chapter, chapterIndex) {
+          var chapterId = 'chapter-' + chapterIndex;
+          toc += '<a class="t1" href="#' + chapterId + '">' + esc(chapter.num + '　' + chapter.title) + '</a>';
+          mobileOptions += '<option value="' + chapterId + '">' + esc(chapter.num + ' ' + chapter.title) + '</option>';
+          var sectionHtml = '';
+          (chapter.sections || []).forEach(function (section, sectionIndex) {
+            var id = sectionId(chapterIndex, sectionIndex);
+            toc += '<a class="t2" href="#' + id + '">' + esc(section.sec + '　' + (section.name || '')) + '</a>';
+            var items = chapter.items.filter(function (item) { return item.sec === section.sec; });
+            var knowledge = items.filter(function (item) { return item.kind === '知识点'; });
+            var questions = items.filter(function (item) { return item.kind === '题目'; });
+            var pitfalls = items.filter(function (item) { return item.kind === '易错点'; });
+            var theory = knowledge.map(function (item) { return conceptBlock(item, id); }).join('');
+            if (!theory) theory = generatedTheory(questions, id);
+            var examples = questions.map(function (q, index) { return exampleBlock(q, id, index); }).join('');
+            sectionHtml += '<section class="section-block" id="' + id + '" data-section="' + id + '">' +
+              '<div class="section-title"><strong>' + esc(section.sec + '　' + (section.name || '')) + '</strong>' +
+              '<span class="section-count">' + questions.length + ' 例题 · ' + (knowledge.length + pitfalls.length) + ' 知识卡</span></div>' +
+              '<div class="concept-list">' + theory + pitfalls.map(pitfallBlock).join('') + '</div>' +
+              (examples ? '<div class="example-list">' + examples + '</div>' : '<div class="empty-section">本节暂无配套例题。</div>') +
+              '</section>';
+          });
+          html += '<section class="chapter-block" id="' + chapterId + '"><div class="chapter-title">' +
+            '<span>' + esc(chapter.num) + '</span><h2>' + esc(chapter.title) + '</h2></div>' +
+            sectionHtml + '</section>';
+        });
+        document.getElementById('tocNav').innerHTML = toc;
+        document.getElementById('mobileToc').innerHTML = mobileOptions;
+        content.innerHTML = html;
+        typeset(content);
+      }
+
+      function scrollToSection(id) {
+        var node = document.getElementById(id);
+        if (node) node.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      function setCurrentSection(id) {
+        if (state.currentSection === id) return;
+        state.currentSection = id;
+        document.querySelectorAll('#tocNav a').forEach(function (link) {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+
+      function openExample(index) {
+        var entry = state.examples[index];
+        if (!entry) return;
+        var q = entry.question;
+        var detail = '<div class="k">考点</div>' + list(q.topics) +
+          '<div class="k">解题关键</div>' + list(q.key_points);
+        (q.solutions || []).forEach(function (solution) {
+          detail += '<div class="k">' + esc(solution.name || '讲解') + '</div>' + list(solution.steps);
+        });
+        if (q.pitfalls && q.pitfalls.length) {
+          detail += '<div class="k">易错提醒</div>' + q.pitfalls.map(function (pitfall) {
+            return '<div class="pit">' + md(pitfall) + '</div>';
+          }).join('');
+        }
+        modalLayer.innerHTML = '<div class="example-modal">' +
+          '<div class="modal-head"><div><span class="eyebrow">例题速查 · ' + esc(q.id) + '</span>' +
+          '<h3>' + esc(q.type || '课堂例题') + '</h3></div><button class="modal-close" data-close-modal>×</button></div>' +
+          '<div class="modal-body"><div class="modal-statement">' + md(q.statement) + '</div>' +
+          '<div class="modal-answer">' + detail + '</div>' +
+          '<div class="modal-actions"><button class="btn" data-close-modal>关闭</button>' +
+          '<button class="btn primary" data-next-example>换一题</button></div></div></div>';
+        modalLayer.classList.add('is-open');
+        modalLayer.setAttribute('aria-hidden', 'false');
+        document.querySelector('[data-next-example]').onclick = quickExample;
+        typeset(modalLayer);
+      }
+
+      function closeModal() {
+        modalLayer.classList.remove('is-open');
+        modalLayer.setAttribute('aria-hidden', 'true');
+        modalLayer.innerHTML = '';
+      }
+
+      function quickExample() {
+        if (!state.examples.length) return;
+        var pool = state.examples;
+        if (state.currentSection) {
+          var local = state.examples.filter(function (entry) {
+            return entry.sectionKey === state.currentSection;
+          });
+          if (local.length) pool = local;
+        }
+        var next;
+        do {
+          next = Math.floor(Math.random() * pool.length);
+        } while (pool.length > 1 && pool[next] === state.examples[state.quickIndex]);
+        state.quickIndex = state.examples.indexOf(pool[next]);
+        openExample(state.quickIndex);
+      }
+
+      function toggleExample(index) {
+        var card = document.querySelector('[data-example-card="' + index + '"]');
+        if (!card) return;
+        card.classList.toggle('is-open');
+        var button = card.querySelector('.ex-toggle');
+        button.textContent = card.classList.contains('is-open') ? '收起讲解 ▴' : '展开讲解 ▾';
+        if (card.classList.contains('is-open')) typeset(card);
+      }
+
+      document.addEventListener('click', function (event) {
+        var toggle = event.target.closest('[data-toggle-example]');
+        if (toggle) {
+          toggleExample(Number(toggle.dataset.toggleExample));
+          return;
+        }
+        var first = event.target.closest('[data-open-first]');
+        if (first) {
+          var key = first.dataset.openFirst;
+          var examples = state.examples.filter(function (entry) { return entry.sectionKey === key; });
+          if (examples.length) openExample(state.examples.indexOf(examples[0]));
+          return;
+        }
+        if (event.target.closest('[data-close-modal]')) {
+          closeModal();
+          return;
+        }
+        if (event.target === modalLayer) closeModal();
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') closeModal();
+      });
+
+      document.getElementById('quickFloat').onclick = quickExample;
+      document.getElementById('mobileToc').onchange = function (event) {
+        if (event.target.value) scrollToSection(event.target.value);
+      };
+
+      var expanded = false;
+      document.getElementById('expandAll').onclick = function () {
+        expanded = !expanded;
+        document.querySelectorAll('details').forEach(function (node) { node.open = expanded; });
+        document.querySelectorAll('.example').forEach(function (node) {
+          node.classList.toggle('is-open', expanded);
+          var toggle = node.querySelector('.ex-toggle');
+          if (toggle) toggle.textContent = expanded ? '收起讲解 ▴' : '展开讲解 ▾';
+        });
+        this.textContent = expanded ? '收起全部' : '展开全部';
+      };
+
+      buildContent();
+      var observer = new IntersectionObserver(function (entries) {
+        var visible = entries.filter(function (entry) { return entry.isIntersecting; });
+        if (visible.length) setCurrentSection(visible[0].target.dataset.section);
+      }, { root: book, rootMargin: '-10% 0px -75% 0px', threshold: 0 });
+      document.querySelectorAll('[data-section]').forEach(function (node) { observer.observe(node); });
+      if (window.innerWidth > 900) {
+        var firstSection = document.querySelector('[data-section]');
+        if (firstSection) setCurrentSection(firstSection.dataset.section);
+      }
+      window.addEventListener('load', function () { typeset(document.body); });
+    })();
+  </script>
+</body>
+</html>

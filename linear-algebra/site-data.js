@@ -46,13 +46,22 @@
     }
     chapter.items.push(Object.assign({}, item, {
       kind: kind,
-      sec: section
+      sec: section,
+      name: kind === '题目'
+        ? (item.id || item.statement || '未命名题目')
+        : (item.title || item.name || '未命名条目')
     }));
   }
 
   problems.forEach(function (item) { addItem('题目', item); });
   knowledge.forEach(function (item) { addItem('知识点', item); });
   pitfalls.forEach(function (item) { addItem('易错点', item); });
+
+  chapters.forEach(function (chapter) {
+    chapter.outline = chapter.sections.map(function (section) {
+      return { sec: section.sec, name: section.name || '', subs: [] };
+    });
+  });
 
   window.LA_DATA = {
     meta: meta,
@@ -63,4 +72,5 @@
       pitfalls: pitfalls.length
     }
   };
+  window.CHAPS = chapters;
 })();
