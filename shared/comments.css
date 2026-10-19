@@ -245,6 +245,31 @@
   background: #f9ecdd;
 }
 
+.cmt-action.cmt-delete {
+  color: #a64b42;
+  background: #fbefed;
+}
+
+.cmt-more {
+  min-height: 30px;
+  border: 1px dashed #d8cab6;
+  border-radius: 7px;
+  color: #84663f;
+  background: #fbf8f2;
+  font: 10.5px/1.5 "Microsoft YaHei UI", "PingFang SC", sans-serif;
+  cursor: pointer;
+}
+
+.cmt-more:hover {
+  border-color: #c7a879;
+  background: #fffaf1;
+}
+
+.cmt-more:disabled {
+  opacity: .55;
+  cursor: default;
+}
+
 .cmt-replies {
   display: grid;
   gap: 7px;

@@ -167,6 +167,16 @@
       var reply = event.target.closest('[data-cmt-reply]');
       if (reply) {
         showReplyForm(panel, reply.dataset.commentId);
+        return;
+      }
+      var remove = event.target.closest('[data-cmt-delete]');
+      if (remove) {
+        withdraw(panel, remove.dataset.commentId, remove.dataset.replyId || null);
+        return;
+      }
+      var more = event.target.closest('[data-cmt-more]');
+      if (more) {
+        loadPanel(panel, true, true);
       }
     });
 
@@ -185,24 +195,47 @@
     });
   }
 
-  async function loadPanel(panel, force) {
+  async function loadPanel(panel, force, append) {
     if (!panel || (panel.dataset.loaded === '1' && !force)) return;
+    if (append && panel._loadingMore) return;
     var list = panel.querySelector('.cmt-list');
-    list.innerHTML = '<div class="cmt-empty">正在加载批注…</div>';
+    if (append) {
+      var moreButton = list.querySelector('[data-cmt-more]');
+      if (moreButton) {
+        moreButton.disabled = true;
+        moreButton.textContent = '加载中…';
+      }
+      panel._loadingMore = true;
+    } else {
+      list.innerHTML = '<div class="cmt-empty">正在加载批注…</div>';
+    }
     try {
       var query = new URLSearchParams({
         sectionKey: panel.dataset.sectionKey,
         chapter: panel.dataset.chapter,
         section: panel.dataset.section,
         sort: panel.dataset.sort,
-        clientId: identity().id
+        clientId: identity().id,
+        limit: '20',
+        offset: String(append ? (panel._comments || []).length : 0)
       });
       var body = await request(api + '?' + query.toString());
       panel.dataset.loaded = '1';
-      panel._comments = body.comments || [];
+      panel._comments = (append ? (panel._comments || []) : []).concat(body.comments || []);
+      panel._total = Number(body.total || panel._comments.length);
+      panel._hasMore = Boolean(body.hasMore);
       renderComments(panel);
     } catch (error) {
-      list.innerHTML = '<div class="cmt-empty">批注加载失败：' + escapeHtml(error.message) + '</div>';
+      if (!append) list.innerHTML = '<div class="cmt-empty">批注加载失败：' + escapeHtml(error.message) + '</div>';
+    } finally {
+      panel._loadingMore = false;
+      if (append) {
+        var rest = list.querySelector('[data-cmt-more]');
+        if (rest) {
+          rest.disabled = false;
+          rest.textContent = '加载更多批注';
+        }
+      }
     }
   }
 
@@ -221,7 +254,10 @@
           '<div class="cmt-actions"><button type="button" class="cmt-action' +
           (reply.liked ? ' on' : '') + '" data-cmt-like data-comment-id="' +
           escapeHtml(comment.id) + '" data-reply-id="' + escapeHtml(reply.id) + '">赞 ' +
-          Number(reply.likeCount || 0) + '</button></div></div>';
+          Number(reply.likeCount || 0) + '</button>' +
+          (reply.mine ? '<button type="button" class="cmt-action cmt-delete" data-cmt-delete data-comment-id="' +
+            escapeHtml(comment.id) + '" data-reply-id="' + escapeHtml(reply.id) + '">撤回</button>' : '') +
+          '</div></div>';
       }).join('');
       return '<article class="cmt-item" data-comment-item="' + escapeHtml(comment.id) + '">' +
         '<div class="cmt-meta"><strong>' + escapeHtml(comment.nickname) + '</strong><time>' +
@@ -231,9 +267,12 @@
         (comment.liked ? ' on' : '') + '" data-cmt-like data-comment-id="' +
         escapeHtml(comment.id) + '">赞 ' + Number(comment.likeCount || 0) + '</button>' +
         '<button type="button" class="cmt-action" data-cmt-reply data-comment-id="' +
-        escapeHtml(comment.id) + '">回复 ' + Number((comment.replies || []).length) + '</button></div>' +
+        escapeHtml(comment.id) + '">回复 ' + Number((comment.replies || []).length) + '</button>' +
+        (comment.mine ? '<button type="button" class="cmt-action cmt-delete" data-cmt-delete data-comment-id="' +
+          escapeHtml(comment.id) + '">撤回</button>' : '') + '</div>' +
         '<div class="cmt-replies">' + replies + '</div></article>';
-    }).join('');
+    }).join('') +
+      (panel._hasMore ? '<button type="button" class="cmt-more" data-cmt-more>加载更多批注</button>' : '');
   }
 
   function showReplyForm(panel, commentId) {
@@ -291,7 +330,7 @@
       textarea.value = '';
       form.querySelector('.cmt-counter').textContent = '0/' + MAX_COMMENT;
       status.textContent = '已发布';
-      await loadPanel(panel, true);
+      await loadPanel(panel, true, false);
       loadCounts(true);
     } catch (error) {
       status.textContent = error.message;
@@ -324,7 +363,7 @@
         nickname: identity().name,
         text: text
       });
-      await loadPanel(panel, true);
+      await loadPanel(panel, true, false);
       loadCounts(true);
     } catch (error) {
       status.textContent = error.message;
@@ -343,12 +382,34 @@
         commentId: commentId,
         replyId: replyId
       });
-      await loadPanel(panel, true);
+      await loadPanel(panel, true, false);
     } catch (error) {
       var list = panel.querySelector('.cmt-list');
       var tip = document.createElement('div');
       tip.className = 'cmt-empty';
       tip.textContent = '点赞失败：' + error.message;
+      list.prepend(tip);
+    }
+  }
+
+  async function withdraw(panel, commentId, replyId) {
+    if (!window.confirm(replyId ? '确定撤回这条回复吗？' : '确定撤回这条批注吗？')) return;
+    try {
+      await post({
+        action: 'delete',
+        sectionKey: panel.dataset.sectionKey,
+        chapter: panel.dataset.chapter,
+        section: panel.dataset.section,
+        commentId: commentId,
+        replyId: replyId
+      });
+      await loadPanel(panel, true, false);
+      loadCounts(true);
+    } catch (error) {
+      var list = panel.querySelector('.cmt-list');
+      var tip = document.createElement('div');
+      tip.className = 'cmt-empty';
+      tip.textContent = '撤回失败：' + error.message;
       list.prepend(tip);
     }
   }

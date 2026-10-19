@@ -31,6 +31,10 @@ function storeKey(site, sectionKey) {
   return `threads/${site}/${Buffer.from(sectionKey).toString('base64url')}.json`;
 }
 
+function countsKey(site) {
+  return `counts/${site}.json`;
+}
+
 function publicComment(comment, clientId) {
   const likes = Array.isArray(comment.likes) ? comment.likes : [];
   return {
@@ -38,6 +42,7 @@ function publicComment(comment, clientId) {
     nickname: comment.nickname,
     text: comment.text,
     createdAt: comment.createdAt,
+    mine: comment.clientId === clientId,
     likeCount: likes.length,
     liked: likes.includes(clientId),
     replies: (Array.isArray(comment.replies) ? comment.replies : []).map((reply) => {
@@ -47,6 +52,7 @@ function publicComment(comment, clientId) {
         nickname: reply.nickname,
         text: reply.text,
         createdAt: reply.createdAt,
+        mine: reply.clientId === clientId,
         likeCount: replyLikes.length,
         liked: replyLikes.includes(clientId)
       };
@@ -62,27 +68,40 @@ function heat(comment) {
   }, 0);
 }
 
+async function loadCountsIndex(store, site) {
+  const key = countsKey(site);
+  let index = await store.get(key, { type: 'json' });
+  if (index && typeof index === 'object' && !Array.isArray(index)) return index;
+  index = {};
+  const prefix = `threads/${site}/`;
+  const blobs = [];
+  for await (const page of store.list({ prefix, paginate: true })) {
+    blobs.push(...page.blobs);
+  }
+  await Promise.all(blobs.map(async (blob) => {
+    const comments = await store.get(blob.key, { type: 'json' });
+    if (!Array.isArray(comments)) return;
+    const sectionKey = Buffer.from(blob.key.slice(prefix.length, -5), 'base64url').toString();
+    index[sectionKey] = comments.reduce((sum, comment) => {
+      return sum + 1 + (Array.isArray(comment.replies) ? comment.replies.length : 0);
+    }, 0);
+  }));
+  await store.setJSON(key, index);
+  return index;
+}
+
+function sectionCount(comments) {
+  return comments.reduce((sum, comment) => {
+    return sum + 1 + (Array.isArray(comment.replies) ? comment.replies.length : 0);
+  }, 0);
+}
+
 export async function handleComments(site, request) {
   const url = new URL(request.url);
   const store = getStore({ name: 'math-comments', consistency: 'strong' });
 
   if (request.method === 'GET' && url.searchParams.get('counts') === '1') {
-    const counts = {};
-    const prefix = `threads/${site}/`;
-    const blobs = [];
-    for await (const page of store.list({ prefix, paginate: true })) {
-      blobs.push(...page.blobs);
-    }
-    await Promise.all(blobs.map(async (blob) => {
-      const comments = await store.get(blob.key, { type: 'json' });
-      if (!Array.isArray(comments)) return;
-      const key = blob.key.slice(prefix.length, -5);
-      const sectionKey = Buffer.from(key, 'base64url').toString();
-      counts[sectionKey] = comments.reduce((sum, comment) => {
-        return sum + 1 + (Array.isArray(comment.replies) ? comment.replies.length : 0);
-      }, 0);
-    }));
-    return json(200, { ok: true, counts });
+    return json(200, { ok: true, counts: await loadCountsIndex(store, site) });
   }
 
   if (request.method === 'GET') {
@@ -96,9 +115,14 @@ export async function handleComments(site, request) {
     comments.sort(sort === 'hot'
       ? (a, b) => heat(b) - heat(a) || String(b.createdAt).localeCompare(String(a.createdAt))
       : (a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+    const total = comments.length;
+    const offset = Math.max(0, Number(url.searchParams.get('offset')) || 0);
+    const limit = Math.min(50, Math.max(1, Number(url.searchParams.get('limit')) || 20));
     return json(200, {
       ok: true,
-      comments: comments.map((comment) => publicComment(comment, clientId))
+      total,
+      hasMore: offset + limit < total,
+      comments: comments.slice(offset, offset + limit).map((comment) => publicComment(comment, clientId))
     });
   }
 
@@ -153,11 +177,30 @@ export async function handleComments(site, request) {
       const index = target.likes.indexOf(clientId);
       if (index >= 0) target.likes.splice(index, 1);
       else target.likes.push(clientId);
+    } else if (action === 'delete') {
+      const index = comments.findIndex((item) => item.id === body.commentId);
+      if (index < 0) throw new Error('批注不存在');
+      const comment = comments[index];
+      if (body.replyId) {
+        const replyIndex = (comment.replies || []).findIndex((reply) => reply.id === body.replyId);
+        if (replyIndex < 0) throw new Error('回复不存在');
+        if (comment.replies[replyIndex].clientId !== clientId) throw new Error('只能撤回自己的回复');
+        comment.replies.splice(replyIndex, 1);
+      } else {
+        if (comment.clientId !== clientId) throw new Error('只能撤回自己的批注');
+        comments.splice(index, 1);
+      }
     } else {
       throw new Error('未知批注操作');
     }
 
-    await store.setJSON(key, comments);
+    if (comments.length) await store.setJSON(key, comments);
+    else await store.delete(key);
+    const countIndex = await loadCountsIndex(store, site);
+    const total = sectionCount(comments);
+    if (total) countIndex[sectionKey] = total;
+    else delete countIndex[sectionKey];
+    await store.setJSON(countsKey(site), countIndex);
     return json(200, { ok: true });
   } catch (error) {
     return json(400, { ok: false, error: error.message });

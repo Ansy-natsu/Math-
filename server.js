@@ -200,6 +200,7 @@ function publicComment(comment, clientId) {
     nickname: comment.nickname,
     text: comment.text,
     createdAt: comment.createdAt,
+    mine: comment.clientId === clientId,
     likeCount: likes.length,
     liked: likes.includes(clientId),
     replies: (Array.isArray(comment.replies) ? comment.replies : []).map((reply) => {
@@ -209,6 +210,7 @@ function publicComment(comment, clientId) {
         nickname: reply.nickname,
         text: reply.text,
         createdAt: reply.createdAt,
+        mine: reply.clientId === clientId,
         likeCount: replyLikes.length,
         liked: replyLikes.includes(clientId)
       };
@@ -246,9 +248,14 @@ async function handleComments(req, res, config, requestUrl) {
     list.sort(sort === 'hot'
       ? (a, b) => commentHeat(b) - commentHeat(a) || String(b.createdAt).localeCompare(String(a.createdAt))
       : (a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+    const total = list.length;
+    const offset = Math.max(0, Number(requestUrl.searchParams.get('offset')) || 0);
+    const limit = Math.min(50, Math.max(1, Number(requestUrl.searchParams.get('limit')) || 20));
     sendJson(res, 200, {
       ok: true,
-      comments: list.map((comment) => publicComment(comment, clientId))
+      total,
+      hasMore: offset + limit < total,
+      comments: list.slice(offset, offset + limit).map((comment) => publicComment(comment, clientId))
     });
     return;
   }
@@ -305,6 +312,19 @@ async function handleComments(req, res, config, requestUrl) {
       const index = target.likes.indexOf(clientId);
       if (index >= 0) target.likes.splice(index, 1);
       else target.likes.push(clientId);
+    } else if (action === 'delete') {
+      const index = comments.findIndex((item) => item.id === body.commentId && item.sectionKey === sectionKey);
+      if (index < 0) throw new Error('批注不存在');
+      const comment = comments[index];
+      if (body.replyId) {
+        const replyIndex = (comment.replies || []).findIndex((reply) => reply.id === body.replyId);
+        if (replyIndex < 0) throw new Error('回复不存在');
+        if (comment.replies[replyIndex].clientId !== clientId) throw new Error('只能撤回自己的回复');
+        comment.replies.splice(replyIndex, 1);
+      } else {
+        if (comment.clientId !== clientId) throw new Error('只能撤回自己的批注');
+        comments.splice(index, 1);
+      }
     } else {
       throw new Error('未知批注操作');
     }
