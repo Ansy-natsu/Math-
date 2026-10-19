@@ -5,7 +5,7 @@
   "description": "微积分与线性代数题库合集及内容管理后台",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check calculus/admin.js && node --check calculus/site-data.js && node --check linear-algebra/admin.js && node --check linear-algebra/site-data.js && node --check linear-algebra/concepts.js"
+    "check": "node --check server.js && node --check calculus/admin.js && node --check calculus/site-data.js && node --check calculus/book-source.js && node --check calculus/interactive-extras.js && node --check linear-algebra/admin.js && node --check linear-algebra/site-data.js && node --check linear-algebra/concepts.js"
   },
   "engines": {
     "node": ">=18"

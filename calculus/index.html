@@ -536,7 +536,7 @@ function draw(){
       : (TAB==='k' ? 'inline' : 'none');
   if(isItv){
     const f=document.getElementById('itv');
-    if(!f.getAttribute('srcdoc')) f.setAttribute('srcdoc', BOOK);   /* 首次才注入 */
+    if(!f.getAttribute('src')) f.setAttribute('src', 'interactive.html');
     return;
   }
   const kw=(document.getElementById('q').value||'').trim().toLowerCase();

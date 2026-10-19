@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>微积分 · 交互导学</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --ink: #1c2420;
+      --muted: #788079;
+      --paper: #faf9f6;
+      --card: #fffefa;
+      --line: #e4ded3;
+      --accent: #b5651d;
+      --accent-soft: #faeee0;
+      --green: #2e654b;
+      --green-soft: #edf4ef;
+      --red: #a53f35;
+      --red-soft: #faeeec;
+      --sans: "Microsoft YaHei UI", "PingFang SC", sans-serif;
+      --serif: "Songti SC", "SimSun", Georgia, serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      color: var(--ink);
+      background: var(--paper);
+      font: 14px/1.85 var(--serif);
+    }
+    button, select { font: inherit; }
+    .reader {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      max-width: 1420px;
+      display: flex;
+      margin: 0 auto;
+      padding: 0 22px;
+    }
+    #toc {
+      width: 236px;
+      flex: 0 0 236px;
+      overflow: auto;
+      padding: 24px 18px 70px 0;
+      border-right: 1px solid var(--line);
+    }
+    .toc-title {
+      padding: 0 8px 9px;
+      color: #aa9a83;
+      font: 700 9.5px/1.4 var(--sans);
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    #tocNav a {
+      display: block;
+      overflow: hidden;
+      padding: 3px 8px;
+      border-radius: 5px;
+      color: #69736c;
+      font: 11px/1.65 var(--sans);
+      text-decoration: none;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    #tocNav a:hover { color: var(--accent); background: #f5eee4; }
+    #tocNav a.t1 { margin-top: 12px; color: #27332c; font-size: 12px; font-weight: 700; }
+    #tocNav a.t2 { padding-left: 17px; }
+    #tocNav a.active { color: var(--accent); background: var(--accent-soft); }
+    #book {
+      flex: 1;
+      min-width: 0;
+      overflow: auto;
+      scroll-behavior: smooth;
+    }
+    .book-page {
+      width: min(850px, calc(100% - 42px));
+      margin: 0 auto;
+      padding: 34px 0 100px;
+    }
+    .mobile-toc-wrap { display: none; margin-bottom: 16px; }
+    .mobile-toc {
+      display: none;
+      width: 100%;
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+      font-size: 10px;
+    }
+    .book-head { padding-bottom: 26px; border-bottom: 2px solid #d9c9ae; }
+    .eyebrow {
+      color: var(--accent);
+      font: 700 9.5px/1.4 var(--sans);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .book-head h1 { margin: 9px 0 8px; font: 29px/1.4 var(--serif); letter-spacing: .02em; }
+    .book-head p { margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.8; }
+    .reader-tip {
+      display: flex;
+      gap: 9px;
+      margin-top: 17px;
+      padding: 10px 12px;
+      border: 1px solid #eadcc5;
+      border-radius: 8px;
+      color: #776449;
+      background: #fdf8ef;
+      font: 10.5px/1.7 var(--sans);
+    }
+    .chapter-block { margin-top: 40px; }
+    .chapter-title {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 8px 0 10px 14px;
+      border-left: 5px solid var(--accent);
+      scroll-margin-top: 20px;
+    }
+    .chapter-title span { color: var(--accent); font: 10.5px/1 var(--sans); letter-spacing: .07em; }
+    .chapter-title h2 { margin: 0; font: 22px/1.45 var(--serif); }
+    .section-fold {
+      margin: 20px 0 0 10px;
+      padding: 0 0 17px 17px;
+      border-left: 1px solid #e2d8c7;
+      scroll-margin-top: 20px;
+    }
+    .section-summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      list-style: none;
+      cursor: pointer;
+    }
+    .section-summary::-webkit-details-marker { display: none; }
+    .section-title {
+      flex: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      min-width: 0;
+    }
+    .section-title strong { color: #6d5433; font: 15px/1.4 var(--serif); }
+    .section-title .src { color: var(--muted); font: 9.5px/1.4 var(--sans); }
+    .section-count { margin-left: auto; color: var(--muted); font: 9.5px/1.4 var(--sans); white-space: nowrap; }
+    .fold-arrow {
+      width: 18px;
+      flex: none;
+      color: #b7a387;
+      font: 11px/1 var(--sans);
+      transition: transform .16s;
+    }
+    .section-fold[open] .fold-arrow { transform: rotate(90deg); }
+    .section-body { padding: 12px 0 0 1px; }
+    .group-fold {
+      margin-top: 7px;
+      border: 1px solid #e7e0d4;
+      border-radius: 8px;
+      background: var(--card);
+    }
+    .group-fold > summary {
+      position: relative;
+      padding: 9px 34px 9px 12px;
+      color: #5b6b61;
+      font: 10.5px/1.55 var(--sans);
+      cursor: pointer;
+      list-style: none;
+    }
+    .group-fold > summary::-webkit-details-marker { display: none; }
+    .group-fold > summary::after {
+      content: "+";
+      position: absolute;
+      right: 12px;
+      top: 7px;
+      color: #b4a284;
+      font: 16px/1 var(--sans);
+    }
+    .group-fold[open] > summary::after { content: "−"; }
+    .group-body { padding: 0 14px 14px; }
+    /* Original book content, preserved and scoped */
+    .book-content div.p { margin: 3px 0; text-indent: 2em; }
+    .book-content div.p.note { color: #444; font-family: "KaiTi", "STKaiti", serif; font-size: 13.5px; }
+    .book-content div.f {
+      margin: 7px 0;
+      text-align: center;
+      font-family: Cambria, "Times New Roman", serif;
+      overflow-wrap: anywhere;
+    }
+    .book-content div.z {
+      margin: 5px 0;
+      padding-left: 12px;
+      border-left: 2px solid #cfcfcf;
+      color: #333;
+      font-family: "KaiTi", "STKaiti", serif;
+    }
+    .book-content p.lb {
+      margin: 13px 0 4px;
+      color: #3f4a43;
+      font: 700 12px/1.6 var(--sans);
+    }
+    .book-content p.lb.note { font-weight: 600; color: #4d554f; }
+    .book-content p.bullet { margin: 5px 0 5px 1em; font: 10.5px/1.75 var(--sans); }
+    .book-content .fill {
+      margin: 5px 0;
+      padding: 5px 10px;
+      border-left: 2px solid #e0cfa8;
+      color: #4a4a4a;
+      background: #f7f3ea;
+      font: 12px/1.7 "KaiTi", "STKaiti", serif;
+    }
+    .book-content .ex {
+      color: var(--accent);
+      border-bottom: 1px dashed #d8b98d;
+      cursor: pointer;
+    }
+    .book-content .refgrp { white-space: nowrap; }
+    .examples-heading {
+      margin: 15px 0 7px;
+      padding-left: 8px;
+      border-left: 3px solid #d9c39b;
+      color: #7a5f39;
+      font: 700 10px/1.5 var(--sans);
+    }
+    .example-list { display: grid; gap: 8px; }
+    .example {
+      overflow: hidden;
+      border: 1px solid #e8e0d3;
+      border-radius: 9px;
+      background: #fff;
+    }
+    .example-head {
+      width: 100%;
+      display: grid;
+      grid-template-columns: auto auto minmax(0, 1fr) auto;
+      align-items: start;
+      gap: 9px;
+      padding: 10px 12px;
+      border: 0;
+      color: inherit;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+    }
+    .example-head:hover { background: #fcfaf6; }
+    .ex-num { padding: 1px 7px; border-radius: 5px; color: var(--accent); background: var(--accent-soft); font: 9.5px/1.7 var(--sans); white-space: nowrap; }
+    .ex-stars { color: #c68a32; font: 9.5px/1.7 var(--sans); letter-spacing: -1px; white-space: nowrap; }
+    .ex-title { color: #303b34; font-size: 12px; line-height: 1.7; }
+    .ex-toggle { color: #9b8f7c; font: 9.5px/1.7 var(--sans); white-space: nowrap; }
+    .example-detail { display: none; padding: 3px 14px 15px; border-top: 1px dashed #e8e1d5; }
+    .example.is-open .example-detail { display: block; }
+    .example-detail .statement { margin: 3px 0 12px; padding: 9px 11px; border-radius: 7px; background: #f8f6f0; font-size: 12.3px; line-height: 1.85; }
+    .k { margin: 12px 0 5px; padding-left: 8px; border-left: 3px solid #d9c39b; color: #7a5f39; font: 700 10px/1.5 var(--sans); }
+    .example-detail ul { margin: 5px 0 5px 19px; padding: 0; }
+    .example-detail li { margin: 3px 0; }
+    .example-detail .pit { margin-top: 6px; padding: 6px 8px; border-left: 3px solid #d7a39c; border-radius: 5px; color: #834038; background: var(--red-soft); font-size: 10.5px; }
+    .float-tools { position: fixed; top: 14px; right: 20px; z-index: 30; }
+    .btn {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: #526057;
+      background: #fff;
+      font: 10.5px/1 var(--sans);
+      cursor: pointer;
+    }
+    .btn:hover { border-color: #c8ae89; color: var(--accent); }
+    .quick-btn {
+      position: fixed;
+      left: 22px;
+      bottom: 22px;
+      z-index: 25;
+      min-height: 38px;
+      padding: 0 14px;
+      border: 1px solid #d5b88e;
+      border-radius: 20px;
+      color: #765025;
+      background: #fffaf1;
+      box-shadow: 0 8px 24px rgba(62,50,32,.13);
+      font: 10.5px/1 var(--sans);
+      cursor: pointer;
+    }
+    .quick-btn:hover { background: #fff2df; }
+    .modal-layer { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; padding: 22px; background: rgba(30,35,32,.34); }
+    .modal-layer.is-open { display: flex; }
+    .example-modal { width: min(760px, 100%); max-height: 88vh; overflow: auto; border-radius: 14px; background: #fffefa; box-shadow: 0 24px 70px rgba(30,27,22,.23); }
+    .modal-head { position: sticky; top: 0; z-index: 1; display: flex; align-items: flex-start; gap: 10px; padding: 16px 20px; border-bottom: 1px solid var(--line); background: rgba(255,254,250,.97); }
+    .modal-head div { flex: 1; }
+    .modal-head h3 { margin: 3px 0 0; font: 19px/1.4 var(--serif); }
+    .modal-close { width: 30px; height: 30px; border: 0; border-radius: 6px; color: var(--muted); background: transparent; font-size: 20px; cursor: pointer; }
+    .modal-body { padding: 20px; }
+    .modal-statement { padding: 10px 0 13px; border-bottom: 1px dashed var(--line); font-size: 13px; }
+    .modal-answer { margin-top: 14px; }
+    .modal-actions { margin-top: 18px; display: flex; gap: 8px; justify-content: flex-end; }
+    @media (max-width: 900px) {
+      .float-tools { top: 10px; right: 12px; }
+      .mobile-toc-wrap { display: block; }
+      .mobile-toc { display: block; }
+      .reader { padding: 0; }
+      #toc { display: none; }
+      .book-page { width: auto; margin: 0 15px; padding-top: 24px; }
+      .section-fold { margin-left: 4px; padding-left: 11px; }
+      .section-title { flex-wrap: wrap; }
+      .section-title .section-count { width: 100%; margin-left: 0; }
+      .example-head { grid-template-columns: auto minmax(0, 1fr) auto; }
+      .ex-stars { display: none; }
+    }
+  </style>
+  <script src="data.js"></script>
+  <script src="book-source.js"></script>
+  <script src="interactive-extras.js"></script>
+  <script>
+    MathJax = {
+      tex: { inlineMath: [['$', '$']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+      startup: { typeset: false }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <div class="reader">
+    <aside id="toc">
+      <div class="toc-title">章节目录</div>
+      <nav id="tocNav"></nav>
+    </aside>
+    <main id="book">
+      <div class="book-page">
+        <div class="mobile-toc-wrap"><select class="mobile-toc" id="mobileToc" aria-label="章节目录"></select></div>
+        <header class="book-head">
+          <span class="eyebrow">Interactive Calculus Reader</span>
+          <h1>微积分 · 交互导学</h1>
+          <p>原始教材内容保持不变，改为默认折叠阅读。点击小节展开原有正文，再点击知识分组或例题查看内容。</p>
+          <div class="reader-tip">
+            <span>i</span>
+            <span>教材原文保留原顺序与文字；新增例题来自题库或依据相同学科结构编写。</span>
+          </div>
+        </header>
+        <div id="content"></div>
+      </div>
+    </main>
+  </div>
+  <div class="float-tools"><button class="btn" id="expandAll">展开全部</button></div>
+  <button class="quick-btn" id="quickFloat">⌕ 例题速查</button>
+  <div class="modal-layer" id="modalLayer" aria-hidden="true"></div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var bookState = {
+        chapters: [],
+        examples: [],
+        currentSection: null
+      };
+      var book = document.getElementById('book');
+      var content = document.getElementById('content');
+      var modalLayer = document.getElementById('modalLayer');
+
+      function esc(value) {
+        return String(value == null ? '' : value).replace(/[&<>"']/g, function (ch) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+        });
+      }
+      function md(value) {
+        return esc(value).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+      }
+      function stars(value) {
+        var n = Math.max(1, Math.min(5, Number(value) || 3));
+        return '★'.repeat(n) + '☆'.repeat(5 - n);
+      }
+      function list(values) {
+        return values && values.length
+          ? '<ul>' + values.map(function (item) { return '<li>' + md(item) + '</li>'; }).join('') + '</ul>'
+          : '';
+      }
+      function parseBook() {
+        var doc = new DOMParser().parseFromString(window.CALCULUS_BOOK || '', 'text/html');
+        var main = doc.querySelector('main');
+        if (!main) return;
+        var currentChapter = null;
+        var currentSection = null;
+        var currentGroup = null;
+        Array.from(main.children).forEach(function (node) {
+          if (node.tagName === 'H1') {
+            currentChapter = { title: node.textContent.trim(), sections: [] };
+            bookState.chapters.push(currentChapter);
+            currentSection = null;
+            currentGroup = null;
+          } else if (node.tagName === 'H2' && currentChapter) {
+            var src = node.querySelector('.src');
+            var titleNode = node.cloneNode(true);
+            var srcNode = titleNode.querySelector('.src');
+            if (srcNode) srcNode.remove();
+            currentSection = {
+              title: titleNode.textContent.trim(),
+              src: src ? src.textContent.trim() : '',
+              intro: [],
+              groups: [],
+              examples: []
+            };
+            currentChapter.sections.push(currentSection);
+            currentGroup = null;
+          } else if (node.tagName === 'H3' && currentSection) {
+            currentGroup = { title: node.textContent.trim(), nodes: [] };
+            currentSection.groups.push(currentGroup);
+          } else if (currentSection && currentGroup) {
+            currentGroup.nodes.push(node.outerHTML);
+          } else if (currentSection) {
+            currentSection.intro.push(node.outerHTML);
+          }
+        });
+      }
+
+      function calcBookSection(problem) {
+        var section = String(problem.section || '');
+        if (section.indexOf('§2.') === 0) return 1;
+        if (section.indexOf('§3.') === 0) return 2;
+        if (section.indexOf('§4.') === 0) return 4;
+        return 2;
+      }
+
+      function assignExamples() {
+        var bank = (typeof BANK !== 'undefined' && BANK) ? BANK : {};
+        var problems = Array.isArray(bank.problems) ? bank.problems : [];
+        problems.forEach(function (problem) {
+          if (String(problem.chapter || '').indexOf('第一章') < 0) return;
+          var sectionIndex = calcBookSection(problem);
+          if (bookState.chapters[0] && bookState.chapters[0].sections[sectionIndex]) {
+            bookState.chapters[0].sections[sectionIndex].examples.push(problem);
+          }
+        });
+        var extras = window.CALCULUS_EXTRA_EXAMPLES || [];
+        extras.forEach(function (problem) {
+          var chapter = bookState.chapters[problem.bookChapter - 1];
+          if (chapter && chapter.sections[problem.bookSection]) {
+            chapter.sections[problem.bookSection].examples.push(problem);
+          }
+        });
+      }
+
+      function exampleBlock(q, sectionKey, localIndex) {
+        var detail = '<div class="k">题目</div><div class="statement">' + md(q.statement) + '</div>' +
+          '<div class="k">考点</div>' + list(q.topics) +
+          '<div class="k">解题关键</div>' + list(q.key_points);
+        (q.solutions || []).forEach(function (solution) {
+          detail += '<div class="k">' + esc(solution.name || '解题过程') + '</div>' + list(solution.steps);
+        });
+        if (q.pitfalls && q.pitfalls.length) {
+          detail += '<div class="k">易错提醒</div>' + q.pitfalls.map(function (pitfall) {
+            return '<div class="pit">' + md(pitfall) + '</div>';
+          }).join('');
+        }
+        var index = bookState.examples.length;
+        bookState.examples.push({ question: q, sectionKey: sectionKey });
+        return '<article class="example" data-example-card="' + index + '">' +
+          '<button class="example-head" data-toggle-example="' + index + '">' +
+            '<span class="ex-num">例 ' + (localIndex + 1) + ' · ' + esc(q.id || '') + '</span>' +
+            '<span class="ex-stars">' + stars(q.difficulty) + '</span>' +
+            '<span class="ex-title">' + esc(q.type || '例题') + ' · ' +
+              esc((q.topics || []).slice(0, 2).join(' / ')) + '</span>' +
+            '<span class="ex-toggle">展开题目与讲解 ▾</span>' +
+          '</button><div class="example-detail">' + detail + '</div></article>';
+      }
+
+      var typesetQueue = Promise.resolve();
+      function typeset(node) {
+        if (!node || !(window.MathJax && MathJax.typesetPromise)) {
+          if (node) window.setTimeout(function () { typeset(node); }, 300);
+          return;
+        }
+        typesetQueue = typesetQueue.then(function () {
+          return MathJax.typesetPromise([node]);
+        }).catch(function () {});
+      }
+      function typesetOnce(node) {
+        if (!node || node.dataset.typeset === '1') return;
+        if (!(window.MathJax && MathJax.typesetPromise)) {
+          window.setTimeout(function () { typesetOnce(node); }, 300);
+          return;
+        }
+        node.dataset.typeset = '1';
+        typeset(node);
+      }
+
+      function buildBook() {
+        var toc = '';
+        var mobile = '<option value="">跳转到章节…</option>';
+        var html = '';
+        bookState.chapters.forEach(function (chapter, chapterIndex) {
+          var chapterId = 'chapter-' + chapterIndex;
+          toc += '<a class="t1" href="#' + chapterId + '">' + esc(chapter.title) + '</a>';
+          mobile += '<option value="' + chapterId + '">' + esc(chapter.title) + '</option>';
+          var sectionHtml = '';
+          chapter.sections.forEach(function (section, sectionIndex) {
+            var id = 'sec-' + chapterIndex + '-' + sectionIndex;
+            toc += '<a class="t2" href="#' + id + '">' + esc(section.title) + '</a>';
+            var groups = section.groups.map(function (group) {
+              return '<details class="group-fold"><summary>' + esc(group.title) + '</summary>' +
+                '<div class="book-content group-body">' + group.nodes.join('') + '</div></details>';
+            }).join('');
+            var examples = section.examples.map(function (item, index) {
+              return exampleBlock(item, id, index);
+            }).join('');
+            sectionHtml += '<details class="section-fold" id="' + id + '" data-section="' + id + '">' +
+              '<summary class="section-summary"><div class="section-title"><strong>' + esc(section.title) + '</strong>' +
+              (section.src ? '<span class="src">' + esc(section.src) + '</span>' : '') +
+              '<span class="section-count">' + section.groups.length + ' 个知识分组 · ' + section.examples.length + ' 例题</span>' +
+              '</div><span class="fold-arrow">▸</span></summary><div class="section-body">' +
+              '<div class="book-content">' + section.intro.join('') + '</div>' + groups +
+              (examples ? '<div class="examples-heading">新增交互例题</div><div class="example-list">' + examples + '</div>' : '') +
+              '</div></details>';
+          });
+          html += '<section class="chapter-block" id="' + chapterId + '"><div class="chapter-title">' +
+            '<span>CHAPTER ' + String(chapterIndex + 1).padStart(2, '0') + '</span><h2>' +
+            esc(chapter.title) + '</h2></div>' + sectionHtml + '</section>';
+        });
+        document.getElementById('tocNav').innerHTML = toc;
+        document.getElementById('mobileToc').innerHTML = mobile;
+        content.innerHTML = html;
+      }
+
+      function scrollToSection(id) {
+        var node = document.getElementById(id);
+        if (!node) return;
+        if (node.tagName === 'DETAILS') node.open = true;
+        window.setTimeout(function () {
+          node.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 30);
+      }
+
+      function setCurrentSection(id) {
+        if (bookState.currentSection === id) return;
+        bookState.currentSection = id;
+        document.querySelectorAll('#tocNav a').forEach(function (link) {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+
+      function openExample(index) {
+        var entry = bookState.examples[index];
+        if (!entry) return;
+        var q = entry.question;
+        var detail = '<div class="k">考点</div>' + list(q.topics) +
+          '<div class="k">解题关键</div>' + list(q.key_points);
+        (q.solutions || []).forEach(function (solution) {
+          detail += '<div class="k">' + esc(solution.name || '讲解') + '</div>' + list(solution.steps);
+        });
+        if (q.pitfalls && q.pitfalls.length) {
+          detail += '<div class="k">易错提醒</div>' + q.pitfalls.map(function (pitfall) {
+            return '<div class="pit">' + md(pitfall) + '</div>';
+          }).join('');
+        }
+        modalLayer.innerHTML = '<div class="example-modal"><div class="modal-head"><div>' +
+          '<span class="eyebrow">例题速查 · ' + esc(q.id || '') + '</span><h3>' +
+          esc(q.type || '课堂例题') + '</h3></div><button class="modal-close" data-close-modal>×</button></div>' +
+          '<div class="modal-body"><div class="modal-statement">' + md(q.statement) + '</div>' +
+          '<div class="modal-answer">' + detail + '</div><div class="modal-actions">' +
+          '<button class="btn" data-close-modal>关闭</button><button class="btn" data-next-example>换一题</button>' +
+          '</div></div></div>';
+        modalLayer.classList.add('is-open');
+        modalLayer.setAttribute('aria-hidden', 'false');
+        document.querySelector('[data-next-example]').onclick = quickExample;
+        typesetOnce(modalLayer.firstElementChild);
+      }
+
+      function closeModal() {
+        modalLayer.classList.remove('is-open');
+        modalLayer.setAttribute('aria-hidden', 'true');
+        modalLayer.innerHTML = '';
+      }
+
+      function quickExample() {
+        if (!bookState.examples.length) return;
+        var pool = bookState.examples;
+        if (bookState.currentSection) {
+          var local = bookState.examples.filter(function (entry) { return entry.sectionKey === bookState.currentSection; });
+          if (local.length) pool = local;
+        }
+        var picked = pool[Math.floor(Math.random() * pool.length)];
+        openExample(bookState.examples.indexOf(picked));
+      }
+
+      function toggleExample(index) {
+        var card = document.querySelector('[data-example-card="' + index + '"]');
+        if (!card) return;
+        card.classList.toggle('is-open');
+        var button = card.querySelector('.ex-toggle');
+        button.textContent = card.classList.contains('is-open') ? '收起题目与讲解 ▴' : '展开题目与讲解 ▾';
+        if (card.classList.contains('is-open')) typesetOnce(card.querySelector('.example-detail'));
+      }
+
+      document.addEventListener('click', function (event) {
+        var toggle = event.target.closest('[data-toggle-example]');
+        if (toggle) {
+          toggleExample(Number(toggle.dataset.toggleExample));
+          return;
+        }
+        if (event.target.closest('[data-close-modal]')) {
+          closeModal();
+          return;
+        }
+        if (event.target === modalLayer) closeModal();
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') closeModal();
+      });
+      document.getElementById('quickFloat').onclick = quickExample;
+      document.getElementById('mobileToc').onchange = function (event) {
+        if (event.target.value) scrollToSection(event.target.value);
+      };
+
+      var expanded = false;
+      document.getElementById('expandAll').onclick = function () {
+        expanded = !expanded;
+        document.querySelectorAll('details').forEach(function (node) { node.open = expanded; });
+        document.querySelectorAll('.example').forEach(function (node) {
+          node.classList.toggle('is-open', expanded);
+          var toggle = node.querySelector('.ex-toggle');
+          if (toggle) toggle.textContent = expanded ? '收起题目与讲解 ▴' : '展开题目与讲解 ▾';
+        });
+        if (expanded) {
+          document.querySelectorAll('details[open], .example.is-open .example-detail').forEach(typesetOnce);
+        }
+        this.textContent = expanded ? '收起全部' : '展开全部';
+      };
+
+      parseBook();
+      assignExamples();
+      buildBook();
+      document.querySelectorAll('#tocNav a').forEach(function (link) {
+        link.addEventListener('click', function (event) {
+          event.preventDefault();
+          scrollToSection(link.getAttribute('href').slice(1));
+        });
+      });
+      document.querySelectorAll('details.group-fold').forEach(function (node) {
+        node.addEventListener('toggle', function () {
+          if (node.open) typesetOnce(node.querySelector('.group-body'));
+        });
+      });
+      var observer = new IntersectionObserver(function (entries) {
+        var visible = entries.filter(function (entry) { return entry.isIntersecting; });
+        if (visible.length) setCurrentSection(visible[0].target.dataset.section);
+      }, { root: book, rootMargin: '-10% 0px -75% 0px', threshold: 0 });
+      document.querySelectorAll('[data-section]').forEach(function (node) { observer.observe(node); });
+      var first = document.querySelector('[data-section]');
+      if (first) setCurrentSection(first.dataset.section);
+    })();
+  </script>
+</body>
+</html>
