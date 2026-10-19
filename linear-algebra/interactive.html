@@ -222,6 +222,53 @@
       font-size: 12px;
       line-height: 1.9;
     }
+    .group-fold {
+      margin-top: 7px;
+      border: 1px solid #e7e0d4;
+      border-radius: 8px;
+      background: var(--card);
+    }
+    .group-fold > summary {
+      position: relative;
+      padding: 9px 34px 9px 12px;
+      color: #4e6558;
+      font: 10.5px/1.55 var(--sans);
+      cursor: pointer;
+      list-style: none;
+    }
+    .group-fold > summary::-webkit-details-marker { display: none; }
+    .group-fold > summary::after {
+      content: "+";
+      position: absolute;
+      right: 12px;
+      top: 7px;
+      color: #b4a284;
+      font: 16px/1 var(--sans);
+    }
+    .group-fold[open] > summary::after { content: "−"; }
+    .group-body { padding: 0 13px 13px; }
+    .knowledge-item {
+      margin: 8px 0 0;
+      padding: 10px 11px;
+      border: 1px solid #eee8dd;
+      border-radius: 7px;
+      background: #fdfcf9;
+    }
+    .knowledge-item h4 {
+      margin: 0 0 5px;
+      color: #39453e;
+      font: 700 11px/1.5 var(--sans);
+    }
+    .knowledge-item p { margin: 0; color: #4f5b54; font-size: 12px; line-height: 1.85; }
+    .knowledge-item .f { margin-top: 7px; }
+    .note-box {
+      margin-top: 8px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      color: #6d583c;
+      background: #fbf4e8;
+      font-size: 11px;
+    }
     .concept-list { display: grid; gap: 7px; }
     details.concept, details.pitfall {
       border: 1px solid #e7e0d4;
@@ -459,6 +506,8 @@
   <script src="data.js"></script>
   <script src="site-data.js"></script>
   <script src="concepts.js"></script>
+  <script src="enrichment.js"></script>
+  <script src="definitions.js"></script>
   <script>
     MathJax = {
       tex: { inlineMath: [['$', '$']] },
@@ -557,36 +606,58 @@
           '<div class="concept-body">' + body + '</div></details>';
       }
 
-      function noteConceptBlock(concept, sectionKey) {
-        var body = '<p class="lead">' + md(concept.text || '') + '</p>';
+      function knowledgeItem(concept) {
+        var html = '<article class="knowledge-item"><h4>' + esc(concept.title || '核心内容') + '</h4>' +
+          '<p>' + md(concept.text || '') + '</p>';
         (concept.formulas || []).forEach(function (formula) {
-          body += '<div class="f">' + esc(formula) + '</div>';
+          html += '<div class="f">' + esc(formula) + '</div>';
         });
-        body += '<div class="concept-actions"><button class="btn small" data-open-first="' +
-          esc(sectionKey) + '">结合本节例题理解 →</button></div>';
-        return '<details class="concept"><summary>概念 · ' + esc(concept.title || '核心知识') +
-          '</summary><div class="concept-body">' + body + '</div></details>';
+        return html + '</article>';
+      }
+
+      function knowledgeGroup(label, entries) {
+        if (!entries || !entries.length) return '';
+        return '<details class="group-fold"><summary>' + esc(label) + ' · ' + entries.length +
+          '</summary><div class="group-body">' +
+          entries.map(knowledgeItem).join('') + '</div></details>';
       }
 
       function sectionNoteBlocks(section, questions, knowledge, sectionKey) {
         var note = window.LA_SECTION_NOTES && window.LA_SECTION_NOTES[section.sec];
+        var extra = window.LA_SECTION_ENRICHMENT && window.LA_SECTION_ENRICHMENT[section.sec] || {};
+        var extraDefinition = window.LA_SECTION_DEFINITIONS && window.LA_SECTION_DEFINITIONS[section.sec];
         if (!note) {
-          return knowledge.map(function (item) { return conceptBlock(item, sectionKey); }).join('') ||
-            generatedTheory(questions, sectionKey);
+          var fallback = knowledge.map(function (item) {
+            return '<article class="knowledge-item"><h4>' + esc(item.title || item.name || '知识卡') +
+              '</h4><p>' + md(item.content || '') + '</p></article>';
+          }).join('');
+          return {
+            html: '<div class="group-body">' + fallback + '</div>',
+            groupCount: fallback ? 1 : 0
+          };
         }
-        var theory = (note.concepts || []).map(function (concept) {
-          return noteConceptBlock(concept, sectionKey);
-        }).join('');
+        var concepts = note.concepts || [];
+        var definitions = concepts.slice(0, 1).concat(extraDefinition ? [extraDefinition] : []).concat(extra.definitions || []);
+        var properties = concepts.slice(1, 2).concat(extra.properties || []);
+        var theorems = concepts.slice(2).concat(extra.theorems || []);
+        var groups = [
+          knowledgeGroup('定义', definitions),
+          knowledgeGroup('性质', properties),
+          knowledgeGroup('相关定理', theorems)
+        ];
+        var groupCount = [definitions, properties, theorems].filter(function (items) { return items.length; }).length;
         var method = '';
         if (note.method && note.method.length) {
-          method = '<details class="method-card"><summary>方法清单 · 怎样使用这一节</summary>' +
-            '<div class="method-body">' + list(note.method) +
-            (note.check ? '<div class="k">检查点</div><p>' + md(note.check) + '</p>' : '') +
+          method = '<details class="group-fold"><summary>典型方法 · ' + note.method.length +
+            '</summary><div class="group-body">' + list(note.method) +
+            (note.check ? '<div class="note-box"><b>检查点：</b>' + md(note.check) + '</div>' : '') +
             '</div></details>';
+          groupCount += 1;
         }
-        return '<p class="section-intro">' + md(note.intro || '') + '</p>' +
-          '<div class="k">概念讲解</div>' +
-          '<div class="concept-list">' + theory + '</div>' + method;
+        return {
+          html: '<p class="section-intro">' + md(note.intro || '') + '</p>' + groups.join('') + method,
+          groupCount: groupCount
+        };
       }
 
       function generatedTheory(questions, sectionKey) {
@@ -660,14 +731,14 @@
             var knowledge = items.filter(function (item) { return item.kind === '知识点'; });
             var questions = items.filter(function (item) { return item.kind === '题目'; });
             var pitfalls = items.filter(function (item) { return item.kind === '易错点'; });
-            var theory = sectionNoteBlocks(section, questions, knowledge, id);
-            var sectionNote = window.LA_SECTION_NOTES && window.LA_SECTION_NOTES[section.sec];
-            var conceptCount = sectionNote && sectionNote.concepts ? sectionNote.concepts.length : Math.max(1, knowledge.length);
+            var noteBlocks = sectionNoteBlocks(section, questions, knowledge, id);
+            var theory = noteBlocks.html;
+            var groupCount = noteBlocks.groupCount + (pitfalls.length ? 1 : 0);
             var examples = questions.map(function (q, index) { return exampleBlock(q, id, index); }).join('');
             sectionHtml += '<details class="section-block section-fold" id="' + id + '" data-section="' + id + '">' +
               '<summary class="section-summary"><div class="section-title"><strong>' +
               esc(section.sec + '　' + (section.name || '')) + '</strong>' +
-              '<span class="section-count">' + conceptCount + ' 概念 · ' + questions.length + ' 例题</span></div>' +
+              '<span class="section-count">' + groupCount + ' 个知识分组 · ' + questions.length + ' 例题</span></div>' +
               '<span class="fold-arrow">▸</span></summary>' +
               '<div class="section-body">' + theory +
               (pitfalls.length ? '<div class="k">易错提醒</div>' + pitfalls.map(pitfallBlock).join('') : '') +
@@ -812,7 +883,7 @@
           scrollToSection(link.getAttribute('href').slice(1));
         });
       });
-      document.querySelectorAll('details.concept, details.method-card, details.pitfall').forEach(function (node) {
+      document.querySelectorAll('details.group-fold, details.pitfall').forEach(function (node) {
         node.addEventListener('toggle', function () {
           if (node.open) typesetBlock(node);
         });
