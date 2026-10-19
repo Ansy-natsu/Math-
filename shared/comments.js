@@ -9,6 +9,7 @@
   var api = '/' + site + '/api/comments';
   var countsCache = new Map();
   var countsPromise = null;
+  var countsLoadedAt = 0;
 
   function escapeHtml(value) {
     return String(value == null ? '' : value).replace(/[&<>"']/g, function (ch) {
@@ -76,10 +77,14 @@
   }
 
   function loadCounts(force) {
+    if (!force && countsLoadedAt && Date.now() - countsLoadedAt < 15000) {
+      return Promise.resolve(countsCache);
+    }
     if (countsPromise && !force) return countsPromise;
     countsPromise = request(api + '?counts=1')
       .then(function (body) {
         countsCache = new Map(Object.entries(body.counts || {}));
+        countsLoadedAt = Date.now();
         updateCounts();
         return countsCache;
       })
