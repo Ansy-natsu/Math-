@@ -1,0 +1,13 @@
+{
+  "name": "math-content-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "微积分题库与知识库内容管理后台",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check admin.js && node --check server.js && node --check site-data.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
