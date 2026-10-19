@@ -185,15 +185,43 @@
       border-left: 1px solid #e2d8c7;
       scroll-margin-top: 20px;
     }
+    .section-summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      list-style: none;
+      cursor: pointer;
+    }
+    .section-summary::-webkit-details-marker { display: none; }
     .section-title {
+      flex: 1;
       display: flex;
       align-items: baseline;
       gap: 9px;
-      margin-bottom: 11px;
+      margin: 0;
     }
     .section-title strong { color: #6d5433; font: 15px/1.4 var(--serif); }
     .section-title span { color: var(--muted); font: 9.5px/1.4 var(--sans); }
     .section-title .section-count { margin-left: auto; }
+    .fold-arrow {
+      width: 18px;
+      flex: none;
+      color: #b7a387;
+      font: 11px/1 var(--sans);
+      transition: transform .16s;
+    }
+    .section-fold[open] .fold-arrow { transform: rotate(90deg); }
+    .section-body { padding: 12px 0 0 1px; }
+    .section-intro {
+      margin: 0 0 11px;
+      padding: 10px 12px;
+      border-left: 3px solid #d9bd93;
+      border-radius: 0 7px 7px 0;
+      color: #5d655f;
+      background: #faf7f0;
+      font-size: 12px;
+      line-height: 1.9;
+    }
     .concept-list { display: grid; gap: 7px; }
     details.concept, details.pitfall {
       border: 1px solid #e7e0d4;
@@ -234,6 +262,32 @@
     .concept-actions { margin-top: 10px; }
     .pitfall { margin-top: 7px; }
     .pitfall summary { color: var(--red) !important; }
+    .method-card {
+      margin-top: 7px;
+      border: 1px solid #e1e5de;
+      border-radius: 8px;
+      background: #fbfcf9;
+    }
+    .method-card > summary {
+      position: relative;
+      padding: 9px 34px 9px 12px;
+      color: #54655b;
+      font: 10.5px/1.55 var(--sans);
+      cursor: pointer;
+      list-style: none;
+    }
+    .method-card > summary::-webkit-details-marker { display: none; }
+    .method-card > summary::after {
+      content: "+";
+      position: absolute;
+      right: 12px;
+      top: 7px;
+      color: #b4a284;
+      font: 16px/1 var(--sans);
+    }
+    .method-card[open] > summary::after { content: "−"; }
+    .method-body { padding: 0 13px 13px; font-size: 11.5px; }
+    .method-body p { margin: 0; padding: 7px 9px; border-radius: 6px; color: #6e5a40; background: #fbf4e8; }
     .rule {
       margin: 2px 0 8px;
       padding: 7px 9px;
@@ -290,6 +344,15 @@
       border-top: 1px dashed #e8e1d5;
     }
     .example.is-open .example-detail { display: block; }
+    .example-detail .statement {
+      margin: 3px 0 12px;
+      padding: 9px 11px;
+      border-radius: 7px;
+      background: #f8f6f0;
+      color: #303b34;
+      font-size: 12.3px;
+      line-height: 1.85;
+    }
     .k {
       margin: 12px 0 5px;
       padding-left: 8px;
@@ -395,6 +458,7 @@
   </style>
   <script src="data.js"></script>
   <script src="site-data.js"></script>
+  <script src="concepts.js"></script>
   <script>
     MathJax = {
       tex: { inlineMath: [['$', '$']] },
@@ -415,7 +479,7 @@
         <header class="book-head">
           <span class="eyebrow">Interactive Linear Algebra</span>
           <h1 id="bookTitle">线性代数（第二版）· 交互导学</h1>
-          <p>依据教材九章目录整理核心概念、公式与例题。点击概念或例题可展开讲解；使用右下角“例题速查”随机抽取例题。</p>
+          <p>依据教材九章目录整理核心概念、公式与例题。默认只显示小节标题；点击小节展开本节概念，再点击概念或例题查看详细讲解。</p>
           <div class="reader-tip">
             <span>i</span>
             <span>题目、解析与知识卡来自配套题库的原创或改编内容；正文为学习导读，不替代教材原文。</span>
@@ -479,6 +543,38 @@
           '<div class="concept-body">' + body + '</div></details>';
       }
 
+      function noteConceptBlock(concept, sectionKey) {
+        var body = '<p class="lead">' + md(concept.text || '') + '</p>';
+        (concept.formulas || []).forEach(function (formula) {
+          body += '<div class="f">' + esc(formula) + '</div>';
+        });
+        body += '<div class="concept-actions"><button class="btn small" data-open-first="' +
+          esc(sectionKey) + '">结合本节例题理解 →</button></div>';
+        return '<details class="concept"><summary>概念 · ' + esc(concept.title || '核心知识') +
+          '</summary><div class="concept-body">' + body + '</div></details>';
+      }
+
+      function sectionNoteBlocks(section, questions, knowledge, sectionKey) {
+        var note = window.LA_SECTION_NOTES && window.LA_SECTION_NOTES[section.sec];
+        if (!note) {
+          return knowledge.map(function (item) { return conceptBlock(item, sectionKey); }).join('') ||
+            generatedTheory(questions, sectionKey);
+        }
+        var theory = (note.concepts || []).map(function (concept) {
+          return noteConceptBlock(concept, sectionKey);
+        }).join('');
+        var method = '';
+        if (note.method && note.method.length) {
+          method = '<details class="method-card"><summary>方法清单 · 怎样使用这一节</summary>' +
+            '<div class="method-body">' + list(note.method) +
+            (note.check ? '<div class="k">检查点</div><p>' + md(note.check) + '</p>' : '') +
+            '</div></details>';
+        }
+        return '<p class="section-intro">' + md(note.intro || '') + '</p>' +
+          '<div class="k">概念讲解</div>' +
+          '<div class="concept-list">' + theory + '</div>' + method;
+      }
+
       function generatedTheory(questions, sectionKey) {
         if (!questions.length) return '';
         var topics = [];
@@ -499,7 +595,8 @@
       }
 
       function exampleBlock(q, sectionKey, localIndex) {
-        var detail = '<div class="k">考点</div>' + list(q.topics) +
+        var detail = '<div class="k">题目</div><div class="statement">' + md(q.statement) + '</div>' +
+          '<div class="k">考点</div>' + list(q.topics) +
           '<div class="k">解题关键</div>' + list(q.key_points);
         (q.solutions || []).forEach(function (solution) {
           detail += '<div class="k">' + esc(solution.name || '解题过程') + '</div>' + list(solution.steps);
@@ -516,8 +613,9 @@
           '<button class="example-head" data-toggle-example="' + exampleIndex + '">' +
             '<span class="ex-num">例 ' + (localIndex + 1) + ' · ' + esc(q.id) + '</span>' +
             '<span class="ex-stars">' + stars(q.difficulty) + '</span>' +
-            '<span class="ex-title">' + md(q.statement) + '</span>' +
-            '<span class="ex-toggle">展开讲解 ▾</span>' +
+            '<span class="ex-title">' + esc(q.type || '例题') + ' · ' +
+              esc((q.topics || []).slice(0, 2).join(' / ')) + '</span>' +
+            '<span class="ex-toggle">展开题目与讲解 ▾</span>' +
           '</button>' +
           '<div class="example-detail">' + detail + '</div></article>';
       }
@@ -548,15 +646,20 @@
             var knowledge = items.filter(function (item) { return item.kind === '知识点'; });
             var questions = items.filter(function (item) { return item.kind === '题目'; });
             var pitfalls = items.filter(function (item) { return item.kind === '易错点'; });
-            var theory = knowledge.map(function (item) { return conceptBlock(item, id); }).join('');
-            if (!theory) theory = generatedTheory(questions, id);
+            var theory = sectionNoteBlocks(section, questions, knowledge, id);
+            var sectionNote = window.LA_SECTION_NOTES && window.LA_SECTION_NOTES[section.sec];
+            var conceptCount = sectionNote && sectionNote.concepts ? sectionNote.concepts.length : Math.max(1, knowledge.length);
             var examples = questions.map(function (q, index) { return exampleBlock(q, id, index); }).join('');
-            sectionHtml += '<section class="section-block" id="' + id + '" data-section="' + id + '">' +
-              '<div class="section-title"><strong>' + esc(section.sec + '　' + (section.name || '')) + '</strong>' +
-              '<span class="section-count">' + questions.length + ' 例题 · ' + (knowledge.length + pitfalls.length) + ' 知识卡</span></div>' +
-              '<div class="concept-list">' + theory + pitfalls.map(pitfallBlock).join('') + '</div>' +
-              (examples ? '<div class="example-list">' + examples + '</div>' : '<div class="empty-section">本节暂无配套例题。</div>') +
-              '</section>';
+            sectionHtml += '<details class="section-block section-fold" id="' + id + '" data-section="' + id + '">' +
+              '<summary class="section-summary"><div class="section-title"><strong>' +
+              esc(section.sec + '　' + (section.name || '')) + '</strong>' +
+              '<span class="section-count">' + conceptCount + ' 概念 · ' + questions.length + ' 例题</span></div>' +
+              '<span class="fold-arrow">▸</span></summary>' +
+              '<div class="section-body">' + theory +
+              (pitfalls.length ? '<div class="k">易错提醒</div>' + pitfalls.map(pitfallBlock).join('') : '') +
+              (examples ? '<div class="k">本节例题</div><div class="example-list">' + examples + '</div>' :
+                '<div class="empty-section">本节暂无配套例题。</div>') +
+              '</div></details>';
           });
           html += '<section class="chapter-block" id="' + chapterId + '"><div class="chapter-title">' +
             '<span>' + esc(chapter.num) + '</span><h2>' + esc(chapter.title) + '</h2></div>' +
@@ -565,12 +668,18 @@
         document.getElementById('tocNav').innerHTML = toc;
         document.getElementById('mobileToc').innerHTML = mobileOptions;
         content.innerHTML = html;
-        typeset(content);
       }
 
       function scrollToSection(id) {
         var node = document.getElementById(id);
-        if (node) node.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (!node) return;
+        if (node.tagName === 'DETAILS') {
+          node.open = true;
+          typeset(node);
+        }
+        window.setTimeout(function () {
+          node.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 30);
       }
 
       function setCurrentSection(id) {
@@ -636,7 +745,7 @@
         if (!card) return;
         card.classList.toggle('is-open');
         var button = card.querySelector('.ex-toggle');
-        button.textContent = card.classList.contains('is-open') ? '收起讲解 ▴' : '展开讲解 ▾';
+        button.textContent = card.classList.contains('is-open') ? '收起题目与讲解 ▴' : '展开题目与讲解 ▾';
         if (card.classList.contains('is-open')) typeset(card);
       }
 
@@ -668,7 +777,6 @@
       document.getElementById('mobileToc').onchange = function (event) {
         if (event.target.value) scrollToSection(event.target.value);
       };
-
       var expanded = false;
       document.getElementById('expandAll').onclick = function () {
         expanded = !expanded;
@@ -676,12 +784,24 @@
         document.querySelectorAll('.example').forEach(function (node) {
           node.classList.toggle('is-open', expanded);
           var toggle = node.querySelector('.ex-toggle');
-          if (toggle) toggle.textContent = expanded ? '收起讲解 ▴' : '展开讲解 ▾';
+          if (toggle) toggle.textContent = expanded ? '收起题目与讲解 ▴' : '展开题目与讲解 ▾';
         });
+        if (expanded) typeset(content);
         this.textContent = expanded ? '收起全部' : '展开全部';
       };
 
       buildContent();
+      document.querySelectorAll('#tocNav a').forEach(function (link) {
+        link.addEventListener('click', function (event) {
+          event.preventDefault();
+          scrollToSection(link.getAttribute('href').slice(1));
+        });
+      });
+      document.querySelectorAll('.section-fold').forEach(function (node) {
+        node.addEventListener('toggle', function () {
+          if (node.open) typeset(node);
+        });
+      });
       var observer = new IntersectionObserver(function (entries) {
         var visible = entries.filter(function (entry) { return entry.isIntersecting; });
         if (visible.length) setCurrentSection(visible[0].target.dataset.section);
@@ -691,7 +811,6 @@
         var firstSection = document.querySelector('[data-section]');
         if (firstSection) setCurrentSection(firstSection.dataset.section);
       }
-      window.addEventListener('load', function () { typeset(document.body); });
     })();
   </script>
 </body>
