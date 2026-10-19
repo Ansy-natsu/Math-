@@ -462,7 +462,8 @@
   <script>
     MathJax = {
       tex: { inlineMath: [['$', '$']] },
-      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
+      startup: { typeset: false }
     };
   </script>
   <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -524,10 +525,23 @@
       function sectionId(chapterIndex, sectionIndex) {
         return 'sec-' + chapterIndex + '-' + sectionIndex;
       }
+      var typesetQueue = Promise.resolve();
       function typeset(root) {
         if (window.MathJax && MathJax.typesetPromise) {
-          MathJax.typesetPromise([root || document.body]).catch(function () {});
+          var target = root || document.body;
+          typesetQueue = typesetQueue.then(function () {
+            return MathJax.typesetPromise([target]);
+          }).catch(function () {});
         }
+      }
+      function typesetBlock(node) {
+        if (!node || node.dataset.typeset === '1') return;
+        if (!(window.MathJax && MathJax.typesetPromise)) {
+          window.setTimeout(function () { typesetBlock(node); }, 300);
+          return;
+        }
+        node.dataset.typeset = '1';
+        typeset(node);
       }
 
       function conceptBlock(item, sectionKey) {
@@ -675,7 +689,6 @@
         if (!node) return;
         if (node.tagName === 'DETAILS') {
           node.open = true;
-          typeset(node);
         }
         window.setTimeout(function () {
           node.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -746,7 +759,7 @@
         card.classList.toggle('is-open');
         var button = card.querySelector('.ex-toggle');
         button.textContent = card.classList.contains('is-open') ? '收起题目与讲解 ▴' : '展开题目与讲解 ▾';
-        if (card.classList.contains('is-open')) typeset(card);
+        if (card.classList.contains('is-open')) typesetBlock(card.querySelector('.example-detail'));
       }
 
       document.addEventListener('click', function (event) {
@@ -786,7 +799,9 @@
           var toggle = node.querySelector('.ex-toggle');
           if (toggle) toggle.textContent = expanded ? '收起题目与讲解 ▴' : '展开题目与讲解 ▾';
         });
-        if (expanded) typeset(content);
+        if (expanded) {
+          document.querySelectorAll('details[open], .example.is-open').forEach(typesetBlock);
+        }
         this.textContent = expanded ? '收起全部' : '展开全部';
       };
 
@@ -797,9 +812,9 @@
           scrollToSection(link.getAttribute('href').slice(1));
         });
       });
-      document.querySelectorAll('.section-fold').forEach(function (node) {
+      document.querySelectorAll('details.concept, details.method-card, details.pitfall').forEach(function (node) {
         node.addEventListener('toggle', function () {
-          if (node.open) typeset(node);
+          if (node.open) typesetBlock(node);
         });
       });
       var observer = new IntersectionObserver(function (entries) {
