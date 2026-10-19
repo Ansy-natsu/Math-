@@ -1,3 +1,5 @@
 .backups/
+.comments/
 .data-*.tmp
 /tmp/
+node_modules/

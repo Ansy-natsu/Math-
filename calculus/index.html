@@ -162,6 +162,8 @@ mark{background:#fff2a8;padding:0 1px;border-radius:2px}
 <script src="../shared/math-render.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="../shared/comments.css">
+<script src="../shared/comments.js"></script>
 <script src="data.js"></script>
 <script src="site-data.js"></script>
 </head><body>
@@ -349,12 +351,12 @@ function renderTree(chaps, kw, kinds){
       if(!gCount){
         const hasAny = (ch.items||[]).some(it => it.sec===g.sec
                         || (g.subs||[]).some(s=>it.sec===s.sec));
-        if(!kw && !hasAny) body += '<div class="grp empty-grp"><div class="ghd off">'
+        if(!kw && !hasAny) body += '<div class="grp empty-grp"><div class="ghd off" data-chapter="'+esc(ch.chapter)+'" data-section="'+esc(g.sec+'　'+g.name)+'">'
               + '<span class="arw">·</span><span>'+esc(g.sec+'　'+g.name)+'</span>'
               + '<span class="cnt">暂无收录</span></div></div>';
         return;
       }
-      body += '<div class="grp"><div class="ghd" data-t="'+gid+'">'
+      body += '<div class="grp"><div class="ghd" data-t="'+gid+'" data-chapter="'+esc(ch.chapter)+'" data-section="'+esc(g.sec+'　'+g.name)+'">'
            +  '<span class="arw">▸</span><span>'+esc(g.sec+'　'+g.name)+'</span>'
            +  '<span class="cnt">'+gCount+'</span></div>'
            +  '<div class="gbody hide" id="'+gid+'">'+inner+'</div></div>';
@@ -577,6 +579,7 @@ function draw(){
   document.getElementById('annbar').style.display='inline';
   if(window.renderMath) m.querySelectorAll('.ghd').forEach(node=>window.renderMath(node));
   if(quickIndex && window.renderMath) window.renderMath(m.querySelector('.eqv-index'));
+  if(window.SectionComments) window.SectionComments.refresh(m);
   const done=()=>applyMarks(m);
   done();
 }

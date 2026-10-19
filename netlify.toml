@@ -1,2 +1,21 @@
 [build]
+  command = "npm ci"
   publish = "."
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  directory = "netlify/functions"
+
+[[redirects]]
+  from = "/calculus/api/comments"
+  to = "/.netlify/functions/calculus-comments"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/linear-algebra/api/comments"
+  to = "/.netlify/functions/linear-algebra-comments"
+  status = 200
+  force = true

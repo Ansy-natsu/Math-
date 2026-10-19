@@ -4,6 +4,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
+const crypto = require('crypto');
 
 const ROOT = __dirname;
 const MAX_BODY = 25 * 1024 * 1024;
@@ -14,12 +15,14 @@ const BANKS = {
   '/calculus': {
     name: 'calculus',
     dataPath: path.join(ROOT, 'calculus', 'data.js'),
-    backupDir: path.join(ROOT, 'calculus', '.backups')
+    backupDir: path.join(ROOT, 'calculus', '.backups'),
+    commentsPath: path.join(ROOT, 'calculus', '.comments', 'comments.json')
   },
   '/linear-algebra': {
     name: 'linear-algebra',
     dataPath: path.join(ROOT, 'linear-algebra', 'data.js'),
-    backupDir: path.join(ROOT, 'linear-algebra', '.backups')
+    backupDir: path.join(ROOT, 'linear-algebra', '.backups'),
+    commentsPath: path.join(ROOT, 'linear-algebra', '.comments', 'comments.json')
   }
 };
 
@@ -154,20 +157,183 @@ function readBody(req) {
   });
 }
 
+function readComments(config) {
+  if (!fs.existsSync(config.commentsPath)) return [];
+  try {
+    const value = JSON.parse(fs.readFileSync(config.commentsPath, 'utf8'));
+    return Array.isArray(value) ? value : [];
+  } catch (error) {
+    console.warn('Unable to read comments:', error.message);
+    return [];
+  }
+}
+
+function writeComments(config, comments) {
+  fs.mkdirSync(path.dirname(config.commentsPath), { recursive: true });
+  const temp = `${config.commentsPath}.${process.pid}.tmp`;
+  fs.writeFileSync(temp, JSON.stringify(comments, null, 2), 'utf8');
+  try {
+    fs.renameSync(temp, config.commentsPath);
+  } catch (error) {
+    fs.copyFileSync(temp, config.commentsPath);
+    fs.unlinkSync(temp);
+  }
+}
+
+function cleanCommentText(value, max) {
+  const text = String(value || '').replace(/\r\n/g, '\n').trim();
+  if (!text) throw new Error('批注内容不能为空');
+  if (text.length > max) throw new Error(`批注最多 ${max} 字`);
+  return text;
+}
+
+function cleanNickname(value) {
+  const name = String(value || '').trim().replace(/\s+/g, ' ');
+  if (!name) throw new Error('请填写昵称');
+  return name.slice(0, 24);
+}
+
+function publicComment(comment, clientId) {
+  const likes = Array.isArray(comment.likes) ? comment.likes : [];
+  return {
+    id: comment.id,
+    nickname: comment.nickname,
+    text: comment.text,
+    createdAt: comment.createdAt,
+    likeCount: likes.length,
+    liked: likes.includes(clientId),
+    replies: (Array.isArray(comment.replies) ? comment.replies : []).map((reply) => {
+      const replyLikes = Array.isArray(reply.likes) ? reply.likes : [];
+      return {
+        id: reply.id,
+        nickname: reply.nickname,
+        text: reply.text,
+        createdAt: reply.createdAt,
+        likeCount: replyLikes.length,
+        liked: replyLikes.includes(clientId)
+      };
+    })
+  };
+}
+
+function commentHeat(comment) {
+  const likes = Array.isArray(comment.likes) ? comment.likes.length : 0;
+  const replies = Array.isArray(comment.replies) ? comment.replies : [];
+  return likes * 2 + replies.length + replies.reduce((sum, reply) => {
+    return sum + (Array.isArray(reply.likes) ? reply.likes.length : 0);
+  }, 0);
+}
+
+async function handleComments(req, res, config, requestUrl) {
+  let comments = readComments(config);
+  const countsMode = requestUrl.searchParams.get('counts') === '1';
+  if (req.method === 'GET' && countsMode) {
+    const counts = {};
+    comments.forEach((comment) => {
+      const key = comment.sectionKey;
+      if (!key) return;
+      counts[key] = (counts[key] || 0) + 1 + (Array.isArray(comment.replies) ? comment.replies.length : 0);
+    });
+    sendJson(res, 200, { ok: true, counts });
+    return;
+  }
+
+  if (req.method === 'GET') {
+    const sectionKey = String(requestUrl.searchParams.get('sectionKey') || '');
+    const clientId = String(requestUrl.searchParams.get('clientId') || '');
+    const sort = requestUrl.searchParams.get('sort') === 'hot' ? 'hot' : 'time';
+    const list = comments.filter((comment) => comment.sectionKey === sectionKey);
+    list.sort(sort === 'hot'
+      ? (a, b) => commentHeat(b) - commentHeat(a) || String(b.createdAt).localeCompare(String(a.createdAt))
+      : (a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+    sendJson(res, 200, {
+      ok: true,
+      comments: list.map((comment) => publicComment(comment, clientId))
+    });
+    return;
+  }
+
+  if (req.method !== 'POST') {
+    sendJson(res, 405, { ok: false, error: '请求方法不支持' });
+    return;
+  }
+
+  try {
+    const body = await readBody(req);
+    const action = String(body.action || '');
+    const clientId = String(body.clientId || '');
+    const sectionKey = String(body.sectionKey || '').slice(0, 240);
+    if (!clientId || clientId.length > 100) throw new Error('用户标识无效');
+    if (!sectionKey) throw new Error('缺少小节标识');
+
+    if (action === 'add') {
+      const sectionComments = comments.filter((comment) => comment.sectionKey === sectionKey);
+      if (sectionComments.length >= 300) throw new Error('本小节批注数量已达上限');
+      comments.push({
+        id: crypto.randomUUID(),
+        sectionKey,
+        chapter: String(body.chapter || '').slice(0, 120),
+        section: String(body.section || '').slice(0, 200),
+        nickname: cleanNickname(body.nickname),
+        clientId,
+        text: cleanCommentText(body.text, 300),
+        createdAt: new Date().toISOString(),
+        likes: [],
+        replies: []
+      });
+    } else if (action === 'reply') {
+      const comment = comments.find((item) => item.id === body.commentId && item.sectionKey === sectionKey);
+      if (!comment) throw new Error('批注不存在');
+      comment.replies = Array.isArray(comment.replies) ? comment.replies : [];
+      if (comment.replies.length >= 100) throw new Error('回复数量已达上限');
+      comment.replies.push({
+        id: crypto.randomUUID(),
+        nickname: cleanNickname(body.nickname),
+        clientId,
+        text: cleanCommentText(body.text, 200),
+        createdAt: new Date().toISOString(),
+        likes: []
+      });
+    } else if (action === 'like') {
+      const comment = comments.find((item) => item.id === body.commentId && item.sectionKey === sectionKey);
+      if (!comment) throw new Error('批注不存在');
+      const target = body.replyId
+        ? (comment.replies || []).find((reply) => reply.id === body.replyId)
+        : comment;
+      if (!target) throw new Error('回复不存在');
+      target.likes = Array.isArray(target.likes) ? target.likes : [];
+      const index = target.likes.indexOf(clientId);
+      if (index >= 0) target.likes.splice(index, 1);
+      else target.likes.push(clientId);
+    } else {
+      throw new Error('未知批注操作');
+    }
+
+    writeComments(config, comments);
+    sendJson(res, 200, { ok: true });
+  } catch (error) {
+    sendJson(res, 400, { ok: false, error: error.message });
+  }
+}
+
 function resolveApi(pathname) {
   for (const prefix of Object.keys(BANKS)) {
-    if (pathname === `${prefix}/api/data` || pathname === `${prefix}/api/info`) {
+    if (pathname === `${prefix}/api/data` || pathname === `${prefix}/api/info` || pathname === `${prefix}/api/comments`) {
       return {
         config: BANKS[prefix],
-        type: pathname.endsWith('/info') ? 'info' : 'data'
+        type: pathname.endsWith('/info') ? 'info' : pathname.endsWith('/comments') ? 'comments' : 'data'
       };
     }
   }
   return null;
 }
 
-async function handleApi(req, res, api) {
+async function handleApi(req, res, api, requestUrl) {
   const config = api.config;
+  if (api.type === 'comments') {
+    await handleComments(req, res, config, requestUrl);
+    return;
+  }
   if (api.type === 'info' && req.method === 'GET') {
     const stat = safeStat(config.dataPath);
     let counts = { problems: 0, knowledge: 0, pitfalls: 0 };
@@ -284,8 +450,10 @@ function serveStatic(req, res, pathname) {
 
 const server = http.createServer((req, res) => {
   let pathname;
+  let requestUrl;
   try {
-    pathname = new URL(req.url, `http://${req.headers.host || 'localhost'}`).pathname;
+    requestUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+    pathname = requestUrl.pathname;
   } catch (error) {
     res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
     res.end('Bad request');
@@ -294,7 +462,7 @@ const server = http.createServer((req, res) => {
 
   const api = resolveApi(pathname);
   if (api) {
-    handleApi(req, res, api);
+    handleApi(req, res, api, requestUrl);
     return;
   }
   if (pathname.startsWith('/api/') || pathname.includes('/api/')) {
