@@ -495,6 +495,7 @@ a { color: inherit; }
   background: #eee9df;
 }
 .bar-fill {
+  display: block;
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(90deg, #c9894f, #a9581b);

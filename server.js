@@ -6,11 +6,22 @@ const path = require('path');
 const vm = require('vm');
 
 const ROOT = __dirname;
-const DATA_PATH = path.join(ROOT, 'data.js');
-const BACKUP_DIR = path.join(ROOT, '.backups');
 const MAX_BODY = 25 * 1024 * 1024;
 const HOST = process.env.HOST || '127.0.0.1';
 const PORT = Number(process.env.PORT) || 8787;
+
+const BANKS = {
+  '/calculus': {
+    name: 'calculus',
+    dataPath: path.join(ROOT, 'calculus', 'data.js'),
+    backupDir: path.join(ROOT, 'calculus', '.backups')
+  },
+  '/linear-algebra': {
+    name: 'linear-algebra',
+    dataPath: path.join(ROOT, 'linear-algebra', 'data.js'),
+    backupDir: path.join(ROOT, 'linear-algebra', '.backups')
+  }
+};
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -21,7 +32,8 @@ const MIME = {
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
-  '.ico': 'image/x-icon'
+  '.ico': 'image/x-icon',
+  '.webp': 'image/webp'
 };
 
 function sendJson(res, status, payload) {
@@ -42,8 +54,8 @@ function safeStat(file) {
   }
 }
 
-function readBank() {
-  const source = fs.readFileSync(DATA_PATH, 'utf8');
+function readBank(config) {
+  const source = fs.readFileSync(config.dataPath, 'utf8');
   const sandbox = {};
   vm.createContext(sandbox);
   vm.runInContext(source, sandbox, { timeout: 2000 });
@@ -70,41 +82,41 @@ function validateBank(data) {
   });
 }
 
-function makeBackup() {
-  if (!fs.existsSync(DATA_PATH)) return null;
-  fs.mkdirSync(BACKUP_DIR, { recursive: true });
+function makeBackup(config) {
+  if (!fs.existsSync(config.dataPath)) return null;
+  fs.mkdirSync(config.backupDir, { recursive: true });
   const stamp = new Date().toISOString().replace(/[:.]/g, '-');
   const name = `data-${stamp}.js`;
-  const target = path.join(BACKUP_DIR, name);
-  fs.copyFileSync(DATA_PATH, target);
+  const target = path.join(config.backupDir, name);
+  fs.copyFileSync(config.dataPath, target);
 
-  const backups = fs.readdirSync(BACKUP_DIR)
+  const backups = fs.readdirSync(config.backupDir)
     .filter((file) => /^data-.*\.js$/.test(file))
     .sort()
     .reverse();
   backups.slice(20).forEach((file) => {
     try {
-      fs.unlinkSync(path.join(BACKUP_DIR, file));
+      fs.unlinkSync(path.join(config.backupDir, file));
     } catch (error) {
       console.warn('Unable to remove old backup:', file, error.message);
     }
   });
-  return `.backups/${name}`;
+  return path.relative(ROOT, target).replace(/\\/g, '/');
 }
 
-function writeBank(data) {
+function writeBank(config, data) {
   validateBank(data);
-  const backup = makeBackup();
-  const tempPath = path.join(ROOT, `.data-${process.pid}-${Date.now()}.tmp`);
+  const backup = makeBackup(config);
+  const tempPath = path.join(ROOT, `.data-${config.name}-${process.pid}-${Date.now()}.tmp`);
   const content = 'const BANK = ' + JSON.stringify(data, null, 2) + ';\n';
   fs.writeFileSync(tempPath, content, 'utf8');
   try {
-    fs.renameSync(tempPath, DATA_PATH);
+    fs.renameSync(tempPath, config.dataPath);
   } catch (error) {
-    fs.copyFileSync(tempPath, DATA_PATH);
+    fs.copyFileSync(tempPath, config.dataPath);
     fs.unlinkSync(tempPath);
   }
-  const stat = fs.statSync(DATA_PATH);
+  const stat = fs.statSync(config.dataPath);
   return {
     modifiedAt: stat.mtime.toISOString(),
     size: stat.size,
@@ -142,13 +154,26 @@ function readBody(req) {
   });
 }
 
-async function handleApi(req, res, pathname) {
-  if (pathname === '/api/info' && req.method === 'GET') {
-    const stat = safeStat(DATA_PATH);
+function resolveApi(pathname) {
+  for (const prefix of Object.keys(BANKS)) {
+    if (pathname === `${prefix}/api/data` || pathname === `${prefix}/api/info`) {
+      return {
+        config: BANKS[prefix],
+        type: pathname.endsWith('/info') ? 'info' : 'data'
+      };
+    }
+  }
+  return null;
+}
+
+async function handleApi(req, res, api) {
+  const config = api.config;
+  if (api.type === 'info' && req.method === 'GET') {
+    const stat = safeStat(config.dataPath);
     let counts = { problems: 0, knowledge: 0, pitfalls: 0 };
     let valid = false;
     try {
-      const bank = readBank();
+      const bank = readBank(config);
       counts = {
         problems: Array.isArray(bank.problems) ? bank.problems.length : 0,
         knowledge: Array.isArray(bank.knowledge) ? bank.knowledge.length : 0,
@@ -160,7 +185,7 @@ async function handleApi(req, res, pathname) {
     }
     sendJson(res, 200, {
       ok: true,
-      service: 'math-content-admin',
+      service: `${config.name}-content-admin`,
       valid,
       counts,
       meta: stat ? {
@@ -171,10 +196,10 @@ async function handleApi(req, res, pathname) {
     return;
   }
 
-  if (pathname === '/api/data' && req.method === 'GET') {
+  if (api.type === 'data' && req.method === 'GET') {
     try {
-      const data = readBank();
-      const stat = fs.statSync(DATA_PATH);
+      const data = readBank(config);
+      const stat = fs.statSync(config.dataPath);
       sendJson(res, 200, {
         ok: true,
         data,
@@ -190,11 +215,11 @@ async function handleApi(req, res, pathname) {
     return;
   }
 
-  if (pathname === '/api/data' && req.method === 'POST') {
+  if (api.type === 'data' && req.method === 'POST') {
     try {
       const body = await readBody(req);
       if (!body || !body.data) throw new Error('请求中缺少 data');
-      const meta = writeBank(body.data);
+      const meta = writeBank(config, body.data);
       sendJson(res, 200, { ok: true, meta });
     } catch (error) {
       sendJson(res, 400, { ok: false, error: error.message });
@@ -202,17 +227,19 @@ async function handleApi(req, res, pathname) {
     return;
   }
 
-  sendJson(res, 404, { ok: false, error: 'API 路径不存在' });
+  sendJson(res, 404, { ok: false, error: 'API 路径或请求方法不存在' });
 }
 
 function serveStatic(req, res, pathname) {
   let relative = pathname === '/' ? '/index.html' : pathname;
-  if (relative === '/admin' || relative === '/admin/') relative = '/admin.html';
+  if (relative.endsWith('/')) relative += 'index.html';
 
   const blocked = relative.startsWith('/.') ||
+    relative.includes('/.backups/') ||
     relative === '/server.js' ||
     relative === '/package.json' ||
-    relative === '/package-lock.json';
+    relative === '/package-lock.json' ||
+    relative === '/netlify.toml';
   if (blocked) {
     res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
     res.end('Not found');
@@ -265,8 +292,13 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  if (pathname.startsWith('/api/')) {
-    handleApi(req, res, pathname);
+  const api = resolveApi(pathname);
+  if (api) {
+    handleApi(req, res, api);
+    return;
+  }
+  if (pathname.startsWith('/api/') || pathname.includes('/api/')) {
+    sendJson(res, 404, { ok: false, error: 'API 路径不存在' });
     return;
   }
   if (req.method !== 'GET' && req.method !== 'HEAD') {
@@ -287,6 +319,7 @@ server.on('error', (error) => {
 });
 
 server.listen(PORT, HOST, () => {
-  console.log(`管理后台：http://${HOST}:${PORT}/admin.html`);
-  console.log(`公开网站：http://${HOST}:${PORT}/`);
+  console.log(`题库目录：http://${HOST}:${PORT}/`);
+  console.log(`微积分题库：http://${HOST}:${PORT}/calculus/`);
+  console.log(`线性代数题库：http://${HOST}:${PORT}/linear-algebra/`);
 });

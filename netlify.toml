@@ -1,0 +1,14 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/calculus"
+  to = "/calculus/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/linear-algebra"
+  to = "/linear-algebra/"
+  status = 301
+  force = true

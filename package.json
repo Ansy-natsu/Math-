@@ -1,11 +1,11 @@
 {
-  "name": "math-content-studio",
+  "name": "ansy-math-studio",
   "version": "1.0.0",
   "private": true,
-  "description": "微积分题库与知识库内容管理后台",
+  "description": "微积分与线性代数题库合集及内容管理后台",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check admin.js && node --check server.js && node --check site-data.js"
+    "check": "node --check server.js && node --check calculus/admin.js && node --check calculus/site-data.js && node --check linear-algebra/admin.js && node --check linear-algebra/site-data.js"
   },
   "engines": {
     "node": ">=18"

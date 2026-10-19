@@ -1,45 +1,46 @@
-# 微积分题库
+# Math Studio
 
-公开站点由 `index.html`、`data.js` 和 `site-data.js` 组成；`admin.html` 是题库与知识库的内容管理后台。
+微积分与线性代数题库合集，包含课程入口、公开题库和内容管理后台。
 
-## 启动
+## 线上地址
+
+- 题库目录：<https://ansy.netlify.app/>
+- 微积分题库：<https://ansy.netlify.app/calculus/>
+- 线性代数题库：<https://ansy.netlify.app/linear-algebra/>
+- 微积分后台：<https://ansy.netlify.app/calculus/admin.html>
+- 线性代数后台：<https://ansy.netlify.app/linear-algebra/admin.html>
+
+## 本地运行
 
 ```powershell
 npm start
 ```
 
-启动后访问：
+本地入口：
 
-- 管理后台：<http://127.0.0.1:8787/admin.html>
-- 公开网站：<http://127.0.0.1:8787/>
+- 题库目录：<http://127.0.0.1:8787/>
+- 微积分题库：<http://127.0.0.1:8787/calculus/>
+- 线性代数题库：<http://127.0.0.1:8787/linear-algebra/>
 
-也可以直接打开 `admin.html`。在没有启动 Node 服务的“本地文件模式”下，编辑和草稿仍可保存，但“发布更新”会改为下载新的 `data.js`，需要手动替换站点文件。
+本地服务为两套题库分别提供 `/calculus/api/data` 和 `/linear-algebra/api/data` 发布接口，发布时会备份到对应目录的 `.backups/`。
 
-## 后台功能
+## 目录结构
 
-- 题目：新建、编辑、复制、删除、搜索、按章节/分类/题型/难度筛选
-- 知识库：维护知识点及易错点，支持公式、使用提示、关联内容与标签
-- 章节结构：批量重命名章节和分类，自动同步所有内容
-- 发布：写入 `data.js`，发布前自动在 `.backups/` 创建最多 20 份备份
-- 迁移：导入/导出 JSON，或单独下载 `data.js`
-- 草稿：编辑内容会自动保存在浏览器本地，发布成功后自动清除
-
-## 数据格式
-
-`data.js` 中使用一个 `BANK` 对象保存内容：
-
-```js
-const BANK = {
-  problems: [],
-  knowledge: [],
-  pitfalls: []
-};
+```text
+/
+├─ index.html             题库选择目录
+├─ landing.css            目录页样式
+├─ calculus/              微积分子站
+│  ├─ index.html
+│  ├─ admin.html
+│  ├─ data.js
+│  └─ ...
+├─ linear-algebra/        线性代数子站
+│  ├─ index.html
+│  ├─ admin.html
+│  ├─ data.js
+│  └─ ...
+└─ server.js              本地预览与双题库发布服务
 ```
 
-新增知识点后，公开网站的“知识点 · 易错点”栏目会直接显示对应内容。
-
-## 检查
-
-```powershell
-npm run check
-```
+Netlify 部署 `main` 分支根目录；推送到 GitHub 后会自动更新线上站点。
