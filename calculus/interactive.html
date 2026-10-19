@@ -420,7 +420,18 @@
 
       function calcBookSection(problem) {
         var section = String(problem.section || '');
+        var chapter = String(problem.chapter || '');
+        if (chapter.indexOf('第二章') >= 0) {
+          if (section.indexOf('§2.1') === 0) return 0;
+          if (section.indexOf('§2.2') === 0) return 1;
+          if (section.indexOf('§2.3') === 0) return 2;
+          if (section.indexOf('§2.4') === 0) return 3;
+          if (section.indexOf('§2.5') === 0) return 4;
+          return 0;
+        }
+        if (section.indexOf('§1.1') === 0) return 0;
         if (section.indexOf('§2.') === 0) return 1;
+        if (section.indexOf('§3.5') === 0) return 3;
         if (section.indexOf('§3.') === 0) return 2;
         if (section.indexOf('§4.') === 0) return 4;
         return 2;
@@ -430,10 +441,11 @@
         var bank = (typeof BANK !== 'undefined' && BANK) ? BANK : {};
         var problems = Array.isArray(bank.problems) ? bank.problems : [];
         problems.forEach(function (problem) {
-          if (String(problem.chapter || '').indexOf('第一章') < 0) return;
+          var chapterIndex = String(problem.chapter || '').indexOf('第二章') >= 0 ? 1 : 0;
           var sectionIndex = calcBookSection(problem);
-          if (bookState.chapters[0] && bookState.chapters[0].sections[sectionIndex]) {
-            bookState.chapters[0].sections[sectionIndex].examples.push(problem);
+          var chapter = bookState.chapters[chapterIndex];
+          if (chapter && chapter.sections[sectionIndex]) {
+            chapter.sections[sectionIndex].examples.push(problem);
           }
         });
         var extras = window.CALCULUS_EXTRA_EXAMPLES || [];

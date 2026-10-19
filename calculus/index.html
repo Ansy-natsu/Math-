@@ -140,6 +140,19 @@ mark{background:#fff2a8;padding:0 1px;border-radius:2px}
 #tb button{background:transparent;border:0;color:#fff;cursor:pointer;padding:4px 9px;
  border-radius:6px;font:inherit}
 #tb button:hover{background:#555b62}
+.eqv-index{margin:18px 0 22px;padding:14px 16px;border:1px solid #e6d7bd;
+ border-radius:10px;background:#fffdf8;box-shadow:0 2px 10px rgba(70,55,35,.035)}
+.eqv-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;
+ font-family:"Heiti SC","SimHei",sans-serif}
+.eqv-head strong{font-size:14px;color:#8a5a25;flex:1}
+.eqv-head span{font-size:10.5px;color:#a6947a}
+.eqv-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.eqv-grid div{padding:6px 9px;border-radius:6px;background:#f7f3eb;
+ font-family:"Cambria Math",Cambria,"Times New Roman",serif;font-size:12.5px;
+ overflow-x:auto;white-space:nowrap}
+.eqv-note{margin-top:9px;color:#9b8d79;font-size:11px;
+ font-family:"Heiti SC","SimHei",sans-serif}
+@media(max-width:760px){.eqv-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:820px){.ibody{grid-template-columns:1fr;gap:8px}
  .im{border-top:1px dashed var(--line);padding-top:6px}}
 </style>
@@ -558,10 +571,23 @@ function draw(){
     }).length;
   });
   m.innerHTML = renderTree(CHAPS, kw, kinds);
+  const quickIndex = (TAB==='p' && !kw) ? renderEquivalentIndex() : '';
+  if(quickIndex) m.innerHTML = quickIndex + m.innerHTML;
   document.getElementById('stat').textContent=n+' 条';
   document.getElementById('annbar').style.display='inline';
+  if(window.renderMath) m.querySelectorAll('.ghd').forEach(node=>window.renderMath(node));
+  if(quickIndex && window.renderMath) window.renderMath(m.querySelector('.eqv-index'));
   const done=()=>applyMarks(m);
   done();
+}
+function renderEquivalentIndex(){
+  return '<section class="eqv-index"><div class="eqv-head">'+
+    '<strong>基础等价无穷小变换索引</strong><span>x → 0</span></div>'+
+    '<div class="eqv-grid">'+
+    '<div>$\\sin x\\sim x$</div><div>$\\tan x\\sim x$</div><div>$1-\\cos x\\sim \\frac{x^2}{2}$</div>'+
+    '<div>$e^x-1\\sim x$</div><div>$\\ln(1+x)\\sim x$</div><div>$a^x-1\\sim x\\ln a$</div>'+
+    '<div>$(1+x)^\\alpha-1\\sim\\alpha x$</div><div>$x-\\sin x\\sim\\frac{x^3}{6}$</div><div>$\\tan x-x\\sim\\frac{x^3}{3}$</div>'+
+    '</div><div class="eqv-note">替换前先确认整体趋于 0；等价量只能直接替换乘除因式，加减结构需先合并或展开。</div></section>';
 }
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
