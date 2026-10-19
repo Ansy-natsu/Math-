@@ -85,13 +85,12 @@ export async function handleComments(site, request) {
     return json(200, { ok: true, counts });
   }
 
-  const sectionKey = String(url.searchParams.get('sectionKey') || '');
-  if (!sectionKey) return json(400, { ok: false, error: '缺少小节标识' });
-  const key = storeKey(site, sectionKey);
-  let comments = await store.get(key, { type: 'json' });
-  if (!Array.isArray(comments)) comments = [];
-
   if (request.method === 'GET') {
+    const sectionKey = String(url.searchParams.get('sectionKey') || '');
+    if (!sectionKey) return json(400, { ok: false, error: '缺少小节标识' });
+    const key = storeKey(site, sectionKey);
+    let comments = await store.get(key, { type: 'json' });
+    if (!Array.isArray(comments)) comments = [];
     const clientId = String(url.searchParams.get('clientId') || '');
     const sort = url.searchParams.get('sort') === 'hot' ? 'hot' : 'time';
     comments.sort(sort === 'hot'
@@ -109,7 +108,12 @@ export async function handleComments(site, request) {
     const body = await request.json();
     const action = String(body.action || '');
     const clientId = String(body.clientId || '');
+    const sectionKey = String(body.sectionKey || '');
     if (!clientId || clientId.length > 100) throw new Error('用户标识无效');
+    if (!sectionKey) throw new Error('缺少小节标识');
+    const key = storeKey(site, sectionKey);
+    let comments = await store.get(key, { type: 'json' });
+    if (!Array.isArray(comments)) comments = [];
 
     if (action === 'add') {
       if (comments.length >= 300) throw new Error('本小节批注数量已达上限');
