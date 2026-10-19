@@ -314,17 +314,15 @@
       .ex-stars { display: none; }
     }
   </style>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="../shared/katex-overrides.css">
+  <script src="../shared/math-render.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
   <script src="data.js"></script>
   <script src="book-source.js"></script>
   <script src="interactive-extras.js"></script>
-  <script>
-    MathJax = {
-      tex: { inlineMath: [['$', '$']] },
-      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
-      startup: { typeset: false }
-    };
-  </script>
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
   <div class="reader">
@@ -473,18 +471,16 @@
 
       var typesetQueue = Promise.resolve();
       function typeset(node) {
-        if (!node || !(window.MathJax && MathJax.typesetPromise)) {
-          if (node) window.setTimeout(function () { typeset(node); }, 300);
-          return;
-        }
+        if (!node || !window.renderMath) return Promise.resolve();
         typesetQueue = typesetQueue.then(function () {
-          return MathJax.typesetPromise([node]);
+          return window.renderMath(node);
         }).catch(function () {});
+        return typesetQueue;
       }
       function typesetOnce(node) {
         if (!node || node.dataset.typeset === '1') return;
-        if (!(window.MathJax && MathJax.typesetPromise)) {
-          window.setTimeout(function () { typesetOnce(node); }, 300);
+        if (!window.renderMath) {
+          window.setTimeout(function () { typesetOnce(node); }, 50);
           return;
         }
         node.dataset.typeset = '1';

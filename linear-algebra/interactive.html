@@ -503,19 +503,17 @@
       .ex-stars { display: none; }
     }
   </style>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="../shared/katex-overrides.css">
+  <script src="../shared/math-render.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
   <script src="data.js"></script>
   <script src="site-data.js"></script>
   <script src="concepts.js"></script>
   <script src="enrichment.js"></script>
   <script src="definitions.js"></script>
-  <script>
-    MathJax = {
-      tex: { inlineMath: [['$', '$']] },
-      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] },
-      startup: { typeset: false }
-    };
-  </script>
-  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
   <div class="reader">
@@ -576,17 +574,17 @@
       }
       var typesetQueue = Promise.resolve();
       function typeset(root) {
-        if (window.MathJax && MathJax.typesetPromise) {
-          var target = root || document.body;
-          typesetQueue = typesetQueue.then(function () {
-            return MathJax.typesetPromise([target]);
-          }).catch(function () {});
-        }
+        var target = root || document.body;
+        if (!target || !window.renderMath) return Promise.resolve();
+        typesetQueue = typesetQueue.then(function () {
+          return window.renderMath(target);
+        }).catch(function () {});
+        return typesetQueue;
       }
       function typesetBlock(node) {
         if (!node || node.dataset.typeset === '1') return;
-        if (!(window.MathJax && MathJax.typesetPromise)) {
-          window.setTimeout(function () { typesetBlock(node); }, 300);
+        if (!window.renderMath) {
+          window.setTimeout(function () { typesetBlock(node); }, 50);
           return;
         }
         node.dataset.typeset = '1';

@@ -143,16 +143,14 @@ mark{background:#fff2a8;padding:0 1px;border-radius:2px}
 @media(max-width:820px){.ibody{grid-template-columns:1fr;gap:8px}
  .im{border-top:1px dashed var(--line);padding-top:6px}}
 </style>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../shared/katex-overrides.css">
+<script src="../shared/math-render.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
 <script src="data.js"></script>
 <script src="site-data.js"></script>
-<script>
-MathJax = {
-  tex: {inlineMath: [['$','$']]},
-  options: {skipHtmlTags: ['script','noscript','style','textarea','pre','code']}
-};
-</script>
-<script id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head><body>
 <header>
   <h1>线性代数题库</h1>
@@ -482,6 +480,14 @@ document.addEventListener('click',e=>{
       b.classList.toggle('hide');
       const a=t.querySelector('.arw');
       if(a) a.textContent = b.classList.contains('hide') ? '▸' : '▾';
+      if(!b.classList.contains('hide') && window.renderMath){
+        if(t.classList.contains('ihd')){
+          const cell=b.querySelector('.ic');
+          if(cell) window.renderMath(cell);
+        } else if(t.classList.contains('ghd') || t.classList.contains('shd')){
+          b.querySelectorAll('.ihd').forEach(node=>window.renderMath(node));
+        }
+      }
     }
   }
 });
@@ -554,13 +560,16 @@ function draw(){
   document.getElementById('stat').textContent=n+' 条';
   document.getElementById('annbar').style.display='inline';
   const done=()=>applyMarks(m);
-  if(window.MathJax&&MathJax.typesetPromise){ MathJax.typesetPromise([m]).then(done).catch(done); }
-  else done();
+  done();
 }
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
   t.classList.add('on'); TAB=t.dataset.t; draw();
 });
-document.getElementById('q').oninput=draw;
+let searchTimer;
+document.getElementById('q').oninput=()=>{
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(draw,180);
+};
 draw();
 </script></body></html>

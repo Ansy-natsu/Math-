@@ -1,0 +1,29 @@
+.katex {
+  font-size: 1.02em;
+}
+
+.katex-display {
+  margin: .35em 0;
+  padding: .15em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.katex-display > .katex {
+  display: inline-block;
+  min-width: max-content;
+}
+
+.f .katex-display,
+.example-detail .katex-display {
+  margin: .1em 0;
+}
+
+@media (max-width: 600px) {
+  .katex {
+    font-size: .97em;
+  }
+  .katex-display {
+    padding-bottom: .35em;
+  }
+}
