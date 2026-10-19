@@ -10,6 +10,11 @@
   var countsCache = new Map();
   var countsPromise = null;
   var countsLoadedAt = 0;
+  var COUNTS_KEY = 'math-comments-counts-v1:' + site;
+  var THREAD_KEY = 'math-comments-thread-v1:' + site + ':';
+  var COUNTS_TTL = 30000;
+  var THREAD_TTL = 120000;
+  var threadMemory = new Map();
 
   function escapeHtml(value) {
     return String(value == null ? '' : value).replace(/[&<>"']/g, function (ch) {
@@ -42,6 +47,50 @@
     return String(chapter || '') + '::' + String(section || '');
   }
 
+  function readCachedJson(key) {
+    try {
+      var value = JSON.parse(sessionStorage.getItem(key) || 'null');
+      return value && typeof value === 'object' ? value : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function writeCachedJson(key, value) {
+    try {
+      sessionStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {}
+  }
+
+  function readThreadCache(key) {
+    var cached = threadMemory.get(key);
+    if (!cached) {
+      cached = readCachedJson(THREAD_KEY + key);
+      if (cached) threadMemory.set(key, cached);
+    }
+    if (!cached || !Array.isArray(cached.comments)) return null;
+    return cached;
+  }
+
+  function writeThreadCache(panel) {
+    var cached = {
+      at: Date.now(),
+      comments: panel._comments || [],
+      total: Number(panel._total || 0),
+      hasMore: Boolean(panel._hasMore)
+    };
+    threadMemory.set(panel.dataset.sectionKey, cached);
+    writeCachedJson(THREAD_KEY + panel.dataset.sectionKey, cached);
+  }
+
+  function restoreThread(panel, cached) {
+    panel.dataset.loaded = '1';
+    panel._comments = cached.comments || [];
+    panel._total = Number(cached.total || 0);
+    panel._hasMore = Boolean(cached.hasMore);
+    renderComments(panel);
+  }
+
   function timeText(value) {
     var date = new Date(value);
     if (Number.isNaN(date.getTime())) return '';
@@ -69,13 +118,19 @@
   }
 
   function applyMutation(panel, body) {
+    panel._mutationVersion = Number(panel._mutationVersion || 0) + 1;
     panel.dataset.loaded = '1';
     panel._comments = body.comments || [];
     panel._total = Number(body.total || panel._comments.length);
     panel._hasMore = Boolean(body.hasMore);
     renderComments(panel);
+    writeThreadCache(panel);
     countsCache.set(panel.dataset.sectionKey, panel._total);
     countsLoadedAt = Date.now();
+    writeCachedJson(COUNTS_KEY, {
+      at: countsLoadedAt,
+      counts: Object.fromEntries(countsCache)
+    });
     updateCounts();
   }
 
@@ -88,7 +143,15 @@
   }
 
   function loadCounts(force) {
-    if (!force && countsLoadedAt && Date.now() - countsLoadedAt < 15000) {
+    if (!countsLoadedAt) {
+      var cached = readCachedJson(COUNTS_KEY);
+      if (cached && cached.counts) {
+        countsCache = new Map(Object.entries(cached.counts));
+        countsLoadedAt = Number(cached.at || 0);
+        updateCounts();
+      }
+    }
+    if (!force && countsLoadedAt && Date.now() - countsLoadedAt < COUNTS_TTL) {
       return Promise.resolve(countsCache);
     }
     if (countsPromise && !force) return countsPromise;
@@ -96,6 +159,10 @@
       .then(function (body) {
         countsCache = new Map(Object.entries(body.counts || {}));
         countsLoadedAt = Date.now();
+        writeCachedJson(COUNTS_KEY, {
+          at: countsLoadedAt,
+          counts: body.counts || {}
+        });
         updateCounts();
         return countsCache;
       })
@@ -154,6 +221,12 @@
       if (opening) loadPanel(panel);
     });
 
+    var prefetch = function () {
+      if (panel.dataset.loaded !== '1' && !panel._loadPromise) loadPanel(panel, false, false, true);
+    };
+    button.addEventListener('pointerenter', prefetch, { once: true });
+    button.addEventListener('focus', prefetch, { once: true });
+
     panel.addEventListener('click', function (event) {
       event.stopPropagation();
       var close = event.target.closest('[data-cmt-close]');
@@ -206,10 +279,19 @@
     });
   }
 
-  async function loadPanel(panel, force, append) {
+  async function loadPanel(panel, force, append, quiet) {
     if (!panel || (panel.dataset.loaded === '1' && !force)) return;
-    if (append && panel._loadingMore) return;
     var list = panel.querySelector('.cmt-list');
+    if (!append && panel._loadPromise && !force) {
+      if (!quiet && !readThreadCache(panel.dataset.sectionKey)) {
+        list.innerHTML = '<div class="cmt-empty">正在加载批注…</div>';
+      }
+      return panel._loadPromise;
+    }
+    if (append && panel._loadingMore) return;
+    var cached = !append && !force ? readThreadCache(panel.dataset.sectionKey) : null;
+    if (cached) restoreThread(panel, cached);
+    if (cached && Date.now() - Number(cached.at || 0) < THREAD_TTL) return;
     if (append) {
       var moreButton = list.querySelector('[data-cmt-more]');
       if (moreButton) {
@@ -217,10 +299,11 @@
         moreButton.textContent = '加载中…';
       }
       panel._loadingMore = true;
-    } else {
+    } else if (!cached && !quiet) {
       list.innerHTML = '<div class="cmt-empty">正在加载批注…</div>';
     }
-    try {
+    var mutationVersion = Number(panel._mutationVersion || 0);
+    var load = (async function () {
       var query = new URLSearchParams({
         sectionKey: panel.dataset.sectionKey,
         chapter: panel.dataset.chapter,
@@ -231,14 +314,19 @@
         offset: String(append ? (panel._comments || []).length : 0)
       });
       var body = await request(api + '?' + query.toString());
+      if (Number(panel._mutationVersion || 0) !== mutationVersion) return;
       panel.dataset.loaded = '1';
       panel._comments = (append ? (panel._comments || []) : []).concat(body.comments || []);
       panel._total = Number(body.total || panel._comments.length);
       panel._hasMore = Boolean(body.hasMore);
       renderComments(panel);
-    } catch (error) {
-      if (!append) list.innerHTML = '<div class="cmt-empty">批注加载失败：' + escapeHtml(error.message) + '</div>';
-    } finally {
+      writeThreadCache(panel);
+    })().catch(function (error) {
+      if (!append && !cached) {
+        list.innerHTML = '<div class="cmt-empty">批注加载失败：' + escapeHtml(error.message) + '</div>';
+      }
+    }).finally(function () {
+      panel._loadPromise = null;
       panel._loadingMore = false;
       if (append) {
         var rest = list.querySelector('[data-cmt-more]');
@@ -247,7 +335,32 @@
           rest.textContent = '加载更多批注';
         }
       }
-    }
+    });
+    panel._loadPromise = load;
+    return load;
+  }
+
+  function snapshotThread(panel) {
+    return {
+      comments: panel._comments || [],
+      total: Number(panel._total || 0),
+      hasMore: Boolean(panel._hasMore)
+    };
+  }
+
+  function restoreSnapshot(panel, snapshot) {
+    panel._comments = snapshot.comments;
+    panel._total = snapshot.total;
+    panel._hasMore = snapshot.hasMore;
+    renderComments(panel);
+    countsCache.set(panel.dataset.sectionKey, panel._total);
+    updateCounts();
+  }
+
+  function setLocalTotal(panel, total) {
+    panel._total = Math.max(0, Number(total) || 0);
+    countsCache.set(panel.dataset.sectionKey, panel._total);
+    updateCounts();
   }
 
   function renderComments(panel) {
@@ -329,6 +442,7 @@
     saveName(nickname);
     submit.disabled = true;
     status.textContent = '发布中…';
+    panel._mutationVersion = Number(panel._mutationVersion || 0) + 1;
     try {
       var body = await post({
         action: 'add',
@@ -364,6 +478,7 @@
     }
     submit.disabled = true;
     status.textContent = '发布中…';
+    panel._mutationVersion = Number(panel._mutationVersion || 0) + 1;
     try {
       var body = await post({
         action: 'reply',
@@ -384,6 +499,27 @@
   }
 
   async function toggleLike(panel, commentId, replyId) {
+    panel._mutationVersion = Number(panel._mutationVersion || 0) + 1;
+    var snapshot = snapshotThread(panel);
+    panel._comments = (panel._comments || []).map(function (comment) {
+      if (comment.id !== commentId) return comment;
+      if (replyId) {
+        return Object.assign({}, comment, {
+          replies: (comment.replies || []).map(function (reply) {
+            if (reply.id !== replyId) return reply;
+            return Object.assign({}, reply, {
+              liked: !reply.liked,
+              likeCount: Math.max(0, Number(reply.likeCount || 0) + (reply.liked ? -1 : 1))
+            });
+          })
+        });
+      }
+      return Object.assign({}, comment, {
+        liked: !comment.liked,
+        likeCount: Math.max(0, Number(comment.likeCount || 0) + (comment.liked ? -1 : 1))
+      });
+    });
+    renderComments(panel);
     try {
       var body = await post({
         action: 'like',
@@ -396,6 +532,7 @@
       });
       applyMutation(panel, body);
     } catch (error) {
+      restoreSnapshot(panel, snapshot);
       var list = panel.querySelector('.cmt-list');
       var tip = document.createElement('div');
       tip.className = 'cmt-empty';
@@ -406,6 +543,19 @@
 
   async function withdraw(panel, commentId, replyId) {
     if (!window.confirm(replyId ? '确定撤回这条回复吗？' : '确定撤回这条批注吗？')) return;
+    panel._mutationVersion = Number(panel._mutationVersion || 0) + 1;
+    var snapshot = snapshotThread(panel);
+    panel._comments = (panel._comments || []).map(function (comment) {
+      if (comment.id !== commentId) return comment;
+      if (!replyId) return null;
+      return Object.assign({}, comment, {
+        replies: (comment.replies || []).filter(function (reply) {
+          return reply.id !== replyId;
+        })
+      });
+    }).filter(Boolean);
+    setLocalTotal(panel, Number(snapshot.total || 0) - 1);
+    renderComments(panel);
     try {
       var body = await post({
         action: 'delete',
@@ -418,6 +568,7 @@
       });
       applyMutation(panel, body);
     } catch (error) {
+      restoreSnapshot(panel, snapshot);
       var list = panel.querySelector('.cmt-list');
       var tip = document.createElement('div');
       tip.className = 'cmt-empty';
