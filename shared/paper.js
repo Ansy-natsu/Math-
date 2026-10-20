@@ -19,6 +19,10 @@
   var state = null;
   var userWrong = new Set();
   var els = {};
+  // 面板折叠状态：试卷信息默认收起，抽题与已选题目默认展开；题干默认显示
+  var UI_KEY = 'paper-ui-v1';
+  var ui = { info: false, draw: true, list: true, stmts: true };
+  var folded = new Set(); // 单独收起题干的题目
 
   /* ---------- 工具 ---------- */
   function esc(value) {
@@ -163,7 +167,7 @@
       '<div class="pk-dhead"><strong>组卷</strong><span class="pk-sub"></span>' +
       '<button type="button" class="pk-x" data-pk="close" aria-label="关闭">✕</button></div>' +
       '<div class="pk-dbody">' +
-        '<section class="pk-sec"><h3>试卷信息</h3>' +
+        '<section class="pk-sec" data-sec="info"><h3><button type="button" class="pk-tg" data-pk="toggle" aria-expanded="true"><span class="pk-arw">▾</span>试卷信息</button><span class="pk-sum" data-v="sum-info"></span></h3><div class="pk-secbody">' +
           '<label class="pk-row"><span>标题</span><input data-f="title" maxlength="60"></label>' +
           '<div class="pk-row2">' +
             '<label class="pk-row"><span>时间（分钟）</span><input data-f="minutes" type="number" min="0" max="600"></label>' +
@@ -172,8 +176,8 @@
           '<label class="pk-row"><span>考试说明</span><input data-f="note" maxlength="120" placeholder="可留空"></label>' +
           '<label class="pk-chk"><input type="checkbox" data-f="group"> 按题型分组（选择、填空、判断、计算、证明、综合）</label>' +
           '<label class="pk-chk"><input type="checkbox" data-f="space"> 试卷中为解答题预留作答空白</label>' +
-        '</section>' +
-        '<section class="pk-sec"><h3>按条件抽题</h3>' +
+        '</div></section>' +
+        '<section class="pk-sec" data-sec="draw"><h3><button type="button" class="pk-tg" data-pk="toggle" aria-expanded="true"><span class="pk-arw">▾</span>按条件抽题</button><span class="pk-sum" data-v="sum-draw"></span></h3><div class="pk-secbody">' +
           '<div class="pk-lbl">章节</div><div class="pk-chips" data-g="chapter"></div>' +
           '<div class="pk-lbl">题型</div><div class="pk-chips" data-g="cat"></div>' +
           '<div class="pk-row2">' +
@@ -192,12 +196,15 @@
             '<button type="button" data-pk="allwrong">全部错题加入</button>' +
           '</div>' +
           '<p class="pk-hint" data-v="wronghint"></p>' +
-        '</section>' +
-        '<section class="pk-sec"><h3>已选题目 <span class="pk-cnt" data-v="count">0</span>' +
-          '<button type="button" class="pk-link" data-pk="clear">清空</button></h3>' +
+        '</div></section>' +
+        '<section class="pk-sec" data-sec="list"><h3><button type="button" class="pk-tg" data-pk="toggle" aria-expanded="true">' +
+          '<span class="pk-arw">▾</span>已选题目</button><span class="pk-cnt" data-v="count">0</span>' +
+          '<span class="pk-sum" data-v="sum-list"></span>' +
+          '<button type="button" class="pk-link" data-pk="stmts">收起题干</button>' +
+          '<button type="button" class="pk-link pk-danger" data-pk="clear">清空</button></h3><div class="pk-secbody">' +
           '<ol class="pk-list"></ol>' +
           '<p class="pk-empty">还没有题目。可在左侧题目上点「＋ 组卷」，或用上方条件抽题。</p>' +
-        '</section>' +
+        '</div></section>' +
       '</div>' +
       '<div class="pk-dfoot">' +
         '<button type="button" class="pk-primary" data-pk="paper">预览 / 打印试卷</button>' +
@@ -279,6 +286,7 @@
     d.querySelector('[data-v="total"]').textContent = total();
     d.querySelector('[data-v="count"]').textContent = state.items.length;
     renderAvail();
+    renderFolds();
 
     var wrongCount = problems.filter(isWrong).length;
     d.querySelector('[data-v="wronghint"]').textContent = wrongCount
@@ -293,8 +301,9 @@
       var cat = categoryOf(p.type);
       var head = state.group && cat !== lastCat ? '<li class="pk-grp">' + cat + '</li>' : '';
       lastCat = cat;
-      return head + '<li class="pk-it" data-id="' + esc(it.id) + '">' +
-        '<div class="pk-ith"><span class="pk-no">' + (i + 1) + '</span>' +
+      var fold = !ui.stmts || folded.has(it.id);
+      return head + '<li class="pk-it' + (fold ? ' pk-fold' : '') + '" data-id="' + esc(it.id) + '">' +
+        '<div class="pk-ith" title="点击收起/展开题干"><span class="pk-no">' + (i + 1) + '</span>' +
           '<span class="pk-pid">' + esc(it.id) + '</span>' +
           '<span class="pk-tag">' + esc(cat) + '</span>' +
           '<span class="pk-star">' + stars(p.difficulty) + '</span>' +
@@ -311,7 +320,30 @@
     els.list.querySelectorAll('.pk-stmt').forEach(math);
   }
   function renderAvail() {
-    els.drawer.querySelector('[data-v="avail"]').textContent = candidates(filters(), false).length;
+    var n = candidates(filters(), false).length;
+    els.drawer.querySelector('[data-v="avail"]').textContent = n;
+    var sum = els.drawer.querySelector('[data-v="sum-draw"]');
+    if (sum) sum.textContent = '可抽 ' + n + ' 题';
+  }
+  // 各区块折叠状态与收起时的一行摘要
+  function renderFolds() {
+    var d = els.drawer;
+    ['info', 'draw', 'list'].forEach(function (key) {
+      var sec = d.querySelector('[data-sec="' + key + '"]');
+      var open = !!ui[key];
+      sec.classList.toggle('pk-closed', !open);
+      var tg = sec.querySelector('.pk-tg');
+      tg.setAttribute('aria-expanded', open ? 'true' : 'false');
+      tg.querySelector('.pk-arw').textContent = open ? '▾' : '▸';
+    });
+    var meta = [state.title || (cfg.subject + ' 自测卷')];
+    if (+state.minutes) meta.push(+state.minutes + ' 分钟');
+    meta.push('满分 ' + total() + ' 分');
+    d.querySelector('[data-v="sum-info"]').textContent = meta.join(' · ');
+    d.querySelector('[data-v="sum-list"]').textContent = '满分 ' + total() + ' 分';
+    var st = d.querySelector('[data-pk="stmts"]');
+    st.textContent = ui.stmts ? '收起题干' : '展开题干';
+    st.style.display = state.items.length && ui.list ? '' : 'none';
   }
 
   function open() {
@@ -449,12 +481,13 @@
     var d = els.drawer;
     d.addEventListener('input', function (e) {
       var t = e.target;
-      if (t.dataset.f === 'title' || t.dataset.f === 'note') { state[t.dataset.f] = t.value; persist(); }
-      else if (t.dataset.f === 'minutes') { state.minutes = Math.max(0, parseInt(t.value, 10) || 0); persist(); }
+      if (t.dataset.f === 'title' || t.dataset.f === 'note') { state[t.dataset.f] = t.value; persist(); renderFolds(); }
+      else if (t.dataset.f === 'minutes') { state.minutes = Math.max(0, parseInt(t.value, 10) || 0); persist(); renderFolds(); }
       else if (t.hasAttribute('data-score')) {
         var item = state.items.find(function (it) { return it.id === t.closest('.pk-it').dataset.id; });
         if (item) { item.score = Math.max(0, Math.min(100, parseInt(t.value, 10) || 0)); persist(); }
         d.querySelector('[data-v="total"]').textContent = total();
+        renderFolds();
       } else if (t.dataset.r === 'n') { renderAvail(); }
     });
     d.addEventListener('change', function (e) {
@@ -464,11 +497,27 @@
     });
     d.addEventListener('click', function (e) {
       var b = e.target.closest('[data-pk]');
+      var ith = e.target.closest('.pk-ith');
+      if (!b && ith && !e.target.closest('input,label,button')) {
+        var li = ith.closest('.pk-it');
+        var fold = !li.classList.contains('pk-fold');
+        li.classList.toggle('pk-fold', fold);
+        if (fold === !ui.stmts) folded.delete(li.dataset.id); else folded.add(li.dataset.id);
+        return;
+      }
       if (!b) return;
       var act = b.dataset.pk;
       var row = b.closest('.pk-it');
       var id = row && row.dataset.id;
       if (act === 'close') close();
+      else if (act === 'toggle') {
+        var key = b.closest('.pk-sec').dataset.sec;
+        ui[key] = !ui[key]; save(UI_KEY, ui); renderFolds();
+      } else if (act === 'stmts') {
+        ui.stmts = !ui.stmts; folded.clear(); save(UI_KEY, ui);
+        els.list.querySelectorAll('.pk-it').forEach(function (li) { li.classList.toggle('pk-fold', !ui.stmts); });
+        renderFolds();
+      }
       else if (act === 'rm') { remove(id); changed(); }
       else if (act === 'up' || act === 'down') {
         var i = state.items.findIndex(function (it) { return it.id === id; });
@@ -524,6 +573,7 @@
     problems.forEach(function (p) { seen.add(p.chapter || '未分章'); });
     chapters = Array.from(seen).sort(function (a, b) { return chapterNo(a) - chapterNo(b); });
 
+    ui = Object.assign(ui, load(UI_KEY, {}));
     state = Object.assign(freshState(), load(cfg.basketKey, {}));
     state.items = (state.items || []).filter(function (it) { return it && byId.has(it.id); });
     userWrong = new Set(load(cfg.wrongKey, []).filter(function (id) { return byId.has(id); }));

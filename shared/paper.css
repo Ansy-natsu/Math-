@@ -31,7 +31,22 @@ body.pk-open .pk-mask{display:block}
 .pk-sec h3{display:flex;align-items:center;gap:8px;margin:2px 0 10px;
  font:700 14px "Heiti SC","SimHei",sans-serif;color:#8a5a25}
 .pk-cnt{font-size:12px;background:#efe6d4;border-radius:9px;padding:0 7px;color:#8a5a25}
-.pk-link{margin-left:auto;border:0;background:none;color:#b3261e;cursor:pointer;font:12.5px "Heiti SC","SimHei",sans-serif}
+.pk-link{border:0;background:none;color:#8a6b3a;cursor:pointer;font:12.5px "Heiti SC","SimHei",sans-serif;padding:2px 4px}
+.pk-link:hover{text-decoration:underline}
+.pk-link[data-pk="stmts"]{margin-left:auto}
+.pk-danger{color:#b3261e}
+.pk-tg{display:inline-flex;align-items:center;gap:6px;border:0;background:none;padding:0;cursor:pointer;
+ font:inherit;color:inherit}
+.pk-arw{display:inline-block;width:12px;color:#b59a6e;font-size:12px}
+.pk-sum{display:none;font:400 12px "Heiti SC","SimHei",sans-serif;color:#9b8d79;min-width:0;
+ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.pk-closed .pk-sum{display:block}
+.pk-closed .pk-secbody{display:none}
+.pk-closed h3{margin-bottom:2px}
+.pk-closed .pk-link{display:none}
+.pk-ith{cursor:pointer}
+.pk-fold .pk-stmt{display:none}
+.pk-fold .pk-no{background:#f4efe6}
 .pk-row{display:flex;flex-direction:column;gap:4px;margin:0 0 9px;flex:1;min-width:0}
 .pk-row>span,.pk-lbl{font:12px "Heiti SC","SimHei",sans-serif;color:#7a6a4a}
 .pk-lbl{margin:2px 0 6px}
