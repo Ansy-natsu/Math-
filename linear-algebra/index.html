@@ -154,6 +154,8 @@ mark{background:#fff2a8;padding:0 1px;border-radius:2px}
 <script defer src="../shared/comments.js"></script>
 <script src="data.js"></script>
 <script src="site-data.js"></script>
+<link rel="stylesheet" href="../shared/paper.css">
+<script defer src="../shared/paper.js" data-site="linear-algebra" data-subject="线性代数"></script>
 </head><body>
 <header>
   <h1>线性代数题库</h1>
@@ -575,6 +577,7 @@ function draw(){
   document.getElementById('annbar').style.display='inline';
   if(window.renderMath) m.querySelectorAll('.ghd').forEach(node=>window.renderMath(node));
   if(window.SectionComments) window.SectionComments.refresh(m);
+  if(window.PaperKit) window.PaperKit.decorate(m);
   const done=()=>applyMarks(m);
   done();
 }

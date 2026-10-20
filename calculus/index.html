@@ -167,6 +167,8 @@ mark{background:#fff2a8;padding:0 1px;border-radius:2px}
 <script defer src="../shared/comments.js"></script>
 <script src="data.js"></script>
 <script src="site-data.js"></script>
+<link rel="stylesheet" href="../shared/paper.css">
+<script defer src="../shared/paper.js" data-site="calculus" data-subject="微积分"></script>
 </head><body>
 <header>
   <h1>微积分题库</h1>
@@ -590,6 +592,7 @@ function draw(){
   if(window.renderMath) m.querySelectorAll('.ghd').forEach(node=>window.renderMath(node));
   if(quickIndex && window.renderMath) window.renderMath(m.querySelector('.eqv-index'));
   if(window.SectionComments) window.SectionComments.refresh(m);
+  if(window.PaperKit) window.PaperKit.decorate(m);
   const done=()=>applyMarks(m);
   done();
 }

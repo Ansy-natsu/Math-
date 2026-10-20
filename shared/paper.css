@@ -1,0 +1,127 @@
+/* 组卷：题目按钮、组卷面板、试卷/答案预览与打印 */
+.pk-act{display:inline-flex;gap:5px;margin-left:6px;flex:none;align-self:center}
+.pk-act button{font:12px/1 "Heiti SC","SimHei",sans-serif;padding:4px 9px;border-radius:12px;cursor:pointer;
+ border:1px solid #e3d6bf;background:#fffaf1;color:#8a6b3a;white-space:nowrap}
+.pk-act button:hover{border-color:#cdb489;background:#f6ecd9}
+.pk-act .pk-add.on{background:#b5651d;border-color:#b5651d;color:#fff}
+.pk-act .pk-wrong.on{background:#fdf0ee;border-color:#e8b3ac;color:#b3261e}
+.pk-act .pk-wrong.fixed{cursor:default}
+
+.pk-fab{position:fixed;left:18px;bottom:18px;z-index:40;display:flex;align-items:center;gap:8px;
+ font:600 14px/1 "Heiti SC","SimHei",sans-serif;padding:11px 16px;border-radius:24px;border:1px solid #e3d6bf;
+ background:#fff;color:#8a5a25;box-shadow:0 4px 16px rgba(80,50,10,.14);cursor:pointer}
+.pk-fab:hover{border-color:#cdb489}
+.pk-fab-n{min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:#efe6d4;color:#8a5a25;
+ display:inline-flex;align-items:center;justify-content:center;font-size:12.5px}
+.pk-fab.has .pk-fab-n{background:#b5651d;color:#fff}
+
+.pk-mask{position:fixed;inset:0;background:rgba(30,20,10,.28);z-index:60;display:none}
+.pk-drawer{position:fixed;top:0;right:0;bottom:0;width:min(480px,100vw);z-index:61;background:#faf9f7;
+ border-left:1px solid #e6e2da;box-shadow:-8px 0 30px rgba(60,40,10,.12);display:flex;flex-direction:column;
+ transform:translateX(102%);transition:transform .22s ease;font-family:"Songti SC","SimSun",Georgia,serif}
+body.pk-open .pk-drawer{transform:none}
+body.pk-open .pk-mask{display:block}
+.pk-dhead{display:flex;align-items:baseline;gap:10px;padding:14px 18px;border-bottom:1px solid #e6e2da;background:#fff}
+.pk-dhead strong{font:700 17px "Heiti SC","SimHei",sans-serif}
+.pk-sub{font:12px "Heiti SC","SimHei",sans-serif;color:#9b8d79;flex:1}
+.pk-x{border:0;background:none;font-size:17px;color:#8a7a62;cursor:pointer;padding:2px 6px}
+.pk-dbody{flex:1;overflow:auto;padding:6px 18px 18px}
+.pk-sec{padding:12px 0;border-bottom:1px dashed #e6e2da}
+.pk-sec:last-child{border-bottom:0}
+.pk-sec h3{display:flex;align-items:center;gap:8px;margin:2px 0 10px;
+ font:700 14px "Heiti SC","SimHei",sans-serif;color:#8a5a25}
+.pk-cnt{font-size:12px;background:#efe6d4;border-radius:9px;padding:0 7px;color:#8a5a25}
+.pk-link{margin-left:auto;border:0;background:none;color:#b3261e;cursor:pointer;font:12.5px "Heiti SC","SimHei",sans-serif}
+.pk-row{display:flex;flex-direction:column;gap:4px;margin:0 0 9px;flex:1;min-width:0}
+.pk-row>span,.pk-lbl{font:12px "Heiti SC","SimHei",sans-serif;color:#7a6a4a}
+.pk-lbl{margin:2px 0 6px}
+.pk-row input,.pk-row select{font:14px inherit;padding:6px 9px;border:1px solid #e6e2da;border-radius:7px;
+ background:#fff;font-family:inherit;width:100%}
+.pk-range{display:flex;align-items:center;gap:6px;font-size:13px;color:#5a5a5a}
+.pk-range select{width:auto}
+.pk-row2{display:flex;gap:12px;align-items:flex-end}
+.pk-total,.pk-avail{flex:1;font:13px "Heiti SC","SimHei",sans-serif;color:#5a5a5a;padding-bottom:12px}
+.pk-total b{font-size:20px;color:#b5651d}
+.pk-avail b{color:#b5651d}
+.pk-avail small{color:#a6947a}
+.pk-chk{display:flex;gap:7px;align-items:center;font:13px "Heiti SC","SimHei",sans-serif;color:#5a5a5a;margin:4px 0}
+.pk-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.pk-chip{display:inline-flex;align-items:center;gap:4px;font:12.5px "Heiti SC","SimHei",sans-serif;color:#5a5a5a;
+ background:#fff;border:1px solid #e6e2da;border-radius:14px;padding:3px 10px 3px 6px;cursor:pointer}
+.pk-chip:has(input:checked){border-color:#d8b98a;background:#fbf3e4;color:#7a4f1d}
+.pk-btns,.pk-dfoot{display:flex;flex-wrap:wrap;gap:8px}
+.pk-btns button,.pk-dfoot button,.pk-pbar button{font:13px "Heiti SC","SimHei",sans-serif;padding:7px 13px;border-radius:8px;
+ border:1px solid #e3d6bf;background:#fff;color:#6a5434;cursor:pointer}
+.pk-btns button:hover,.pk-dfoot button:hover,.pk-pbar button:hover{background:#f6ecd9}
+button.pk-primary{background:#b5651d;border-color:#b5651d;color:#fff}
+button.pk-primary:hover{background:#9c5618}
+.pk-hint{font:12px "Heiti SC","SimHei",sans-serif;color:#9b8d79;margin:8px 0 0}
+.pk-dfoot{padding:12px 18px;border-top:1px solid #e6e2da;background:#fff}
+.pk-dfoot button{flex:1}
+.pk-list{list-style:none;margin:0;padding:0}
+.pk-grp{font:700 12.5px "Heiti SC","SimHei",sans-serif;color:#9b7a4a;margin:12px 0 4px}
+.pk-it{background:#fff;border:1px solid #e6e2da;border-radius:9px;padding:8px 10px;margin:6px 0}
+.pk-ith{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font:12px "Heiti SC","SimHei",sans-serif}
+.pk-no{min-width:20px;height:20px;border-radius:10px;background:#efe6d4;color:#8a5a25;display:inline-flex;
+ align-items:center;justify-content:center;font-weight:700}
+.pk-pid{color:#b5651d;font-weight:700}
+.pk-tag{background:#f4efe6;color:#7a6a4a;border-radius:9px;padding:1px 7px}
+.pk-tag-w{background:#fdf0ee;color:#b3261e}
+.pk-star{color:#d8a12b}
+.pk-sp{flex:1}
+.pk-score input{width:48px;padding:2px 4px;border:1px solid #e6e2da;border-radius:5px;font-size:12.5px;text-align:center}
+.pk-ic{border:1px solid #e6e2da;background:#faf8f4;border-radius:5px;cursor:pointer;color:#7a6a4a;padding:1px 6px;font-size:12px}
+.pk-ic:hover{background:#f1ece3}
+.pk-stmt{font-size:13.5px;line-height:1.65;margin-top:6px;color:#333;max-height:7.5em;overflow:hidden;
+ -webkit-mask-image:linear-gradient(#000 70%,transparent)}
+.pk-empty{font:13px "Heiti SC","SimHei",sans-serif;color:#9b8d79}
+.pk-toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);z-index:90;background:rgba(40,28,12,.88);
+ color:#fff;font:13px "Heiti SC","SimHei",sans-serif;padding:8px 14px;border-radius:8px;pointer-events:none}
+
+/* 试卷 / 答案预览 */
+.pk-print{position:fixed;inset:0;z-index:80;background:#ece8e1;overflow:auto;display:none}
+body.pk-viewing .pk-print{display:block}
+.pk-pbar{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:10px;padding:10px 18px;
+ background:#fff;border-bottom:1px solid #e6e2da}
+.pk-pmode{flex:1;font:13px "Heiti SC","SimHei",sans-serif;color:#7a6a4a}
+.pk-sheet{width:min(794px,100%);margin:20px auto 60px;background:#fff;padding:56px 64px;
+ box-shadow:0 2px 14px rgba(0,0,0,.08);color:#111;font-family:"Songti SC","SimSun","Times New Roman",serif;
+ font-size:15px;line-height:1.8}
+.pk-ph{text-align:center;border-bottom:2px solid #111;padding-bottom:12px;margin-bottom:18px}
+.pk-ph h1{font:700 22px "Heiti SC","SimHei",sans-serif;margin:0 0 6px;letter-spacing:.06em}
+.pk-ph2{font:700 16px "Heiti SC","SimHei",sans-serif;letter-spacing:.2em}
+.pk-meta{font-size:14px}
+.pk-who{display:flex;justify-content:center;gap:34px;margin-top:8px;font-size:14px}
+.pk-note{margin-top:8px;font-size:13.5px;color:#333}
+.pk-h2{font:700 16px "Heiti SC","SimHei",sans-serif;margin:20px 0 8px}
+.pk-h2 small{font-weight:400;font-size:13px;margin-left:4px}
+.pk-q{margin:0 0 14px;break-inside:avoid;page-break-inside:avoid}
+.pk-qn{font-weight:700;margin-right:2px}
+.pk-qp{color:#444;margin-right:4px}
+.pk-blank{border-bottom:1px dashed #d6d0c4;margin-top:4px}
+.pk-qa{padding-bottom:12px;border-bottom:1px dashed #ddd6c8}
+.pk-src{font:12.5px "Heiti SC","SimHei",sans-serif;color:#666}
+.pk-qstmt{color:#333;margin:2px 0 6px}
+.pk-ans{margin:4px 0;color:#111}
+.pk-k{font:700 13px "Heiti SC","SimHei",sans-serif;color:#555;margin:8px 0 2px}
+.pk-tp{font-size:14px;color:#333}
+.pk-sheet ul{margin:2px 0 2px 1.4em;padding:0}
+.pk-sheet li{margin:2px 0}
+.pk-sheet .katex{font-size:1.05em}
+
+@media (max-width:640px){
+ .pk-sheet{padding:28px 20px;margin:0}
+ .pk-who{gap:14px;flex-wrap:wrap}
+ .pk-act button{padding:4px 7px}
+}
+
+/* 打印：只输出试卷本身（只在预览试卷时生效，平时打印页面不受影响） */
+@media print{
+ @page{size:A4;margin:16mm 15mm}
+ html,body.pk-viewing{height:auto!important;overflow:visible!important;display:block!important;background:#fff!important}
+ body.pk-viewing>*:not(.pk-print){display:none!important}
+ body.pk-viewing .pk-print{position:static;display:block;overflow:visible;background:#fff}
+ body.pk-viewing .pk-pbar{display:none!important}
+ body.pk-viewing .pk-sheet{width:auto;margin:0;padding:0;box-shadow:none;font-size:11pt}
+ .pk-fab,.pk-drawer,.pk-mask,.pk-toast{display:none!important}
+}
