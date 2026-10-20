@@ -143,16 +143,19 @@ mark{background:#fff2a8;padding:0 1px;border-radius:2px}
 @media(max-width:820px){.ibody{grid-template-columns:1fr;gap:8px}
  .im{border-top:1px dashed var(--line);padding-top:6px}}
 </style>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../shared/vendor/katex-0.16.11/katex.min.css">
+<link rel="preload" href="../shared/vendor/katex-0.16.11/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../shared/vendor/katex-0.16.11/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../shared/katex-overrides.css">
 <script src="../shared/math-render.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script defer src="../shared/vendor/katex-0.16.11/katex.min.js"></script>
+<script defer src="../shared/vendor/katex-0.16.11/contrib/auto-render.min.js"></script>
 <link rel="stylesheet" href="../shared/comments.css">
-<script src="../shared/comments.js"></script>
+<script defer src="../shared/comments.js"></script>
 <script src="data.js"></script>
 <script src="site-data.js"></script>
+<link rel="stylesheet" href="../shared/paper.css">
+<script defer src="../shared/paper.js" data-site="linear-algebra" data-subject="线性代数"></script>
 </head><body>
 <header>
   <h1>线性代数题库</h1>
@@ -237,6 +240,8 @@ function renderProblems(list){
 }
 
 let UID = 0;
+/* 题目/知识点正文默认折叠，首次展开时才生成，避免一次性解析全部解答 */
+const LAZY = new Map();
 function fml(list, a){
   return (list||[]).map((x,i)=>{
     let cls='f';
@@ -299,18 +304,23 @@ function itemHTML(ch, it){
          + '<span class="delm" data-k="'+esc(key)+'" data-i="'+i+'">✕</span></div>';
   }).join('');
   const margin=(notes+mklist)||'<div class="empty">选中文字或点公式可批注</div>';
+  LAZY.set(bid, ()=>'<div class="ic">'+itemBody(it,a)+'</div>'
+    + '<div class="im">'+margin+'</div>');
   return '<div class="item" data-key="'+esc(key)+'">'
     + '<div class="ihd" data-t="'+bid+'">'
     +   '<span class="arw">▸</span>'
     +   bidge + title + '</div>'
-    + '<div class="ibody hide" id="'+bid+'">'
-    +   '<div class="ic">'+itemBody(it,a)+'</div>'
-    +   '<div class="im">'+margin+'</div>'
+    + '<div class="ibody hide" id="'+bid+'" data-lazy="1">'
     + '</div></div>';
+}
+function hay(it){
+  if(!Object.prototype.hasOwnProperty.call(it,'__hay'))
+    Object.defineProperty(it,'__hay',{value:JSON.stringify(it).toLowerCase()});
+  return it.__hay;
 }
 function renderTree(chaps, kw, kinds){
   const hit = it => (!kinds || kinds.indexOf(it.kind) >= 0)
-                && (!kw || JSON.stringify(it).toLowerCase().indexOf(kw) >= 0);
+                && (!kw || hay(it).indexOf(kw) >= 0);
   let out='';
   chaps.forEach((ch, ci)=>{
     const items = (ch.items||[]).filter(hit);
@@ -479,6 +489,10 @@ document.addEventListener('click',e=>{
   if(t){
     const b=document.getElementById(t.dataset.t);
     if(b){
+      if(b.dataset.lazy && LAZY.has(b.id)){
+        b.innerHTML=LAZY.get(b.id)(); LAZY.delete(b.id); delete b.dataset.lazy;
+        applyMarks(document.getElementById('main'));
+      }
       b.classList.toggle('hide');
       const a=t.querySelector('.arw');
       if(a) a.textContent = b.classList.contains('hide') ? '▸' : '▾';
@@ -551,11 +565,11 @@ function draw(){
   let html='', n=0;
   document.getElementById('annbar').style.display=(TAB==='k')?'inline':'none';
   const kinds = (TAB==='p') ? ['题目'] : ['知识点','易错点'];
-  UID=0;
+  UID=0; LAZY.clear();
   CHAPS.forEach(ch=>{
     n += (ch.items||[]).filter(it=>{
       if(kinds.indexOf(it.kind) < 0) return false;
-      return !kw || JSON.stringify(it).toLowerCase().indexOf(kw)>=0;
+      return !kw || hay(it).indexOf(kw)>=0;
     }).length;
   });
   m.innerHTML = renderTree(CHAPS, kw, kinds);
@@ -563,6 +577,7 @@ function draw(){
   document.getElementById('annbar').style.display='inline';
   if(window.renderMath) m.querySelectorAll('.ghd').forEach(node=>window.renderMath(node));
   if(window.SectionComments) window.SectionComments.refresh(m);
+  if(window.PaperKit) window.PaperKit.decorate(m);
   const done=()=>applyMarks(m);
   done();
 }
