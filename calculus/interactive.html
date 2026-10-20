@@ -314,12 +314,13 @@
       .ex-stars { display: none; }
     }
   </style>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="../shared/vendor/katex-0.16.11/katex.min.css">
+  <link rel="preload" href="../shared/vendor/katex-0.16.11/fonts/KaTeX_Main-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../shared/vendor/katex-0.16.11/fonts/KaTeX_Math-Italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../shared/katex-overrides.css">
   <script src="../shared/math-render.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="../shared/vendor/katex-0.16.11/katex.min.js"></script>
+  <script defer src="../shared/vendor/katex-0.16.11/contrib/auto-render.min.js"></script>
   <script src="data.js"></script>
   <script src="book-source.js"></script>
   <script src="interactive-extras.js"></script>

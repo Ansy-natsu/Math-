@@ -1,5 +1,5 @@
 [build]
-  command = "npm ci"
+  command = "npm ci && node scripts/stamp-assets.mjs"
   publish = "."
 
 [build.environment]
