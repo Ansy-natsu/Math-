@@ -399,7 +399,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第1章 线性方程组的求解",
       "section": "§1.2 同解变形与阶梯形线性方程组",
-      "right_answer": "令 $x_2=s,\\ x_4=t$（$s,t\\in\\mathbb R$），则通解为 $(x_1,x_2,x_3,x_4)=s(-2,1,0,0)+t(-1,0,0,1)+(0,0,-1,0)$。"
+      "right_answer": "$(x_1,x_2,x_3,x_4)=s(-2,1,0,0)+t(-1,0,0,1)+(0,0,-1,0)$，$s,t\\in\\mathbb R$。"
     },
     {
       "id": "1.2-02",
@@ -496,7 +496,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第1章 线性方程组的求解",
       "section": "§1.3 Gauss消元法的一般结论",
-      "right_answer": "当 $a\\neq7$ 时，$D\\neq0$，系数矩阵可逆，只有零解 $x=y=z=0$。；当 $a=7$ 时，$D=0$，有非零解。此时方程组为 $x+y+z=0,\\ x+2y+3z=0,\\ x+4y+7z=0$。"
+      "right_answer": "当 $a\\ne7$ 时只有零解 $x=y=z=0$；当 $a=7$ 时全部解为 $(x,y,z)=t(1,-2,1)^T$，$t\\in\\mathbb R$。"
     },
     {
       "id": "1.3-02",
@@ -597,7 +597,7 @@ const BANK = {
         "§4.8 解的结构"
       ],
       "added": "2026-10-19",
-      "right_answer": "代回第一式得 $x_1=2-2x_3+4x_4$。令 $x_3=s,x_4=t$，通解为 $(x_1,x_2,x_3,x_4)=(2,-3,0,0)+s(-2,1,1,0)+t(4,-5,0,1)$。"
+      "right_answer": "$p=2,\\ q=3,\\ r=2$；通解为 $(x_1,x_2,x_3,x_4)=(2,-3,0,0)+s(-2,1,1,0)+t(4,-5,0,1)$，$s,t\\in\\mathbb R$。"
     },
     {
       "id": "2025-LA-QZ-A1",
@@ -641,7 +641,7 @@ const BANK = {
         "§4.8 解的结构"
       ],
       "added": "2026-10-19",
-      "right_answer": "因此 $r(A)=3<4=r(A\\mid b)$，方程组无解。"
+      "right_answer": "方程组无解。"
     },
     {
       "id": "2025-LA-QZ-A3",
@@ -686,7 +686,7 @@ const BANK = {
         "§1.3 解的判定"
       ],
       "added": "2026-10-19",
-      "right_answer": "$n+1$ 阶方阵列相关，故其行列式为 $0$。"
+      "right_answer": "行列式为 $0$。"
     },
     {
       "id": "2025-LA-QZ-B1",
@@ -729,7 +729,7 @@ const BANK = {
         "§1.3 Gauss消元法"
       ],
       "added": "2026-10-19",
-      "right_answer": "两个秩不相等，方程组无解。"
+      "right_answer": "方程组无解。"
     },
     {
       "id": "2025-LA-QZ-B3",
@@ -774,7 +774,7 @@ const BANK = {
         "2025-LA-QZ-A3"
       ],
       "added": "2026-10-19",
-      "right_answer": "故方程组无解。"
+      "right_answer": "方程组无解。"
     },
     {
       "id": "1.4-01",
@@ -820,7 +820,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第1章 线性方程组的求解",
       "section": "§1.4 矩阵及其初等变换",
-      "right_answer": "行阶梯形为 $\\begin{pmatrix}1&2&3\\\\0&0&1\\\\0&0&0\\end{pmatrix}$，$r(A)=2$，且 $A$ 行等价于 $\\begin{pmatrix}1&0&0\\\\0&1&0\\\\0&0&0\\end{pmatrix}$。"
+      "right_answer": "（1）行阶梯形为 $\\begin{pmatrix}1&2&3\\\\0&0&1\\\\0&0&0\\end{pmatrix}$；（2）非零行数为 $2$，$A$ 行等价于 $\\begin{pmatrix}1&0&0\\\\0&1&0\\\\0&0&0\\end{pmatrix}$。"
     },
     {
       "id": "1.5-01",
@@ -875,7 +875,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第1章 线性方程组的求解",
       "section": "§1.5 Gauss消元过程的矩阵形式",
-      "right_answer": "所以 $A=E_{21}(2)E_{31}(4)E_{32}(3)U$，三个初等矩阵的乘积正是上面的 $L$。"
+      "right_answer": "$L=\\begin{pmatrix}1&0&0\\\\2&1&0\\\\4&3&1\\end{pmatrix}$，$U=\\begin{pmatrix}2&1&1\\\\0&1&1\\\\0&0&2\\end{pmatrix}$；行变换为 $R_2\\leftarrow R_2-2R_1,\\ R_3\\leftarrow R_3-4R_1,\\ R_3\\leftarrow R_3-3R_2$。"
     },
     {
       "id": "1.5-02",
@@ -922,7 +922,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第1章 线性方程组的求解",
       "section": "§1.5 Gauss消元过程的矩阵形式",
-      "right_answer": "所以 $Ax=b_1$ 的解为 $(1,2)^T$，$Ax=b_2$ 的解为 $(-1,1)^T$。即 $X=\\begin{pmatrix}1&-1\\\\2&1\\end{pmatrix}$。"
+      "right_answer": "$x_1=(1,2)^T$，$x_2=(-1,1)^T$，$X=(x_1,x_2)=\\begin{pmatrix}1&-1\\\\2&1\\end{pmatrix}$。"
     },
     {
       "id": "2.1-01",
@@ -966,7 +966,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第2章 行列式与矩阵的秩",
       "section": "§2.1 n–排列",
-      "right_answer": "逆序数 $\\tau=0+1+2+1+3=7$，为奇数，故是奇排列。"
+      "right_answer": "逆序数 $\\tau=7$；该排列为奇排列。"
     },
     {
       "id": "2.2-01",
@@ -1012,7 +1012,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第2章 行列式与矩阵的秩",
       "section": "§2.2 方阵的行列式",
-      "right_answer": "所以 $D=+24$。"
+      "right_answer": "$D=24$。"
     },
     {
       "id": "2.2-02",
@@ -1063,7 +1063,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第2章 行列式与矩阵的秩",
       "section": "§2.2 方阵的行列式",
-      "right_answer": "最终化为下三角行列式，对角线乘积正是上述 $6$ 个差因子。"
+      "right_answer": "$V_4=12$。"
     },
     {
       "id": "2.3-01",
@@ -1112,7 +1112,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第2章 行列式与矩阵的秩",
       "section": "§2.3 行列式的性质",
-      "right_answer": "所以 $D=10\\times16=160$。"
+      "right_answer": "$D=160$。"
     },
     {
       "id": "2.3-02",
@@ -1160,7 +1160,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第2章 行列式与矩阵的秩",
       "section": "§2.3 行列式的性质",
-      "right_answer": "$|A^2|=|A|^2=4$。"
+      "right_answer": "$|2A|=16$，$|A^T|=2$，$|A^{-1}|=\\dfrac12$，$|A^*|=4$，$|A^2|=4$。"
     },
     {
       "id": "2025-LA-QZ-A2",
@@ -1205,7 +1205,7 @@ const BANK = {
         "§5.1 特征值"
       ],
       "added": "2026-10-19",
-      "right_answer": "因此行列式为 $1+x_1^2+x_2^2+x_3^2+x_4^2$。"
+      "right_answer": "$D=1+x_1^2+x_2^2+x_3^2+x_4^2$。"
     },
     {
       "id": "2025-LA-QZ-B2",
@@ -1251,7 +1251,7 @@ const BANK = {
         "2025-LA-QZ-A2"
       ],
       "added": "2026-10-19",
-      "right_answer": "故行列式仍为 $\\det(I+xx^T)=1+x_1^2+x_2^2+x_3^2+x_4^2$。"
+      "right_answer": "$D=1+x_1^2+x_2^2+x_3^2+x_4^2$。"
     },
     {
       "id": "2.4-01",
@@ -1304,7 +1304,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第2章 行列式与矩阵的秩",
       "section": "§2.4 Laplace定理",
-      "right_answer": "故 $D=-2\\times5=-10$。"
+      "right_answer": "$D=-10$。"
     },
     {
       "id": "2025-LA-MT-03",
@@ -1345,7 +1345,7 @@ const BANK = {
         "§2.4 Laplace展开"
       ],
       "added": "2026-10-19",
-      "right_answer": "代入四个代数余子式均为 $1$，得 $D=4$。"
+      "right_answer": "$D=4$。"
     },
     {
       "id": "2025-LA-MT-04",
@@ -1393,7 +1393,7 @@ const BANK = {
         "§2.4 Laplace展开"
       ],
       "added": "2026-10-19",
-      "right_answer": "代回 $x(z+3)+2(z+1)=0$ 得 $-(z+3)+2z+2=0$，所以 $z=1$。"
+      "right_answer": "$x=-1, z=1$。"
     },
     {
       "id": "2.5-01",
@@ -1486,7 +1486,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第2章 行列式与矩阵的秩",
       "section": "§2.6 Gauss消元过程中的不变量",
-      "right_answer": "两个行空间互相包含，故相等；行空间的维数（行秩）自然不变。"
+      "right_answer": "行空间和行秩均不变。"
     },
     {
       "id": "2.7-01",
@@ -1535,14 +1535,14 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第2章 行列式与矩阵的秩",
       "section": "§2.7 矩阵的相抵",
-      "right_answer": "$r(A)=2$，且 $A$ 相抵于 $\\begin{pmatrix}1&0&0\\\\0&1&0\\\\0&0&0\\end{pmatrix}$。"
+      "right_answer": "（1）$r(A)=2$；（2）$A$ 相抵于 $\\begin{pmatrix}1&0&0\\\\0&1&0\\\\0&0&0\\end{pmatrix}$。行变换可取 $R_2-2R_1,R_3-R_1$、交换 $R_2,R_3$、$R_2\\leftarrow(-1)R_2$，列变换可取 $C_2-2C_1,C_3-3C_1,C_3-2C_2$。"
     },
     {
       "id": "2025-LA-MT-02",
       "source": "2025–2026 线性代数（甲）秋冬期中第2题",
       "chapter": "第2章 行列式与矩阵的秩",
       "section": "§2.7 矩阵的相抵",
-      "statement": "设\n$$A=\\begin{pmatrix}1&1&1\\\\1&0&2\\\\4&4&a^2+3\\end{pmatrix},\\qquad B=\\begin{pmatrix}1&0&1\\\\1&3&3\\\\a+3&1-a&a^2+3\\end{pmatrix}.$$\n（1）当 $a$ 为何值时，$A$ 与 $B$ 不相抵？\\n（2）当 $a$ 为何值时，二者的秩都为 $2$？\\n（3）当二者秩都为 $3$ 时，求满足 $A(x_1,x_2,x_3)^T=(1,3,a^2+3)^T$ 的 $x_1,x_2,x_3$。",
+      "statement": "设\n$$A=\\begin{pmatrix}1&1&1\\\\1&0&2\\\\4&4&a^2+3\\end{pmatrix},\\qquad B=\\begin{pmatrix}1&0&1\\\\1&3&3\\\\a+3&1-a&a^2+3\\end{pmatrix}.$$\n（1）当 $a$ 为何值时，$A$ 与 $B$ 不相抵？\n（2）当 $a$ 为何值时，二者的秩都为 $2$？\n（3）当二者秩都为 $3$ 时，求满足 $A(x_1,x_2,x_3)^T=(1,3,a^2+3)^T$ 的 $x_1,x_2,x_3$。",
       "type": "综合题",
       "topics": [
         "矩阵相抵",
@@ -1585,7 +1585,7 @@ const BANK = {
         "§2.5 矩阵的秩"
       ],
       "added": "2026-10-19",
-      "right_answer": "$a=-1$ 或 $-\\dfrac23$ 时不相抵；$a=1$ 时二者秩都为 $2$；满秩时 $(x_1,x_2,x_3)=(1,-1,1)$。"
+      "right_answer": "（1）$a=-1$ 或 $a=-\\dfrac23$ 时，$A$ 与 $B$ 不相抵；（2）$a=1$ 时，二者秩都为 $2$；（3）当二者秩都为 $3$（满秩）时，$(x_1,x_2,x_3)=(1,-1,1)$。"
     },
     {
       "id": "3.1-01",
@@ -1633,7 +1633,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第3章 矩阵的运算",
       "section": "§3.1 矩阵的加减法、数乘、乘法和转置",
-      "right_answer": "$AB=\\begin{pmatrix}2&1\\\\1&1\\end{pmatrix}$，$BA=\\begin{pmatrix}1&1\\\\1&2\\end{pmatrix}$，故 $AB\\ne BA$；同时 $(AB)^2\\ne A^2B^2$。"
+      "right_answer": "（1）$AB=\\begin{pmatrix}2&1\\\\1&1\\end{pmatrix}$，$BA=\\begin{pmatrix}1&1\\\\1&2\\end{pmatrix}$，故 $AB\\ne BA$；（2）$A^2=\\begin{pmatrix}1&2\\\\0&1\\end{pmatrix}$，$B^2=\\begin{pmatrix}1&0\\\\2&1\\end{pmatrix}$，$(AB)^2=\\begin{pmatrix}5&3\\\\3&2\\end{pmatrix}$，$A^2B^2=\\begin{pmatrix}5&2\\\\2&1\\end{pmatrix}$，故 $(AB)^2\\ne A^2B^2$。"
     },
     {
       "id": "3.1-02",
@@ -1680,14 +1680,14 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第3章 矩阵的运算",
       "section": "§3.1 矩阵的加减法、数乘、乘法和转置",
-      "right_answer": "两者相等，故 $(AB)^T=B^TA^T$。"
+      "right_answer": "$(AB)^T=B^TA^T$。"
     },
     {
       "id": "2025-LA-MT-08",
       "source": "2025–2026 线性代数（甲）秋冬期中第8题",
       "chapter": "第3章 矩阵的运算",
       "section": "§3.1 矩阵的加减法、数乘、乘法和转置",
-      "statement": "（1）设 $n$ 阶矩阵\n$$A=\\begin{pmatrix}a_1\\\\a_2\\\\\\vdots\\\\a_n\\end{pmatrix}(b_1\\ b_2\\ \\cdots\\ b_n),$$\n如果 $a_1b_1+a_2b_2+\\cdots+a_nb_n=1$，证明 $A^2=A$。\\n（2）设 $A,B,C$ 为 $n$ 阶方阵，满足 $r(A)<r(C)\\le n$，且 $BC=O$。证明：存在非零矩阵 $X$，使得 $AX=BX$。",
+      "statement": "（1）设 $n$ 阶矩阵\n$$A=\\begin{pmatrix}a_1\\\\a_2\\\\\\vdots\\\\a_n\\end{pmatrix}(b_1\\ b_2\\ \\cdots\\ b_n),$$\n如果 $a_1b_1+a_2b_2+\\cdots+a_nb_n=1$，证明 $A^2=A$。\n（2）设 $A,B,C$ 为 $n$ 阶方阵，满足 $r(A)<r(C)\\le n$，且 $BC=O$。证明：存在非零矩阵 $X$，使得 $AX=BX$。",
       "type": "证明题",
       "topics": [
         "秩一矩阵",
@@ -1735,7 +1735,7 @@ const BANK = {
         "§4.6 秩与向量组"
       ],
       "added": "2026-10-19",
-      "right_answer": "$A^2=(ab^T)(ab^T)=a(b^Ta)b^T=ab^T=A$。；存在非零向量 $x\\in\\ker(A-B)$，取 $X=x\\mathbf{1}^T$（或任意非零列重复构成非零矩阵），则 $(A-B)X=0$，即 $AX=BX$。"
+      "right_answer": "（1）$A^2=A$；（2）存在非零矩阵 $X=x\\mathbf{1}^T$，使 $AX=BX$。"
     },
     {
       "id": "3.2-01",
@@ -1784,7 +1784,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第3章 矩阵的运算",
       "section": "§3.2 矩阵求逆",
-      "right_answer": "验证第一行乘第一列：$1(-24)+2(20)+3(-5)=-24+40-15=1$；第一行乘第二列：$18-30+12=0$。其余同理，故 $AA^{-1}=I$。"
+      "right_answer": "$A^{-1}=\\begin{pmatrix}-24&18&5\\\\20&-15&-4\\\\-5&4&1\\end{pmatrix}$，且 $AA^{-1}=I$。"
     },
     {
       "id": "3.2-02",
@@ -1838,7 +1838,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第3章 矩阵的运算",
       "section": "§3.2 矩阵求逆",
-      "right_answer": "$A^{-1}=\\dfrac{3I-A}{2}$，$(A+I)^{-1}=\\dfrac{4I-A}{6}$。"
+      "right_answer": "（1）$A$ 可逆，$A^{-1}=\\dfrac{3I-A}{2}$；（2）$A+I$ 可逆，$(A+I)^{-1}=\\dfrac{4I-A}{6}$。"
     },
     {
       "id": "2025-LA-MT-05",
@@ -1885,7 +1885,7 @@ const BANK = {
         "§3.2 逆矩阵"
       ],
       "added": "2026-10-19",
-      "right_answer": "当 $x\\ne0$ 时，$|A|=\\sqrt[3]{x}$。"
+      "right_answer": "$x\\ne0$；$|A|=\\sqrt[3]{x}$。"
     },
     {
       "id": "3.3-01",
@@ -1933,7 +1933,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第3章 矩阵的运算",
       "section": "§3.3 分块矩阵的运算",
-      "right_answer": "所以 $M^{-1}=\\begin{pmatrix}A^{-1}&0\\\\-B^{-1}CA^{-1}&B^{-1}\\end{pmatrix}$。"
+      "right_answer": "$M$ 可逆，$M^{-1}=\\begin{pmatrix}A^{-1}&0\\\\-B^{-1}CA^{-1}&B^{-1}\\end{pmatrix}$。"
     },
     {
       "id": "3.3-02",
@@ -1982,7 +1982,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第3章 矩阵的运算",
       "section": "§3.3 分块矩阵的运算",
-      "right_answer": "所以 $|M|=|A|\\cdot4=4$。"
+      "right_answer": "$|M|=4$。"
     },
     {
       "id": "3.4-01",
@@ -2028,7 +2028,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第3章 矩阵的运算",
       "section": "§3.4 矩阵的初等变换与矩阵乘法的联系",
-      "right_answer": "$E=\\begin{pmatrix}0&1&0\\\\1&0&0\\\\0&0&1\\end{pmatrix}$。；$EA=\\begin{pmatrix}4&5&6\\\\1&2&3\\\\7&8&9\\end{pmatrix}$，即交换 $A$ 的第 $1,2$ 行。；$AE=\\begin{pmatrix}2&1&3\\\\5&4&6\\\\8&7&9\\end{pmatrix}$，即交换 $A$ 的第 $1,2$ 列。"
+      "right_answer": "（1）$EA$ 交换 $A$ 的第 $1,2$ 行，$AE$ 交换 $A$ 的第 $1,2$ 列；（2）$E=\\begin{pmatrix}0&1&0\\\\1&0&0\\\\0&0&1\\end{pmatrix}$，$EA=\\begin{pmatrix}4&5&6\\\\1&2&3\\\\7&8&9\\end{pmatrix}$，$AE=\\begin{pmatrix}2&1&3\\\\5&4&6\\\\8&7&9\\end{pmatrix}$。"
     },
     {
       "id": "2025-LA-MT-06",
@@ -2075,7 +2075,7 @@ const BANK = {
         "§3.4 初等矩阵"
       ],
       "added": "2026-10-19",
-      "right_answer": "$Q^{1000}=I$，故 $P^{1025}AQ^{1000}=P^{1025}A$。"
+      "right_answer": "$PAQ^{2025}=\\begin{pmatrix}a_{13}&a_{12}&a_{11}\\\\a_{23}&a_{22}&a_{21}\\\\a_{33}+2a_{13}&a_{32}+2a_{12}&a_{31}+2a_{11}\\end{pmatrix}$；$P^{1025}AQ^{1000}=\\begin{pmatrix}a_{11}&a_{12}&a_{13}\\\\a_{21}&a_{22}&a_{23}\\\\a_{31}+2050a_{11}&a_{32}+2050a_{12}&a_{33}+2050a_{13}\\end{pmatrix}$。"
     },
     {
       "id": "2025-LA-MT-07",
@@ -2118,7 +2118,7 @@ const BANK = {
         "§5.5 正交矩阵"
       ],
       "added": "2026-10-19",
-      "right_answer": "于是 $A^TA=I$。"
+      "right_answer": "$A^TA=I$。"
     },
     {
       "id": "3.5-01",
@@ -2165,7 +2165,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第3章 矩阵的运算",
       "section": "§3.5 矩阵运算对矩阵秩的影响",
-      "right_answer": "反例：$A=\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$，$B=\\begin{pmatrix}0&0\\\\0&1\\end{pmatrix}$，则 $r(A)=r(B)=1$，但 $AB=0$，$r(AB)=0$。"
+      "right_answer": "$r(AB)\\le\\min\\{r(A),r(B)\\}$。反例：$A=\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$，$B=\\begin{pmatrix}0&0\\\\0&1\\end{pmatrix}$，$r(A)=r(B)=1$，但 $r(AB)=0$。"
     },
     {
       "id": "3.5-02",
@@ -2211,7 +2211,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第3章 矩阵的运算",
       "section": "§3.5 矩阵运算对矩阵秩的影响",
-      "right_answer": "于是 $r(A+B)=\\dim\\operatorname{Col}(A+B)\\le\\dim(\\operatorname{Col}(A)+\\operatorname{Col}(B))\\le\\dim\\operatorname{Col}(A)+\\dim\\operatorname{Col}(B)=r(A)+r(B)$。"
+      "right_answer": "$r(A+B)\\le r(A)+r(B)$。"
     },
     {
       "id": "4.1-01",
@@ -2259,7 +2259,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第4章 n元向量空间",
       "section": "§4.1 向量组的线性关系",
-      "right_answer": "当 $a=1$ 时 $\\beta=\\alpha_1$；当 $a=2$ 时 $\\beta=\\alpha_2$；两种情形都线性相关。"
+      "right_answer": "$a=1$ 或 $a=2$ 时线性相关。"
     },
     {
       "id": "4.2-01",
@@ -2306,7 +2306,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第4章 n元向量空间",
       "section": "§4.2 向量组的线性表示及等价",
-      "right_answer": "两个向量组可以互相线性表示，故等价。"
+      "right_answer": "两个向量组等价。"
     },
     {
       "id": "4.3-01",
@@ -2361,7 +2361,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第4章 n元向量空间",
       "section": "§4.3 极大线性无关组与向量组的秩",
-      "right_answer": "本题第一、三列为主元列，故 $\\{\\alpha_1,\\alpha_3\\}$ 是极大无关组，$r=2$。"
+      "right_answer": "$\\{\\alpha_1,\\alpha_3\\}$ 是一个极大线性无关组，$r=2$。"
     },
     {
       "id": "4.4-01",
@@ -2409,7 +2409,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第4章 n元向量空间",
       "section": "§4.4 维数基坐标",
-      "right_answer": "检验：$4(1,1,1)-(1,1,0)-(1,0,0)=(2,3,4)$。"
+      "right_answer": "$[\\beta]_\\alpha=(4,-1,-1)^T$。"
     },
     {
       "id": "4.5-01",
@@ -2457,7 +2457,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第4章 n元向量空间",
       "section": "§4.5 基之间的过渡矩阵坐标变换",
-      "right_answer": "$P=\\begin{pmatrix}2&1\\\\1&1\\end{pmatrix}$，$P^{-1}=\\begin{pmatrix}1&-1\\\\-1&2\\end{pmatrix}$，$[\\xi]_\\beta=(1,1)^T$。"
+      "right_answer": "（1）从 $\\alpha$ 到 $\\beta$ 的过渡矩阵为 $P=\\begin{pmatrix}2&1\\\\1&1\\end{pmatrix}$；（2）从 $\\beta$ 到 $\\alpha$ 的过渡矩阵为 $P^{-1}=\\begin{pmatrix}1&-1\\\\-1&2\\end{pmatrix}$；（3）$[\\xi]_\\beta=(1,1)^T$。"
     },
     {
       "id": "4.6-01",
@@ -2507,7 +2507,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第4章 n元向量空间",
       "section": "§4.6 矩阵的秩与向量组的秩之间的关系",
-      "right_answer": "所以 $R$ 的列秩为 $r$；由列关系不变，$A$ 的列秩也为 $r$。故行秩 $=$ 列秩。"
+      "right_answer": "矩阵的行秩等于列秩。"
     },
     {
       "id": "4.7-01",
@@ -2557,7 +2557,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第4章 n元向量空间",
       "section": "§4.7 子空间",
-      "right_answer": "$W$ 是子空间，一组基为 $(-1,1,0)^T,(-1,0,1)^T$，$\\dim W=2$；可扩充为 $\\mathbb R^3$ 的基 $\\{(-1,1,0)^T,(-1,0,1)^T,(1,0,0)^T\\}$。"
+      "right_answer": "（1）$W$ 是 $\\mathbb R^3$ 的子空间；（2）$\\{(-1,1,0)^T,(-1,0,1)^T\\}$ 是 $W$ 的一组基，$\\dim W=2$；（3）扩充基为 $\\{(-1,1,0)^T,(-1,0,1)^T,(1,0,0)^T\\}$。"
     },
     {
       "id": "4.8-01",
@@ -2608,7 +2608,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第4章 n元向量空间",
       "section": "§4.8 线性方程组解的结构",
-      "right_answer": "通解为 $x=\\eta^*+c_1\\eta_1+c_2\\eta_2$，$c_1,c_2\\in\\mathbb R$。"
+      "right_answer": "$\\eta^*=(-1,2,0,0)^T$，$\\eta_1=(4,-3,1,0)^T$，$\\eta_2=(-1,-1,0,1)^T$；通解 $x=\\eta^*+c_1\\eta_1+c_2\\eta_2$，$c_1,c_2\\in\\mathbb R$。"
     },
     {
       "id": "4.9-01",
@@ -2658,7 +2658,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第4章 n元向量空间",
       "section": "§4.9 欧氏空间",
-      "right_answer": "所以 $\\{\\beta_1,\\beta_2,\\beta_3\\}$ 是一组正交基（如需标准正交基，再各自除以模长）。"
+      "right_answer": "$\\beta_1=(1,1,0,0)^T$，$\\beta_2=(\\tfrac12,-\\tfrac12,1,0)^T$，$\\beta_3=(\\tfrac13,-\\tfrac13,-\\tfrac13,1)^T$。"
     },
     {
       "id": "5.1-01",
@@ -2707,7 +2707,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第5章 矩阵的特征值理论与相似对角化",
       "section": "§5.1 特征值与特征向量的定义及计算",
-      "right_answer": "对 $\\lambda=1$：$(I-A)x=0$ 即 $x_1+x_2+x_3=0$，解得 $x=s(1,-1,0)^T+t(1,0,-1)^T$（$s,t$ 不全为零）。"
+      "right_answer": "特征值 $4,1,1$；$\\lambda=4$ 的特征向量为 $k(1,1,1)^T\\ (k\\ne0)$，$\\lambda=1$ 的特征向量为 $s(1,-1,0)^T+t(1,0,-1)^T\\ (s,t\\text{ 不全为零})$。"
     },
     {
       "id": "5.1-02",
@@ -2754,7 +2754,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第5章 矩阵的特征值理论与相似对角化",
       "section": "§5.1 特征值与特征向量的定义及计算",
-      "right_answer": "对 $\\lambda=-1$：$(-I-A)x=\\begin{pmatrix}-2&-2\\\\-3&-3\\end{pmatrix}x=0$，得 $x_1+x_2=0$，特征向量 $k(1,-1)^T$（$k\\neq0$）。"
+      "right_answer": "特征值 $4,-1$；$\\lambda=4$ 的特征向量为 $k(2,3)^T\\ (k\\ne0)$，$\\lambda=-1$ 的特征向量为 $k(1,-1)^T\\ (k\\ne0)$。"
     },
     {
       "id": "5.2-01",
@@ -2801,7 +2801,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第5章 矩阵的特征值理论与相似对角化",
       "section": "§5.2 特征值与特征向量的基本性质",
-      "right_answer": "$A^{-1}$ 的特征值为 $\\lambda^{-1}$；$A^*$ 的特征值为 $\\dfrac{|A|}{\\lambda}$；$f(A)$ 的特征值为 $f(\\lambda)$。"
+      "right_answer": "（1）$\\lambda\\ne0$，$A^{-1}$ 的特征值为 $\\lambda^{-1}$；（2）$A^*$ 的特征值为 $\\dfrac{|A|}{\\lambda}$；（3）$f(A)$ 的特征值为 $f(\\lambda)$。"
     },
     {
       "id": "5.2-02",
@@ -2855,7 +2855,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第5章 矩阵的特征值理论与相似对角化",
       "section": "§5.2 特征值与特征向量的基本性质",
-      "right_answer": "第一式乘 $\\lambda_2$ 后相减：$c_1(\\lambda_1-\\lambda_2)x_1=0$。因 $\\lambda_1\\neq\\lambda_2$、$x_1\\neq0$，得 $c_1=0$，进而 $c_2=0$。"
+      "right_answer": "属于不同特征值的特征向量线性无关。"
     },
     {
       "id": "5.3-01",
@@ -2912,7 +2912,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第5章 矩阵的特征值理论与相似对角化",
       "section": "§5.3 矩阵的相似及其性质",
-      "right_answer": "（1）相似矩阵的迹、行列式、特征多项式和秩都相同；（2）$A$ 与 $B$ 不相似。"
+      "right_answer": "（1）迹、行列式、特征多项式和秩均相同；（2）$A$ 与 $B$ 不相似。"
     },
     {
       "id": "5.4-01",
@@ -2963,7 +2963,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第5章 矩阵的特征值理论与相似对角化",
       "section": "§5.4 矩阵的相似对角化",
-      "right_answer": "当 $a\\neq0$ 时，$r(A-I)=2$，$\\dim\\ker(A-I)=3-2=1<2$，不可对角化。；当 $a=0$ 时，$r(A-I)=1$，$\\dim\\ker(A-I)=2$，特征向量可取 $e_1,e_2$，加上 $\\lambda=2$ 的 $e_3$，共有 $3$ 个线性无关特征向量，故可对角化。；所以仅当 $a=0$ 时 $A$ 可相似对角化。"
+      "right_answer": "$A$ 可相似对角化当且仅当 $a=0$。"
     },
     {
       "id": "5.4-02",
@@ -3012,7 +3012,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第5章 矩阵的特征值理论与相似对角化",
       "section": "§5.4 矩阵的相似对角化",
-      "right_answer": "取 $n=1$ 检验：$\\dfrac13\\begin{pmatrix}9&6\\\\3&6\\end{pmatrix}=\\begin{pmatrix}3&2\\\\1&2\\end{pmatrix}=A$。"
+      "right_answer": "$A^n=\\dfrac13\\begin{pmatrix}2\\cdot4^n+1&2\\cdot4^n-2\\\\4^n-1&4^n+2\\end{pmatrix}$。"
     },
     {
       "id": "5.5-01",
@@ -3108,7 +3108,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第6章 二次型",
       "section": "§6.1 二次型的定义及标准形",
-      "right_answer": "$f=x^TAx$，其中 $x=(x_1,x_2,x_3)^T$。"
+      "right_answer": "$f=x^TAx$，$A=\\begin{pmatrix}1&2&-3\\\\2&2&4\\\\-3&4&3\\end{pmatrix}$。"
     },
     {
       "id": "6.1-02",
@@ -3156,7 +3156,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第6章 二次型",
       "section": "§6.1 二次型的定义及标准形",
-      "right_answer": "由 $y_1=x_1+x_2,\\ y_2=x_2+2x_3,\\ y_3=x_3$ 反解，$x=Cy$，其中 $C=\\begin{pmatrix}1&-1&2\\\\0&1&-2\\\\0&0&1\\end{pmatrix}$，$|C|=1\\neq0$，故为可逆线性替换。"
+      "right_answer": "标准形 $f=y_1^2+y_2^2+y_3^2$；可逆替换 $x=Cy$，$C=\\begin{pmatrix}1&-1&2\\\\0&1&-2\\\\0&0&1\\end{pmatrix}$。"
     },
     {
       "id": "6.2-01",
@@ -3214,7 +3214,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第6章 二次型",
       "section": "§6.2 二次型的矩阵形式与矩阵的合同",
-      "right_answer": "$A$ 与 $B$ 合同，但不相似；两者的正、负惯性指数都为 $(1,1)$，特征值不同。"
+      "right_answer": "（1）$A$ 与 $B$ 合同；（2）$A$ 与 $B$ 不相似。"
     },
     {
       "id": "6.2-02",
@@ -3271,7 +3271,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第6章 二次型",
       "section": "§6.2 二次型的矩阵形式与矩阵的合同",
-      "right_answer": "两种标准形的惯性指数相同：正 $1$、负 $2$。"
+      "right_answer": "标准形为 $f=2y_1^2-y_2^2-y_3^2$。"
     },
     {
       "id": "6.3-01",
@@ -3320,7 +3320,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第6章 二次型",
       "section": "§6.3 二次型的规范形",
-      "right_answer": "规范形为 $z_1^2$。"
+      "right_answer": "秩为 $1$；正惯性指数为 $1$，负惯性指数为 $0$；规范形为 $z_1^2$。"
     },
     {
       "id": "6.4-01",
@@ -3369,7 +3369,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第6章 二次型",
       "section": "§6.4 实二次型的正交替换",
-      "right_answer": "令 $Q=(q_1,q_2,q_3)$，则 $Q$ 正交，且 $Q^TAQ=\\operatorname{diag}(2,2,0)$，故 $f=2y_1^2+2y_2^2$。"
+      "right_answer": "$Q=\\begin{pmatrix}\\frac1{\\sqrt2}&0&\\frac1{\\sqrt2}\\\\\\frac1{\\sqrt2}&0&-\\frac1{\\sqrt2}\\\\0&1&0\\end{pmatrix}$；$x=Qy$ 后，$f=2y_1^2+2y_2^2$。"
     },
     {
       "id": "6.5-01",
@@ -3417,7 +3417,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第6章 二次型",
       "section": "§6.5 二次型的正定性",
-      "right_answer": "各阶顺序主子式全为正，故 $A$ 正定，二次型正定。"
+      "right_answer": "二次型正定。"
     },
     {
       "id": "6.5-02",
@@ -3463,7 +3463,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第6章 二次型",
       "section": "§6.5 二次型的正定性",
-      "right_answer": "$\\Delta_1=1>0$；$\\Delta_2=\\begin{vmatrix}1&t\\\\t&1\\end{vmatrix}=1-t^2$；$\\Delta_3=2(1-t^2)$。；要求 $\\Delta_2>0$ 且 $\\Delta_3>0$，即 $1-t^2>0$。；所以 $-1<t<1$。"
+      "right_answer": "$-1<t<1$。"
     },
     {
       "id": "6.5-03",
@@ -3511,7 +3511,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第6章 二次型",
       "section": "§6.5 二次型的正定性",
-      "right_answer": "$A^TA$ 半正定；$A^TA+I$ 正定。"
+      "right_answer": "（1）$A^TA$ 半正定；（2）$A^TA+I_n$ 正定。"
     },
     {
       "id": "7.1-01",
@@ -3560,7 +3560,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第7章 线性空间",
       "section": "§7.1 映射观点下的运算",
-      "right_answer": "这三个矩阵线性无关（看四个位置的坐标即可），故为 $V$ 的基，$\\dim V=3$。"
+      "right_answer": "$V$ 是线性空间；一组基为 $\\begin{pmatrix}1&0\\\\0&-1\\end{pmatrix},\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix},\\begin{pmatrix}0&0\\\\1&0\\end{pmatrix}$，$\\dim V=3$。"
     },
     {
       "id": "7.2-01",
@@ -3616,7 +3616,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第7章 线性空间",
       "section": "§7.2 线性空间的定义",
-      "right_answer": "两者不相等，违反 $(k+l)\\odot x=k\\odot x\\oplus l\\odot x$。"
+      "right_answer": "不构成线性空间。"
     },
     {
       "id": "7.3-01",
@@ -3669,7 +3669,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第7章 线性空间",
       "section": "§7.3 向量组的线性关系",
-      "right_answer": "解得 $k_1=k_2=k_3=0$，故线性无关。"
+      "right_answer": "线性无关。"
     },
     {
       "id": "7.4-01",
@@ -3716,7 +3716,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第7章 线性空间",
       "section": "§7.4 向量组的线性表示及等价",
-      "right_answer": "所以 $q=p_2+2p_3$。检验：$(1+x^2)+2(x+x^2)=1+2x+3x^2$。"
+      "right_answer": "$q=p_2+2p_3$。"
     },
     {
       "id": "7.5-01",
@@ -3764,7 +3764,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第7章 线性空间",
       "section": "§7.5 极大线性无关组与向量组的秩",
-      "right_answer": "$M_2(\\mathbb R)$ 的维数为 $4$，故这 $4$ 个线性无关的矩阵构成一组基。"
+      "right_answer": "向量组的秩为 $4$，且构成 $M_2(\\mathbb R)$ 的一组基。"
     },
     {
       "id": "7.6-01",
@@ -3811,7 +3811,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第7章 线性空间",
       "section": "§7.6 维数基坐标",
-      "right_answer": "故它们构成一组基，$\\dim S_3(\\mathbb R)=6$。"
+      "right_answer": "一组基为 $E_{11},E_{22},E_{33},E_{12}+E_{21},E_{13}+E_{31},E_{23}+E_{32}$，$\\dim S_3(\\mathbb R)=6$。"
     },
     {
       "id": "7.7-01",
@@ -3860,7 +3860,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第7章 线性空间",
       "section": "§7.7 基之间的过渡矩阵坐标变换",
-      "right_answer": "$P=\\begin{pmatrix}1&1&1\\\\0&1&2\\\\0&0&1\\end{pmatrix}$，$q$ 在基 $\\beta$ 下的坐标为 $(2,-4,3)^T$。"
+      "right_answer": "（1）$P=\\begin{pmatrix}1&1&1\\\\0&1&2\\\\0&0&1\\end{pmatrix}$；（2）$[q]_\\beta=(2,-4,3)^T$。"
     },
     {
       "id": "7.8-01",
@@ -3909,7 +3909,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第7章 线性空间",
       "section": "§7.8 子空间",
-      "right_answer": "唯一性：若 $v=w_1+t_1(1,1,1)=w_2+t_2(1,1,1)$，则 $w_1-w_2=(t_2-t_1)(1,1,1)\\in W_1\\cap W_2=\\{0\\}$，故 $t_1=t_2,\\ w_1=w_2$。"
+      "right_answer": "$\\mathbb R^3=W_1\\oplus W_2$；对 $v=(a,b,c)^T$，令 $t=\\dfrac{a+b+c}{3}$，则 $v=(v-t(1,1,1)^T)+t(1,1,1)^T$，其中 $v-t(1,1,1)^T\\in W_1$。"
     },
     {
       "id": "7.9-01",
@@ -3959,7 +3959,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第7章 线性空间",
       "section": "§7.9 一个不能忽略的重要关系",
-      "right_answer": "所以这 $r+s+t$ 个向量线性无关，构成 $W_1+W_2$ 的基，维数为 $r+s+t=(r+s)+(r+t)-r=\\dim W_1+\\dim W_2-\\dim(W_1\\cap W_2)$。"
+      "right_answer": "$\\dim(W_1+W_2)=\\dim W_1+\\dim W_2-\\dim(W_1\\cap W_2)$。"
     },
     {
       "id": "8.1-01",
@@ -4008,7 +4008,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第8章 欧氏空间",
       "section": "§8.1 欧氏空间的定义及其简单性质",
-      "right_answer": "四条公理均满足，故它是 $\\mathbb R^2$ 上的一个内积。"
+      "right_answer": "所定义运算满足内积公理，是 $\\mathbb R^2$ 上的一个内积。"
     },
     {
       "id": "8.1-02",
@@ -4057,7 +4057,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第8章 欧氏空间",
       "section": "§8.1 欧氏空间的定义及其简单性质",
-      "right_answer": "等号成立 $\\iff$ 存在 $t$ 使 $\\|\\alpha+t\\beta\\|=0$，即 $\\alpha=-t\\beta$，也就是 $\\alpha,\\beta$ 线性相关。"
+      "right_answer": "$|\\langle\\alpha,\\beta\\rangle|\\le\\|\\alpha\\|\\,\\|\\beta\\|$；等号成立当且仅当 $\\alpha,\\beta$ 线性相关。"
     },
     {
       "id": "8.1-03",
@@ -4105,7 +4105,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第8章 欧氏空间",
       "section": "§8.1 欧氏空间的定义及其简单性质",
-      "right_answer": "$\\alpha-\\beta=(0,1,-1)^T$，距离 $d=\\sqrt{0^2+1^2+(-1)^2}=\\sqrt2$。"
+      "right_answer": "夹角 $\\theta=60^\\circ$，距离 $d=\\sqrt2$。"
     },
     {
       "id": "8.2-01",
@@ -4156,7 +4156,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第8章 欧氏空间",
       "section": "§8.2 标准正交基",
-      "right_answer": "检验：$\\langle\\beta_3,\\beta_1\\rangle=-\\frac23+\\frac23=0$，$\\langle\\beta_3,\\beta_2\\rangle=-\\frac13-\\frac13+\\frac23=0$。"
+      "right_answer": "$\\beta_1=(1,1,0)^T$，$\\beta_2=(\\tfrac12,-\\tfrac12,1)^T$，$\\beta_3=(-\\tfrac23,\\tfrac23,\\tfrac23)^T$。"
     },
     {
       "id": "8.2-02",
@@ -4204,7 +4204,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第8章 欧氏空间",
       "section": "§8.2 标准正交基",
-      "right_answer": "验证维数：$\\dim W+\\dim W^\\perp=1+2=3=\\dim\\mathbb R^3$。"
+      "right_answer": "$W^\\perp=\\operatorname{span}\\{(1,-1,0)^T,(1,0,-1)^T\\}$，$\\dim W^\\perp=2$。"
     },
     {
       "id": "8.2-03",
@@ -4252,7 +4252,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第8章 欧氏空间",
       "section": "§8.2 标准正交基",
-      "right_answer": "$A$ 是正交矩阵，$A^{-1}=A^T$；$A$ 表示顺时针旋转 $45^\\circ$，$A^2$ 表示顺时针旋转 $90^\\circ$。"
+      "right_answer": "（1）$A$ 是正交矩阵，$A^{-1}=A^T$；（2）$A^2=\\begin{pmatrix}0&1\\\\-1&0\\end{pmatrix}$，$A$ 表示顺时针旋转 $45^\\circ$，$A^2$ 表示顺时针旋转 $90^\\circ$。"
     },
     {
       "id": "8.2-04",
@@ -4301,7 +4301,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第8章 欧氏空间",
       "section": "§8.2 标准正交基",
-      "right_answer": "$b-p=(-\\frac13,\\frac13,\\frac13)^T$，距离 $\\|b-p\\|=\\sqrt{\\frac13}=\\frac{\\sqrt3}{3}$。"
+      "right_answer": "正交投影 $p=(\\tfrac43,\\tfrac23,\\tfrac23)^T$，距离 $d=\\dfrac{\\sqrt3}{3}$。"
     },
     {
       "id": "8.2-05",
@@ -4348,7 +4348,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第8章 欧氏空间",
       "section": "§8.2 标准正交基",
-      "right_answer": "取 $\\beta=\\alpha$ 得 $\\|\\alpha\\|^2=\\sum_i a_i^2$。"
+      "right_answer": "$\\langle\\alpha,\\beta\\rangle=\\sum_{i=1}^n a_ib_i$，$\\|\\alpha\\|^2=\\sum_{i=1}^n a_i^2$。"
     },
     {
       "id": "9.1-01",
@@ -4394,7 +4394,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第9章 线性映射与线性变换初步",
       "section": "§9.1 线性映射的定义",
-      "right_answer": "（1）$T_1(0,0)=(1,0)\\neq(0,0)$，不满足 $T(0)=0$，故不是线性映射。也可直接看：常数项 $1$ 破坏了齐次性。；（2）设 $u=(x_1,y_1),v=(x_2,y_2)$，则 $T_2(u+v)=(x_1+x_2+y_1+y_2,\\ 2x_1+2x_2)=T_2(u)+T_2(v)$。"
+      "right_answer": "（1）$T_1$ 不是线性映射；（2）$T_2$ 是线性映射。"
     },
     {
       "id": "9.1-02",
@@ -4442,7 +4442,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第9章 线性映射与线性变换初步",
       "section": "§9.1 线性映射的定义",
-      "right_answer": "检验：$1+2=3=\\dim\\mathbb R^3$。"
+      "right_answer": "$\\ker T=\\operatorname{span}\\{(-1,1,-1)^T\\}$，$\\dim\\ker T=1$；$\\operatorname{Im}T=\\mathbb R^2$，$\\dim\\operatorname{Im}T=2$。"
     },
     {
       "id": "9.2-01",
@@ -4492,7 +4492,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第9章 线性映射与线性变换初步",
       "section": "§9.2 线性映射的和、数乘及乘积",
-      "right_answer": "两者第一分量不同（$2x+y$ 与 $2x+2y$），故 $ST\\neq TS$。"
+      "right_answer": "$(S+T)(x,y)=(3x+y,x)$，$(2S)(x,y)=(2x+2y,2x-2y)$，$(ST)(x,y)=(2x+y,2x-y)$，$(TS)(x,y)=(2x+2y,x-y)$；故 $ST\\ne TS$。"
     },
     {
       "id": "9.3-01",
@@ -4542,7 +4542,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第9章 线性映射与线性变换初步",
       "section": "§9.3 线性映射的维数定理",
-      "right_answer": "核的基为 $(2,-1,1,0)^T$ 与 $(-1,0,0,1)^T$。"
+      "right_answer": "$\\dim\\ker T=2$，一组基为 $(2,-1,1,0)^T,(-1,0,0,1)^T$；$\\dim\\operatorname{Im}T=2$，一组基为 $(1,0,1)^T,(2,1,3)^T$。"
     },
     {
       "id": "9.4-01",
@@ -4597,7 +4597,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第9章 线性映射与线性变换初步",
       "section": "§9.4 线性映射的矩阵",
-      "right_answer": "$A=\\begin{pmatrix}1&2\\\\3&-1\\end{pmatrix}$，$B=\\begin{pmatrix}\\frac52&\\frac32\\\\\\frac12&-\\frac52\\end{pmatrix}$。"
+      "right_answer": "（1）$A=\\begin{pmatrix}1&2\\\\3&-1\\end{pmatrix}$；（2）$B=\\begin{pmatrix}\\frac52&\\frac32\\\\\\frac12&-\\frac52\\end{pmatrix}$。"
     },
     {
       "id": "9.4-02",
@@ -4646,7 +4646,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第9章 线性映射与线性变换初步",
       "section": "§9.4 线性映射的矩阵",
-      "right_answer": "所以 $A$ 与 $B$ 相似。"
+      "right_answer": "存在可逆矩阵 $P$，使 $B=P^{-1}AP$，因此 $A$ 与 $B$ 相似。"
     },
     {
       "id": "9.5-01",
@@ -4696,7 +4696,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第9章 线性映射与线性变换初步",
       "section": "§9.5 线性变换及其矩阵",
-      "right_answer": "$T(1)=1$，$T(x)=1+x$，$T(x^2)=2x+x^2$。"
+      "right_answer": "（1）$A=\\begin{pmatrix}1&1&0\\\\0&1&2\\\\0&0&1\\end{pmatrix}$；（2）特征值为 $1,1,1$，$T$ 不可对角化。"
     },
     {
       "id": "9.5-02",
@@ -4744,7 +4744,7 @@ const BANK = {
       "added": "2026-10-19",
       "chapter": "第9章 线性映射与线性变换初步",
       "section": "§9.5 线性变换及其矩阵",
-      "right_answer": "$N=\\begin{pmatrix}0&1&0\\\\0&0&1\\\\0&0&0\\end{pmatrix}$。；$N^2=\\begin{pmatrix}0&0&1\\\\0&0&0\\\\0&0&0\\end{pmatrix}$，$N^3=0$。；$N$ 的特征多项式为 $\\lambda^3$，特征值只有 $0$。；$\\ker N=\\operatorname{span}\\{(1,0,0)^T\\}$，维数为 $1<3$，故 $N$ 不可对角化。"
+      "right_answer": "（1）$N=\\begin{pmatrix}0&1&0\\\\0&0&1\\\\0&0&0\\end{pmatrix}$；（2）$N^3=0$，特征值只有 $0$，且不可对角化。"
     }
   ],
   "knowledge": [
