@@ -49,7 +49,7 @@ const BANK = {
       "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第7题",
       "chapter": "第一章 函数与极限",
       "section": "§1.1 函数与初等函数",
-      "statement": "设 $f(x)$ 和 $g(x)$ 均为定义在 $\\mathbb R$ 上的函数，则下列陈述错误的是（不定项）\\nA. 若 $f$ 是周期函数，则 $g(f(x))$ 是周期函数；\\nB. 若 $f,g$ 都是周期函数，则 $f+g$ 是周期函数；\\nC. 若 $f,g$ 都是奇函数，则 $f(g(x))$ 是偶函数；\\nD. 若 $f,g$ 都单调递减，则 $f(x)g(x)$ 单调递增。",
+      "statement": "设 $f(x)$ 和 $g(x)$ 均为定义在 $\\mathbb R$ 上的函数，则下列陈述错误的是（不定项）\nA. 若 $f$ 是周期函数，则 $g(f(x))$ 是周期函数；\nB. 若 $f,g$ 都是周期函数，则 $f+g$ 是周期函数；\nC. 若 $f,g$ 都是奇函数，则 $f(g(x))$ 是偶函数；\nD. 若 $f,g$ 都单调递减，则 $f(x)g(x)$ 单调递增。",
       "type": "多项选择题",
       "topics": [
         "周期函数",
@@ -455,7 +455,7 @@ const BANK = {
       "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第2题",
       "chapter": "第一章 函数与极限",
       "section": "§1.2 数列极限存在的准则",
-      "statement": "下列陈述错误的是（不定项）\\nA. 若 $\\{a_{2n-1}\\}$ 与 $\\{a_{2n}\\}$ 都收敛，则 $\\{a_n\\}$ 收敛；\\nB. 若存在 $\\varepsilon_0>0$，对任意 $N>0$，存在 $n_0>N$ 使 $|a_{n_0}-A|\\ge\\varepsilon_0$，则 $\\{a_n\\}$ 收敛；\\nC. 设 $a_1=2$，$a_{n+1}=3a_n-\\dfrac4{a_n+1}$，则 $\\lim a_n=1$；\\nD. 若 $a_n\\to A$，则存在 $N>0$，使对任意 $\\varepsilon>0$，当 $n>N$ 时 $|a_n-A|<\\varepsilon$。",
+      "statement": "下列陈述错误的是（不定项）\nA. 若 $\\{a_{2n-1}\\}$ 与 $\\{a_{2n}\\}$ 都收敛，则 $\\{a_n\\}$ 收敛；\nB. 若存在 $\\varepsilon_0>0$，对任意 $N>0$，存在 $n_0>N$ 使 $|a_{n_0}-A|\\ge\\varepsilon_0$，则 $\\{a_n\\}$ 收敛；\nC. 设 $a_1=2$，$a_{n+1}=3a_n-\\dfrac4{a_n+1}$，则 $\\lim a_n=1$；\nD. 若 $a_n\\to A$，则存在 $N>0$，使对任意 $\\varepsilon>0$，当 $n>N$ 时 $|a_n-A|<\\varepsilon$。",
       "type": "多项选择题",
       "topics": [
         "子列极限",
@@ -1450,7 +1450,7 @@ const BANK = {
       "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第5题",
       "chapter": "第一章 函数与极限",
       "section": "§1.5 两个重要极限",
-      "statement": "下列关于极限计算正确的是（不定项）\\nA. $\\displaystyle\\lim_{x\\to0}(\\sqrt{\\cos2x})^{1/x^2}=e^{-1}$；\\nB. $\\displaystyle\\lim_{x\\to+\\infty}\\left(\\frac{2x+3}{2x+1}\\right)^x=e$；\\nC. $\\displaystyle\\lim_{x\\to0}\\left(\\frac{3x-1}{x-1}\\right)^{1/x}=e^{-2}$；\\nD. $\\displaystyle\\lim_{x\\to+\\infty}(1+x)^{1/x}=e$。",
+      "statement": "下列关于极限计算正确的是（不定项）\nA. $\\displaystyle\\lim_{x\\to0}(\\sqrt{\\cos2x})^{1/x^2}=e^{-1}$；\nB. $\\displaystyle\\lim_{x\\to+\\infty}\\left(\\frac{2x+3}{2x+1}\\right)^x=e$；\nC. $\\displaystyle\\lim_{x\\to0}\\left(\\frac{3x-1}{x-1}\\right)^{1/x}=e^{-2}$；\nD. $\\displaystyle\\lim_{x\\to+\\infty}(1+x)^{1/x}=e$。",
       "type": "多项选择题",
       "topics": [
         "1^∞ 型极限",
@@ -1694,7 +1694,7 @@ const BANK = {
       "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第8题",
       "chapter": "第一章 函数与极限",
       "section": "§1.7 函数连续的概念",
-      "statement": "下列陈述正确的是（不定项）\\nA. 若 $f$ 在 $[a,b]$ 上连续，最小值和最大值分别为 $m,M$，则值域为 $[m,M]$；\\nB. 若 $f$ 在 $[a,b]$ 上只有第一类间断点，则 $f$ 在 $[a,b]$ 上有界；\\nC. 若定义在 $[a,b]$ 上的 $f$ 的值域是区间 $[m,n]$，则 $f$ 在 $[a,b]$ 上连续；\\nD. 若 $f$ 在 $(a,b)$ 内连续，且 $f(a+0),f(b-0)$ 均存在，则 $f$ 在 $(a,b)$ 内有界。",
+      "statement": "下列陈述正确的是（不定项）\nA. 若 $f$ 在 $[a,b]$ 上连续，最小值和最大值分别为 $m,M$，则值域为 $[m,M]$；\nB. 若 $f$ 在 $[a,b]$ 上只有第一类间断点，则 $f$ 在 $[a,b]$ 上有界；\nC. 若定义在 $[a,b]$ 上的 $f$ 的值域是区间 $[m,n]$，则 $f$ 在 $[a,b]$ 上连续；\nD. 若 $f$ 在 $(a,b)$ 内连续，且 $f(a+0),f(b-0)$ 均存在，则 $f$ 在 $(a,b)$ 内有界。",
       "type": "多项选择题",
       "topics": [
         "连续函数性质",

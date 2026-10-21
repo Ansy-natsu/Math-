@@ -144,7 +144,7 @@ function loadBank(file) {
 function normalizeStatement(value) {
   let text = String(value || '')
     .replace(/\r\n?/g, '\n')
-    .replace(/\\+n(?![A-Za-z])/g, '\n');
+    .replace(/\\+n(?![a-z])/g, '\n');
 
   const optionMatches = text.match(/(?:^|[\s。；;])([A-D])[.、．]\s*/g) || [];
   const labels = new Set(optionMatches.map((item) => item.trim().charAt(0)).filter(Boolean));
