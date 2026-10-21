@@ -198,6 +198,203 @@ TEXT_OVERRIDES = {
             r"将各主元化为 $1$，再从下往上用主元消去其上方元素，最终得到 $I_n$。",
         ]),
     },
+    "2.3-7": {
+        "statement": r"证明：线性方程组 $\begin{cases}x_1-x_2=b_1,\\x_2-x_3=b_2,\\x_3-x_4=b_3,\\-x_1+x_4=b_4\end{cases}$ 有解，当且仅当 $\sum_{i=1}^4 b_i=0$；有解时求其通解。",
+        "answer": r"有解 $\iff b_1+b_2+b_3+b_4=0$；通解为 $(x_1,x_2,x_3,x_4)=(b_1+b_2+b_3+t,\ b_2+b_3+t,\ b_3+t,\ t)^T$，$t\in\mathbb R$。",
+        "solution": "\n".join([
+            r"四个方程相加，左端全部消去，得到必要条件 $b_1+b_2+b_3+b_4=0$。",
+            r"取 $x_4=t$，依次回代：$x_3=b_3+t$，$x_2=b_2+b_3+t$，$x_1=b_1+b_2+b_3+t$。",
+            r"当 $\sum b_i=0$ 时，第四个方程自动满足，因此该条件也是充分的。",
+        ]),
+    },
+    "2.4-1(1)": {
+        "statement": r"讨论线性方程组 $\begin{cases}x_1+x_2+\lambda x_3=2,\\3x_1+4x_2+2x_3=\lambda,\\2x_1+3x_2-x_3=1\end{cases}$：当 $\lambda$ 取何值时无解、有唯一解、有无穷多解？",
+        "answer": r"$\lambda\ne3$ 时唯一解 $(x_1,x_2,x_3)=(3\lambda+6,-2\lambda-4,-1)$；$\lambda=3$ 时无穷多解 $(5-10t,-3+7t,t)$，$t\in\mathbb R$；不存在使方程组无解的参数值。",
+        "solution": "\n".join([
+            r"后两式分别减去第一式的 $3$ 倍和 $2$ 倍，再相减，得 $(\lambda-3)x_3=3-\lambda$。",
+            r"当 $\lambda\ne3$ 时，$x_3=-1$，回代得到唯一解 $(3\lambda+6,-2\lambda-4,-1)$。",
+            r"当 $\lambda=3$ 时，最后化为恒等式；令 $x_3=t$，得通解 $(5-10t,-3+7t,t)$。",
+            r"所有情形下增广矩阵都相容，因此不存在无解参数。",
+        ]),
+    },
+    "2.4-4": {
+        "statement": r"设 $A=(a_{ij})_{n\times n}$，且 $D=|A|\ne0$。证明线性方程组 $\displaystyle\sum_{j=1}^{n-1}a_{ij}x_j=a_{in}\ (i=1,\ldots,n)$ 无解。",
+        "answer": "方程组无解。",
+        "solution": "\n".join([
+            r"该方程组以 $A$ 的前 $n-1$ 列为系数矩阵，以最后一列 $(a_{1n},\ldots,a_{nn})^T$ 为常数列。",
+            r"若方程组有解，则最后一列可表示为前 $n-1$ 列的线性组合。将 $|A|$ 按最后一列展开，每项都会出现重复列，故 $|A|=0$，与 $|A|\ne0$ 矛盾。",
+            r"因此方程组无解。",
+        ]),
+    },
+    "2.4-5": {
+        "statement": r"证明：线性方程组 $\displaystyle\sum_{j=1}^{n}a_{ij}x_j=b_i\ (i=1,\ldots,n+1)$ 有解的必要条件是 $\begin{vmatrix}a_{11}&\cdots&a_{1n}&b_1\\\vdots&&\vdots&\vdots\\a_{n+1,1}&\cdots&a_{n+1,n}&b_{n+1}\end{vmatrix}=0$，并举例说明该条件不充分。",
+        "answer": r"有解时增广行列式必为 $0$；但该条件不充分。",
+        "solution": "\n".join([
+            r"若方程组有解，则增广矩阵的最后一列 $b$ 是前 $n$ 列的线性组合，因此由 $n+1$ 个列向量组成的行列式为 $0$；必要性得证。",
+            r"反例：方程组 $0\cdot x=1,\ 0\cdot x=0$ 的增广行列式 $\begin{vmatrix}0&1\\0&0\end{vmatrix}=0$，但第一个方程无解。",
+            r"真正的充要条件仍然是 $r(A)=r([A\mid b])$。",
+        ]),
+    },
+    "1.5-1(1)": {
+        "statement": r"用 Cramer 法则解方程组 $\begin{cases}x_1+x_2-2x_3=-3,\\5x_1-2x_2+7x_3=22,\\2x_1-5x_2+4x_3=4.\end{cases}$",
+        "answer": r"$(x_1,x_2,x_3)=(1,2,3)$。",
+        "solution": "\n".join([
+            r"系数矩阵 $A=\begin{pmatrix}1&1&-2\\5&-2&7\\2&-5&4\end{pmatrix}$，$|A|=63\ne0$。",
+            r"分别替换三个列向量，得 $D_1=63,\ D_2=126,\ D_3=189$。",
+            r"因此 $x_1=1,\ x_2=2,\ x_3=3$，回代三式均成立。",
+        ]),
+    },
+    "1.5-2": {
+        "statement": r"当 $\lambda$ 取何值时，齐次线性方程组 $\begin{cases}x_1+\lambda x_3=0,\\2x_1-x_4=0,\\\lambda x_1+x_2=0,\\x_3+2x_4=0\end{cases}$ 只有零解？",
+        "answer": r"$\lambda\ne\dfrac14$ 时只有零解。",
+        "solution": "\n".join([
+            r"系数矩阵的行列式为 $\begin{vmatrix}1&0&\lambda&0\\2&0&0&-1\\\lambda&1&0&0\\0&0&1&2\end{vmatrix}=4\lambda-1$。",
+            r"当 $4\lambda-1\ne0$，即 $\lambda\ne1/4$ 时，齐次方阵方程组只有零解。",
+            r"当 $\lambda=1/4$ 时，可取 $x_1\ne0$ 构造非零解，故条件也是必要的。",
+        ]),
+    },
+    "1.5-3": {
+        "statement": r"证明：对任意实数 $k$，齐次线性方程组 $\begin{cases}(k^2-2)x_1+x_2-2x_3=0,\\-5x_1+(k^2+3)x_2-3x_3=0,\\x_1+(k^2+2)x_3=0\end{cases}$ 只有零解。",
+        "answer": r"对每个实数 $k$，方程组都只有零解。",
+        "solution": "\n".join([
+            r"系数矩阵为 $A=\begin{pmatrix}k^2-2&1&-2\\-5&k^2+3&-3\\1&0&k^2+2\end{pmatrix}$。",
+            r"令 $t=k^2$，沿第一行展开：$|A|=(t-2)(t+3)(t+2)+5(t+2)-3+2(t+3)=(t+1)^3$。",
+            r"所以 $|A|=(k^2+1)^3>0$，对每个实数 $k$ 都有 $|A|\ne0$，因此只有零解。",
+        ]),
+    },
+    "1.6-1": {
+        "statement": r"设 $a_i\ne0\ (i=1,\ldots,n)$，证明：$D_n=\begin{vmatrix}1+a_1&1&\cdots&1\\1&1+a_2&\cdots&1\\\vdots&\vdots&&\vdots\\1&1&\cdots&1+a_n\end{vmatrix}=a_1a_2\cdots a_n\left(1+\sum_{i=1}^n\dfrac1{a_i}\right)$。",
+        "answer": r"$D_n=\left(\prod_{i=1}^n a_i\right)\left(1+\sum_{i=1}^n\dfrac1{a_i}\right)$。",
+        "solution": "\n".join([
+            r"把 $D_n$ 的每一列拆成“对角列”和“全 $1$ 列”，含两个及以上全 $1$ 列的项均为 $0$。",
+            r"于是 $D_n=\prod_{i=1}^n a_i+\sum_{j=1}^n\prod_{i\ne j}a_i$，提取公因子即得答案。",
+        ]),
+    },
+    "1.6-2(1)": {
+        "statement": r"证明三对角行列式 $D_n=\begin{vmatrix}\alpha+\beta&\alpha\beta&0&\cdots&0\\1&\alpha+\beta&\alpha\beta&\cdots&0\\0&1&\ddots&\ddots&\vdots\\\vdots&&\ddots&\alpha+\beta&\alpha\beta\\0&\cdots&0&1&\alpha+\beta\end{vmatrix}=\begin{cases}\dfrac{\alpha^{\,n+1}-\beta^{\,n+1}}{\alpha-\beta},&\alpha\ne\beta,\\(n+1)\alpha^n,&\alpha=\beta.\end{cases}$",
+        "answer": r"$\alpha\ne\beta$ 时为 $\dfrac{\alpha^{n+1}-\beta^{n+1}}{\alpha-\beta}$；$\alpha=\beta$ 时为 $(n+1)\alpha^n$。",
+        "solution": "\n".join([
+            r"沿最后一行展开，得递推式 $D_n=(\alpha+\beta)D_{n-1}-\alpha\beta D_{n-2}$，初值 $D_0=1,D_1=\alpha+\beta$。",
+            r"归纳可证 $D_n=\sum_{j=0}^n\alpha^{n-j}\beta^j$。",
+            r"当 $\alpha\ne\beta$ 时用等比数列求和；当 $\alpha=\beta$ 时直接得 $(n+1)\alpha^n$。",
+        ]),
+    },
+    "2.3-1(1)": {
+        "statement": r"解线性方程组 $\begin{cases}2x_1+x_2-x_3+x_4=1,\\3x_1-2x_2+2x_3-3x_4=2,\\5x_1+x_2-x_3+2x_4=-1,\\2x_1-x_2+x_3-3x_4=4.\end{cases}$",
+        "answer": "方程组无解。",
+        "solution": "\n".join([
+            r"增广矩阵为 $\left(\begin{array}{cccc|c}2&1&-1&1&1\\3&-2&2&-3&2\\5&1&-1&2&-1\\2&-1&1&-3&4\end{array}\right)$。",
+            r"作行变换 $R_2\leftarrow2R_2-3R_1,\ R_3\leftarrow2R_3-5R_1,\ R_4\leftarrow R_4-R_1$，后三行分别为 $(0,-7,7,-9\mid1)$、$(0,-3,3,-1\mid-7)$、$(0,-2,2,-4\mid3)$。",
+            r"取组合 $-5R_2+5R_3+10R_4$，左端系数全为 $0$，右端为 $-10$，出现矛盾 $0=-10$，故无解。",
+        ]),
+    },
+    "2.3-2(1)(2)": {
+        "statement": r"判断齐次线性方程组何时可以不必计算就判定有非零解：(1) 方程个数少于未知量个数；(2) 系数矩阵为 $A=\begin{pmatrix}1&2&8\\1&2&-3\\2&3&5\end{pmatrix}$ 的三元齐次方程组。",
+        "answer": r"（1）必有非零解；（2）只有零解。",
+        "solution": "\n".join([
+            r"（1）未知量个数大于独立方程个数的上界，故 $r(A)<n$，必有非零解。",
+            r"（2）计算 $|A|=-11\ne0$，故 $r(A)=3$，三元齐次方程组只有零解。",
+        ]),
+    },
+    "2.3-4": {
+        "statement": r"当 $k$ 取何值时，齐次线性方程组 $\begin{cases}kx_1+x_2+x_3=0,\\x_1+kx_2-x_3=0,\\2x_1-x_2+x_3=0\end{cases}$ 只有零解？",
+        "answer": r"$k\ne-1$ 且 $k\ne4$。",
+        "solution": "\n".join([
+            r"系数矩阵为 $A=\begin{pmatrix}k&1&1\\1&k&-1\\2&-1&1\end{pmatrix}$。",
+            r"$|A|=(k-4)(k+1)$。齐次方阵方程组只有零解当且仅当 $|A|\ne0$。",
+            r"因此 $k\ne-1$ 且 $k\ne4$。",
+        ]),
+    },
+    "2.3-5": {
+        "statement": r"问 $a,b$ 取何值时，线性方程组 $\begin{cases}x_1+x_2+x_3+x_4+x_5=1,\\3x_1+2x_2+x_3+x_4-3x_5=a,\\x_2+2x_3+2x_4+6x_5=3,\\5x_1+4x_2+3x_3+3x_4-x_5=b\end{cases}$ 有解？有解时求通解。",
+        "answer": r"$a=0,\ b=2$；通解为 $(x_1,x_2,x_3,x_4,x_5)=(-2+s+t+5u,\ 3-2s-2t-6u,\ s,t,u)$，$s,t,u\in\mathbb R$。",
+        "solution": "\n".join([
+            r"比较系数行可得 $R_2+R_3=3R_1$，所以 $a+3=3$，即 $a=0$；又 $R_4=R_2+2R_1$，所以 $b=a+2=2$。",
+            r"当 $a=0,b=2$ 时只有两个独立方程。令 $x_3=s,x_4=t,x_5=u$，回代得 $x_2=3-2s-2t-6u$、$x_1=-2+s+t+5u$。",
+        ]),
+    },
+    "3.2-6": {
+        "statement": r"设 $f(x)=a_mx^m+a_{m-1}x^{m-1}+\cdots+a_1x+a_0$，其中 $a_0\ne0$，$A$ 为 $n$ 阶方阵。若 $f(A)=O$，证明 $A$ 可逆，并求 $A^{-1}$。",
+        "answer": r"$A^{-1}=-\dfrac1{a_0}\left(a_mA^{m-1}+a_{m-1}A^{m-2}+\cdots+a_1I\right)$。",
+        "solution": "\n".join([
+            r"由 $f(A)=O$ 得 $a_mA^m+\cdots+a_1A=-a_0I$。",
+            r"因为 $a_0\ne0$，两边提出 $A$：$A\left[-\dfrac1{a_0}(a_mA^{m-1}+\cdots+a_1I)\right]=I$。",
+            r"方阵存在右逆即可逆，故 $A$ 可逆，且逆矩阵为括号中的矩阵。",
+        ]),
+    },
+    "3.3-5(2)(4)": {
+        "statement": r"利用分块矩阵求逆：(2) $M=\begin{pmatrix}2&1&0&0\\1&1&0&0\\-1&2&2&7\\1&-1&1&3\end{pmatrix}$；(4) $n$ 阶矩阵的非零元素仅为 $m_{i,i+1}=a_i\ (i<n)$ 和 $m_{n,1}=a_n$，其中 $a_i\ne0$。",
+        "answer": r"（2）$M^{-1}=\begin{pmatrix}1&-1&0&0\\-1&2&0&0\\-23&36&-3&7\\7&-11&1&-2\end{pmatrix}$；（4）$M^{-1}_{1n}=a_n^{-1}$，$M^{-1}_{i+1,i}=a_i^{-1}\ (i<n)$，其余元素为 $0$。",
+        "solution": "\n".join([
+            r"（2）把 $M$ 写成 $\begin{pmatrix}A&O\\C&D\end{pmatrix}$，则 $\begin{pmatrix}A&O\\C&D\end{pmatrix}^{-1}=\begin{pmatrix}A^{-1}&O\\-D^{-1}CA^{-1}&D^{-1}\end{pmatrix}$。",
+            r"其中 $A=\begin{pmatrix}2&1\\1&1\end{pmatrix}$，$D=\begin{pmatrix}2&7\\1&3\end{pmatrix}$，代入块逆公式即可。",
+            r"（4）矩阵表示循环移位，逆矩阵只保留对应的反向移位元素，因此主对角线之外只有 $m^{-1}_{1n}=a_n^{-1}$ 和 $m^{-1}_{i+1,i}=a_i^{-1}$。",
+        ]),
+    },
+    "3.6-1(1)(2)(3)(4)": {
+        "statement": r"设 $A,B$ 为 $n(n>1)$ 阶方阵，$k\ne0$。判断：(1) $|A|=0\Rightarrow A=O$；(2) $|kA|=k|A|$；(3) $\left|\dfrac1{|A|}A\right|=\dfrac1{|A|}$；(4) $|A+B|=|A|+|B|$；(5) $|AB|=|A||B|$；(6) $|A^T|=|A|$；(7) $|(AB)^T|=|A^T||B^T|$。",
+        "answer": r"（1）（2）（3）（4）错误；（5）（6）（7）正确。",
+        "solution": "\n".join([
+            r"（1）反例：$A=\operatorname{diag}(1,0)$，$|A|=0$ 但 $A\ne O$。",
+            r"（2）正确公式是 $|kA|=k^n|A|$。",
+            r"（3）若 $A=2I_2$，则 $|A|=4$，但 $\left|\frac14A\right|=\frac14$，不等于 $\frac1{|A|}$ 的错误写法；正确关系为 $\left|\frac1{|A|}A\right|=\frac1{|A|^{n-1}}$。",
+            r"（4）反例：$A=B=I_2$，$|A+B|=4$，而 $|A|+|B|=2$。",
+            r"（5）（6）是行列式基本性质；（7）由 $(AB)^T=B^TA^T$ 与乘积行列式性质得到。",
+        ]),
+    },
+    "4.5-4(2)(3)": {
+        "statement": r"求下列子空间的维数和一组基：(2) $L(\alpha_1,\alpha_2,\alpha_3,\alpha_4)\subseteq\mathbb R^4$，其中 $\alpha_1=(2,1,3,-1)^T,\alpha_2=(1,-1,3,-1)^T,\alpha_3=(4,5,3,-1)^T,\alpha_4=(1,5,-3,1)^T$；(3) 齐次线性方程组 $\begin{cases}3x_1+2x_2-5x_3+4x_4=0,\\3x_1-x_2+3x_3-3x_4=0,\\3x_1+5x_2-13x_3+11x_4=0\end{cases}$ 的解空间。",
+        "answer": r"（2）维数为 $2$，可取基 $\{\alpha_1,\alpha_2\}$，且 $\alpha_3=3\alpha_1-2\alpha_2,\ \alpha_4=2\alpha_1-3\alpha_2$；（3）维数为 $2$，可取基 $(-1,24,9,0)^T,(2,-21,0,9)^T$。",
+        "solution": "\n".join([
+            r"（2）把四个向量按列排成矩阵并作行消元，得到两个主元列，且 $\alpha_3=3\alpha_1-2\alpha_2$、$\alpha_4=2\alpha_1-3\alpha_2$。",
+            r"（3）对系数矩阵 $A=\begin{pmatrix}3&2&-5&4\\3&-1&3&-3\\3&5&-13&11\end{pmatrix}$ 作初等行变换，非零行数为 $2$。",
+            r"取 $x_3=9s,x_4=9t$ 可避免分数，得到解空间基 $(-1,24,9,0)^T$ 与 $(2,-21,0,9)^T$。",
+        ]),
+    },
+    "4.6-3": {
+        "statement": r"设 $\xi_1,\xi_2,\xi_3$ 是齐次方程组 $AX=O$ 的一个基础解系，下列哪组仍是基础解系？(A) $\xi_1+\xi_2,\xi_2+\xi_3,\xi_3+\xi_1$；(B) $\xi_1+\xi_2,\xi_2+\xi_3,\xi_3-\xi_1$；(C) $\xi_1-\xi_2,\xi_2-\xi_3,\xi_3-\xi_1$；(D) $\xi_1+2\xi_2,2\xi_2+3\xi_3,3\xi_3-\xi_1$。",
+        "answer": "A。",
+        "solution": "\n".join([
+            r"把候选向量组用原基础解系的坐标表示。其可逆性与坐标矩阵的行列式有关。",
+            r"选项 A 的坐标矩阵为 $C_A=\begin{pmatrix}1&0&1\\1&1&0\\0&1&1\end{pmatrix}$，$|C_A|=2\ne0$，故仍为基础解系。",
+            r"B、C、D 的坐标矩阵均线性相关，因此不构成基础解系。",
+        ]),
+    },
+    "4.8-18": {
+        "statement": r"设 $\alpha_1,\ldots,\alpha_m$ 是 $n$ 维欧氏空间 $V$ 中的向量，Gram 矩阵及其行列式为 $G(\alpha_1,\ldots,\alpha_m)=\big(\langle\alpha_i,\alpha_j\rangle\big)_{m\times m}$。证明：$\alpha_1,\ldots,\alpha_m$ 线性无关，当且仅当 $|G(\alpha_1,\ldots,\alpha_m)|\ne0$。",
+        "answer": r"向量组线性无关 $\iff$ Gram 行列式非零。",
+        "solution": "\n".join([
+            r"对任意实列向量 $c=(c_1,\ldots,c_m)^T$，有 $c^TGc=\left\|\sum_{i=1}^m c_i\alpha_i\right\|^2$。",
+            r"若向量组无关，则 $c\ne0$ 时右端严格大于 $0$，故 $G$ 正定，$|G|\ne0$。",
+            r"若向量组相关，则存在非零 $c$ 使 $\sum c_i\alpha_i=0$；与各 $\alpha_j$ 作内积得 $Gc=0$，所以 $|G|=0$。",
+        ]),
+    },
+    "5.1-3": {
+        "statement": r"设 $A=\xi\eta^T$，其中 $\xi=(x_1,\ldots,x_n)^T\ne0$，$\eta=(y_1,\ldots,y_n)^T\ne0$。证明 $\xi$ 是 $A$ 的特征向量，并指出对应特征值。",
+        "answer": r"$\xi$ 是特征向量，对应特征值为 $\eta^T\xi=\displaystyle\sum_{j=1}^n x_jy_j$。",
+        "solution": "\n".join([
+            r"$A\xi=(\xi\eta^T)\xi=\xi(\eta^T\xi)$。",
+            r"由于 $\xi\ne0$，按定义 $\xi$ 是 $A$ 的特征向量，特征值为 $\eta^T\xi$。",
+        ]),
+    },
+    "6.1-3(1)": {
+        "statement": r"判断配方法使用的线性替换是否满秩，并给出正确配方：$f(x_1,x_2,x_3)=4x_1^2-4x_1x_2+6x_2^2$。原解写作 $f=2x_1^2+2(x_1-x_2)^2+4x_2^2$，并令 $y_1=x_1,y_2=x_1-x_2,y_3=x_2$。",
+        "answer": r"原替换退化；正确配方为 $f=4\left(x_1-\frac12x_2\right)^2+5x_2^2$，取 $y_1=x_1-\frac12x_2,\ y_2=x_2,\ y_3=x_3$ 即可。",
+        "solution": "\n".join([
+            r"原变换满足 $y_1-y_2-y_3=0$，三个新变量不独立，变换矩阵不满秩。",
+            r"正确配方：$4x_1^2-4x_1x_2+6x_2^2=4\left(x_1-\frac12x_2\right)^2+5x_2^2$。",
+            r"令 $y_1=x_1-\frac12x_2,y_2=x_2,y_3=x_3$，变换矩阵可逆，标准形为 $4y_1^2+5y_2^2$。",
+        ]),
+    },
+    "附三-8": {
+        "statement": r"讨论参数 $a,b,c$ 满足什么条件时，线性方程组 $\begin{cases}x+y+z=a+b+c,\\ax+by+cz=a^2+b^2+c^2,\\bcx+acy+abz=3abc\end{cases}$ 有唯一解，并求该解。",
+        "answer": r"$a,b,c$ 两两不相等时存在唯一解，唯一解为 $(x,y,z)=(a,b,c)$。",
+        "solution": "\n".join([
+            r"系数矩阵为 $M=\begin{pmatrix}1&1&1\\a&b&c\\bc&ac&ab\end{pmatrix}$，其行列式为 $-(a-b)(a-c)(b-c)$。",
+            r"因此存在唯一解当且仅当 $a,b,c$ 两两不同。",
+            r"直接代入可验证 $(x,y,z)=(a,b,c)$ 满足三个方程，故它就是唯一解。",
+        ]),
+    },
 }
 
 SOLUTION_CUES = {

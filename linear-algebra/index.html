@@ -222,8 +222,64 @@ function annOf(k){ return ANN[k] || (ANN[k] = {marks:[],notes:[]}); }
 function esc(s){return (s+'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
 /* 公式块内部保持原样；选项仍逐项分行。 */
 const MATH_TEXT=/(\$\$[\s\S]+?\$\$|\\\[[\s\S]+?\\\]|\\\([\s\S]+?\\\)|\$(?:\\.|[^$\\])+?\$)/g;
+function autoFormatPlainMath(value){
+  const raw=String(value==null?'':value).replace(/\r\n?/g,'\n');
+  const lines=raw.split('\n');
+  const result=[];
+  const clean=text=>text.replace(/[;,，；]+$/,'').trim();
+  const tokenMath=token=>{
+    let out=String(token).replace(/−/g,'-').replace(/⋯/g,'\\cdots ').replace(/…/g,'\\ldots ')
+      .replace(/≠/g,'\\ne ').replace(/≤/g,'\\le ').replace(/≥/g,'\\ge ').replace(/∞/g,'\\infty ');
+    return out;
+  };
+  const isMatrixRow=text=>{
+    const row=clean(text);
+    if(!row||row.length>110||row.includes('$')||/[\u3400-\u9fff]/.test(row)||row.includes('=')||/[⎧⎨⎩{}]/.test(row))return null;
+    const tokens=row.split(/\s+/);
+    if(tokens.length<2||tokens.length>10)return null;
+    const good=tokens.filter(token=>/^[-+()]?[0-9A-Za-zα-ωΑ-Ω√∞⋯…≠≤≥.]+$/.test(token)).length;
+    return good/tokens.length>=0.82?tokens:null;
+  };
+  const isEquationRow=text=>{
+    const row=clean(text);
+    if(!row||row.length>150||row.includes('$')||/[\u3400-\u9fff]/.test(row)||!row.includes('=')||/[⎧⎨⎩{}]/.test(row))return null;
+    return row;
+  };
+  for(let i=0;i<lines.length;){
+    const matrixTokens=isMatrixRow(lines[i]);
+    if(matrixTokens){
+      const rows=[matrixTokens];
+      let j=i+1;
+      while(j<lines.length){
+        const next=isMatrixRow(lines[j]);
+        if(!next||next.length!==matrixTokens.length)break;
+        rows.push(next);j++;
+      }
+      if(rows.length>=2){
+        result.push('$$\\begin{pmatrix}'+rows.map(row=>row.map(tokenMath).join('&')).join('\\\\')+'\\end{pmatrix}$$');
+        i=j;continue;
+      }
+    }
+    const equation=isEquationRow(lines[i]);
+    if(equation){
+      const rows=[equation];
+      let j=i+1;
+      while(j<lines.length){
+        const next=isEquationRow(lines[j]);
+        if(!next)break;
+        rows.push(next);j++;
+      }
+      if(rows.length>=2){
+        result.push('$$\\begin{cases}'+rows.map(row=>tokenMath(row)).join('\\\\')+'\\end{cases}$$');
+        i=j;continue;
+      }
+    }
+    result.push(lines[i]);i++;
+  }
+  return result.join('\n');
+}
 function md(s){
-  const parts=String(s==null?'':s).replace(/\r\n?/g,'\n').split(MATH_TEXT);
+  const parts=autoFormatPlainMath(s).split(MATH_TEXT);
   for(let i=0;i<parts.length;i+=2) parts[i]=parts[i].replace(/\\+n(?![a-z])/g,'\n');
   const text=parts.filter((_,i)=>i%2===0).join('\n');
   const matches=text.match(/(?:^|[\s。；;])([A-D])[.、．]\s*/g)||[];
