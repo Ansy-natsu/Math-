@@ -5,7 +5,7 @@ const BANK = {
       "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第3题",
       "chapter": "第一章 函数与极限",
       "section": "§1.1 函数与初等函数",
-      "statement": "函数 $f(x)=\\arcsin(\\sin x)+\\arccos(\\cos x)$ 在 $[0,\\pi]$ 上的表达式为（　）。\\nA. $f(x)=\\pi$　B. $f(x)=2\\pi$　C. $f(x)=2x\\ (0\\le x\\le\\pi/2),\\ \\pi-x\\ (\\pi/2<x\\le\\pi)$　D. $f(x)=2x\\ (0\\le x\\le\\pi/2),\\ \\pi\\ (\\pi/2<x\\le\\pi)$。",
+      "statement": "函数 $f(x)=\\arcsin(\\sin x)+\\arccos(\\cos x)$ 在 $[0,\\pi]$ 上的表达式为（　）。\nA. $f(x)=\\pi$\nB. $f(x)=2\\pi$\nC. $f(x)=2x\\ (0\\le x\\le\\pi/2),\\ \\pi-x\\ (\\pi/2<x\\le\\pi)$\nD. $f(x)=2x\\ (0\\le x\\le\\pi/2),\\ \\pi\\ (\\pi/2<x\\le\\pi)$。",
       "type": "单选题",
       "topics": [
         "反三角函数",
@@ -20,7 +20,7 @@ const BANK = {
         "分段",
         "单选"
       ],
-      "right_answer": "D",
+      "right_answer": "D. $f(x)=2x\\ (0\\le x\\le\\pi/2),\\ \\pi\\ (\\pi/2<x\\le\\pi)$。",
       "key_points": [
         "$\\arcsin(\\sin x)=x$（$0\\le x\\le\\pi/2$），等于 $\\pi-x$（$\\pi/2<x\\le\\pi$）",
         "$\\arccos(\\cos x)=x$（$0\\le x\\le\\pi$）"
@@ -49,7 +49,7 @@ const BANK = {
       "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第7题",
       "chapter": "第一章 函数与极限",
       "section": "§1.1 函数与初等函数",
-      "statement": "设 $f(x)$ 和 $g(x)$ 均为定义在 $\\mathbb R$ 上的函数，则下列陈述错误的是（不定项）\\nA. 若 $f$ 是周期函数，则 $g(f(x))$ 是周期函数；\\nB. 若 $f,g$ 都是周期函数，则 $f+g$ 是周期函数；\\nC. 若 $f,g$ 都是奇函数，则 $f(g(x))$ 是偶函数；\\nD. 若 $f,g$ 都单调递减，则 $f(x)g(x)$ 单调递增。",
+      "statement": "设 $f(x)$ 和 $g(x)$ 均为定义在 $\\mathbb R$ 上的函数，则下列陈述错误的是（不定项）\nA. 若 $f$ 是周期函数，则 $g(f(x))$ 是周期函数；\nB. 若 $f,g$ 都是周期函数，则 $f+g$ 是周期函数；\nC. 若 $f,g$ 都是奇函数，则 $f(g(x))$ 是偶函数；\nD. 若 $f,g$ 都单调递减，则 $f(x)g(x)$ 单调递增。",
       "type": "多项选择题",
       "topics": [
         "周期函数",
@@ -64,7 +64,7 @@ const BANK = {
         "函数性质",
         "反例"
       ],
-      "right_answer": "B、C、D",
+      "right_answer": "B、C、D。",
       "key_points": [
         "周期函数的复合仍以原周期为周期",
         "两个周期函数的周期不一定可比",
@@ -154,7 +154,7 @@ const BANK = {
         "小测 Q9"
       ],
       "added": "2026-10-16",
-      "right_answer": "故 $\\{x_n\\}$ 无界；又单调递增，所以 $x_n\\to+\\infty$。；由 $x_n>0$ 及 $\\sqrt{\\ }$ 连续，开方得 $\\dfrac{x_n}{\\sqrt{2n}}\\to1$。"
+      "right_answer": "（1）$\\lim_{n\\to\\infty}x_n=+\\infty$；（2）$\\lim_{n\\to\\infty}\\dfrac{x_n}{\\sqrt{2n}}=1$。"
     },
     {
       "id": "经典-02",
@@ -203,7 +203,7 @@ const BANK = {
         "小测 Q10"
       ],
       "added": "2026-10-16",
-      "right_answer": "由 $m^{1/n}\\to1$ 得左端 $\\to M$，由夹逼定理极限为 $M$。"
+      "right_answer": "$M$，其中 $M=\\max\\{a_1,a_2,\\cdots,a_m\\}$。"
     },
     {
       "id": "经典-03",
@@ -250,7 +250,7 @@ const BANK = {
         "小测 Q11"
       ],
       "added": "2026-10-16",
-      "right_answer": "故 $\\sqrt[n]{n}=1+t_n\\to1$。"
+      "right_answer": "$1$。"
     },
     {
       "id": "经典-04",
@@ -297,7 +297,7 @@ const BANK = {
         "小测 Q12"
       ],
       "added": "2026-10-16",
-      "right_answer": "开方得 $0<P_n<\\dfrac{1}{\\sqrt{2n+1}}$，右端 $\\to0$，由夹逼定理 $P_n\\to0$。"
+      "right_answer": "$0$。"
     },
     {
       "id": "2025-MT-01",
@@ -346,7 +346,7 @@ const BANK = {
         "§4.1 连续函数的性质"
       ],
       "added": "2026-10-19",
-      "right_answer": "故 $a_n\\to b=\\sqrt[3]{A}$，即 $\\{a_n\\}$ 收敛。"
+      "right_answer": "$\\{a_n\\}$ 收敛。"
     },
     {
       "id": "2025-MT-02",
@@ -394,7 +394,7 @@ const BANK = {
         "题库经典-04 Wallis 型"
       ],
       "added": "2026-10-19",
-      "right_answer": "于是 $0<P_n<\\frac1{\\sqrt{2n+1}}$，右端趋于 $0$，由夹逼定理得极限为 $0$。"
+      "right_answer": "$0$。"
     },
     {
       "id": "2025-MT-09",
@@ -448,14 +448,14 @@ const BANK = {
         "§2.3 数列极限存在准则"
       ],
       "added": "2026-10-19",
-      "right_answer": "对任意 $\\varepsilon>0$，取 $N>\\frac1{4\\varepsilon}$，当 $m>n>N$ 时 $|a_m-a_n|<\\varepsilon$。由柯西收敛准则，数列收敛。"
+      "right_answer": "$\\{a_n\\}$ 收敛。"
     },
     {
       "id": "2025-QZ-02",
       "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第2题",
       "chapter": "第一章 函数与极限",
       "section": "§1.2 数列极限存在的准则",
-      "statement": "下列陈述错误的是（不定项）\\nA. 若 $\\{a_{2n-1}\\}$ 与 $\\{a_{2n}\\}$ 都收敛，则 $\\{a_n\\}$ 收敛；\\nB. 若存在 $\\varepsilon_0>0$，对任意 $N>0$，存在 $n_0>N$ 使 $|a_{n_0}-A|\\ge\\varepsilon_0$，则 $\\{a_n\\}$ 收敛；\\nC. 设 $a_1=2$，$a_{n+1}=3a_n-\\dfrac4{a_n+1}$，则 $\\lim a_n=1$；\\nD. 若 $a_n\\to A$，则存在 $N>0$，使对任意 $\\varepsilon>0$，当 $n>N$ 时 $|a_n-A|<\\varepsilon$。",
+      "statement": "下列陈述错误的是（不定项）\nA. 若 $\\{a_{2n-1}\\}$ 与 $\\{a_{2n}\\}$ 都收敛，则 $\\{a_n\\}$ 收敛；\nB. 若存在 $\\varepsilon_0>0$，对任意 $N>0$，存在 $n_0>N$ 使 $|a_{n_0}-A|\\ge\\varepsilon_0$，则 $\\{a_n\\}$ 收敛；\nC. 设 $a_1=2$，$a_{n+1}=3a_n-\\dfrac4{a_n+1}$，则 $\\lim a_n=1$；\nD. 若 $a_n\\to A$，则存在 $N>0$，使对任意 $\\varepsilon>0$，当 $n>N$ 时 $|a_n-A|<\\varepsilon$。",
       "type": "多项选择题",
       "topics": [
         "子列极限",
@@ -470,7 +470,7 @@ const BANK = {
         "子列",
         "量词"
       ],
-      "right_answer": "A、B、C、D 均错误",
+      "right_answer": "A、B、C、D。",
       "key_points": [
         "奇、偶子列必须收敛到同一极限才能推出原数列收敛",
         "B 的量词描述的是“不收敛”，不是收敛",
@@ -567,7 +567,7 @@ const BANK = {
         "第四章：$x=0$ 是 $e^{1/x}$ 的无穷型（第二类）间断点"
       ],
       "added": "2026-10-12",
-      "right_answer": "极限存在 $\\iff$ 左右极限都存在且相等；此处左极限为 $0$、右极限不存在，故整体极限不存在。"
+      "right_answer": "极限不存在。"
     },
     {
       "id": "错-1-3.2",
@@ -670,7 +670,7 @@ const BANK = {
       "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第9题",
       "chapter": "第一章 函数与极限",
       "section": "§1.4 无穷小量阶的比较",
-      "statement": "设 $\\alpha(x)=\\dfrac{1-x}{3+x}$，$\\beta(x)=1-\\sqrt[4]{x}$，当 $x\\to1$ 时，下列陈述正确的是（　）。\\nA. 同阶非等价无穷小　B. 等价无穷小　C. $\\alpha$ 比 $\\beta$ 低阶　D. $\\alpha$ 比 $\\beta$ 高阶。",
+      "statement": "设 $\\alpha(x)=\\dfrac{1-x}{3+x}$，$\\beta(x)=1-\\sqrt[4]{x}$，当 $x\\to1$ 时，下列陈述正确的是（　）。\nA. 同阶非等价无穷小\nB. 等价无穷小\nC. $\\alpha$ 比 $\\beta$ 低阶\nD. $\\alpha$ 比 $\\beta$ 高阶。",
       "type": "单选题",
       "topics": [
         "无穷小阶的比较",
@@ -684,7 +684,7 @@ const BANK = {
         "等价量",
         "单选"
       ],
-      "right_answer": "B",
+      "right_answer": "B. 等价无穷小。",
       "key_points": [
         "令 $h=x-1\\to0$",
         "$\\alpha\\sim-h/4$，$\\beta\\sim-h/4$"
@@ -767,7 +767,7 @@ const BANK = {
         "题库易错点 E-001"
       ],
       "added": "2026-10-12",
-      "right_answer": "两者相减：$\\beta(x)=\\dfrac{3}{4}x^2+o(x^2)$，故 $k=\\dfrac{3}{4}$。"
+      "right_answer": "$k=\\dfrac34$。"
     },
     {
       "id": "10.14-D",
@@ -812,7 +812,7 @@ const BANK = {
         "§3.5 无穷小量阶的比较"
       ],
       "added": "2026-10-12",
-      "right_answer": "所以原式 $\\sim\\dfrac{2x^4}{x^4}=2$。"
+      "right_answer": "$2$。"
     },
     {
       "id": "10.14-C",
@@ -862,7 +862,7 @@ const BANK = {
         "§3.6 两个重要极限"
       ],
       "added": "2026-10-12",
-      "right_answer": "故极限 $=\\cos\\alpha$。"
+      "right_answer": "$\\cos\\alpha$。"
     },
     {
       "id": "1-4.12(2)",
@@ -925,7 +925,7 @@ const BANK = {
         "常用等价无穷小：$(1+u)^\\gamma-1\\sim\\gamma u$"
       ],
       "added": "2026-10-12",
-      "right_answer": "$\\dfrac{\\alpha}{\\beta}a^{\\alpha-\\beta}$"
+      "right_answer": "$\\dfrac{\\alpha}{\\beta}a^{\\alpha-\\beta}$。"
     },
     {
       "id": "1-4.12(5)",
@@ -987,7 +987,7 @@ const BANK = {
         "常用等价无穷小：$\\ln(1+u)\\sim u$（$u\\to 0$）"
       ],
       "added": "2026-10-12",
-      "right_answer": "左右两端当 $x\\to+\\infty$ 时都趋于 $\\dfrac{\\ln 3}{\\ln 2}$，由夹逼定理得原式 $=\\dfrac{\\ln 3}{\\ln 2}$。"
+      "right_answer": "$\\dfrac{\\ln3}{\\ln2}=\\log_2 3$。"
     },
     {
       "id": "1-4.12(8)",
@@ -1045,7 +1045,7 @@ const BANK = {
         "§3.6 两个重要极限"
       ],
       "added": "2026-10-12",
-      "right_answer": "$x\\to+\\infty$ 时右端 $\\to 0$，由夹逼定理得原式 $=0$。"
+      "right_answer": "$0$。"
     },
     {
       "id": "1-综.3(2)",
@@ -1352,7 +1352,7 @@ const BANK = {
       "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第8题",
       "chapter": "第一章 函数与极限",
       "section": "§1.5 两个重要极限",
-      "statement": "求下列极限：\\n（1）$\\displaystyle\\lim_{x\\to0}\\dfrac{(2^x-1)\\sin x\\ln(1+x)}{\\tan x-\\sin x}$；\\n（2）$\\displaystyle\\lim_{x\\to0}(\\cos x)^{\\csc^2x}$。",
+      "statement": "求下列极限：\n（1）$\\displaystyle\\lim_{x\\to0}\\dfrac{(2^x-1)\\sin x\\ln(1+x)}{\\tan x-\\sin x}$；\n（2）$\\displaystyle\\lim_{x\\to0}(\\cos x)^{\\csc^2x}$。",
       "type": "计算题",
       "topics": [
         "等价无穷小",
@@ -1393,14 +1393,14 @@ const BANK = {
         "§3.6 两个重要极限"
       ],
       "added": "2026-10-19",
-      "right_answer": "（1）分子 $\\sim(x\\ln2)\\cdot x\\cdot x=x^3\\ln2$，分母 $\\tan x-\\sin x\\sim\\frac{x^3}{2}$，故原式 $=2\\ln2=\\ln4$。；（2）设 $L=\\lim_{x\\to0}(\\cos x)^{\\csc^2x}$，取对数：$\\ln L=\\lim\\dfrac{\\ln\\cos x}{\\sin^2x}$。"
+      "right_answer": "（1）$\\ln4$；（2）$e^{-1/2}$。"
     },
     {
       "id": "2025-QZ-04",
       "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第4题",
       "chapter": "第一章 函数与极限",
       "section": "§1.5 两个重要极限",
-      "statement": "下列结论中，正确的个数有_____个。\\n① $\\displaystyle\\lim_{x\\to0}\\frac{\\sin(x\\sin(1/x))}{x\\sin(1/x)}=1$；\\n② 若 $0<a<1$，则 $\\displaystyle\\lim_{n\\to\\infty}(1-a^n)=1$；\\n③ $\\displaystyle\\lim_{n\\to\\infty}\\sqrt[n]{1+\\frac1{\\sqrt2}+\\cdots+\\frac1{\\sqrt n}}=1$；\\n④ $\\displaystyle\\lim_{n\\to\\infty}(n!)^{1/n^2}=1$。\\nA. 4　B. 3　C. 2　D. 1。",
+      "statement": "下列结论中，正确的个数有_____个。\n① $\\displaystyle\\lim_{x\\to0}\\frac{\\sin(x\\sin(1/x))}{x\\sin(1/x)}=1$；\n② 若 $0<a<1$，则 $\\displaystyle\\lim_{n\\to\\infty}(1-a^n)=1$；\n③ $\\displaystyle\\lim_{n\\to\\infty}\\sqrt[n]{1+\\frac1{\\sqrt2}+\\cdots+\\frac1{\\sqrt n}}=1$；\n④ $\\displaystyle\\lim_{n\\to\\infty}(n!)^{1/n^2}=1$。\nA. 4\nB. 3\nC. 2\nD. 1。",
       "type": "单选题",
       "topics": [
         "重要极限",
@@ -1450,7 +1450,7 @@ const BANK = {
       "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第5题",
       "chapter": "第一章 函数与极限",
       "section": "§1.5 两个重要极限",
-      "statement": "下列关于极限计算正确的是（不定项）\\nA. $\\displaystyle\\lim_{x\\to0}(\\sqrt{\\cos2x})^{1/x^2}=e^{-1}$；\\nB. $\\displaystyle\\lim_{x\\to+\\infty}\\left(\\frac{2x+3}{2x+1}\\right)^x=e$；\\nC. $\\displaystyle\\lim_{x\\to0}\\left(\\frac{3x-1}{x-1}\\right)^{1/x}=e^{-2}$；\\nD. $\\displaystyle\\lim_{x\\to+\\infty}(1+x)^{1/x}=e$。",
+      "statement": "下列关于极限计算正确的是（不定项）\nA. $\\displaystyle\\lim_{x\\to0}(\\sqrt{\\cos2x})^{1/x^2}=e^{-1}$；\nB. $\\displaystyle\\lim_{x\\to+\\infty}\\left(\\frac{2x+3}{2x+1}\\right)^x=e$；\nC. $\\displaystyle\\lim_{x\\to0}\\left(\\frac{3x-1}{x-1}\\right)^{1/x}=e^{-2}$；\nD. $\\displaystyle\\lim_{x\\to+\\infty}(1+x)^{1/x}=e$。",
       "type": "多项选择题",
       "topics": [
         "1^∞ 型极限",
@@ -1499,7 +1499,7 @@ const BANK = {
       "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第6题",
       "chapter": "第一章 函数与极限",
       "section": "§1.5 两个重要极限",
-      "statement": "极限 $\\displaystyle\\lim_{x\\to+\\infty}x\\left(\\sqrt[5]{x^5+10x^3-7}-\\sqrt[3]{x^3-3x+4}\\right)=$_____。\\nA. $\\frac{23}{15}$　B. $3$　C. $\\frac{16}{15}$　D. $2$。",
+      "statement": "极限 $\\displaystyle\\lim_{x\\to+\\infty}x\\left(\\sqrt[5]{x^5+10x^3-7}-\\sqrt[3]{x^3-3x+4}\\right)=$_____。\nA. $\\frac{23}{15}$\nB. $3$\nC. $\\frac{16}{15}$\nD. $2$。",
       "type": "单选题",
       "topics": [
         "广义二项式展开",
@@ -1687,14 +1687,14 @@ const BANK = {
         "§2.1 导数定义"
       ],
       "added": "2026-10-19",
-      "right_answer": "$\\alpha>-2$ 时连续；$\\alpha>-1$ 时可导，且一阶导数连续。"
+      "right_answer": "连续：$\\alpha>-2$；可导：$\\alpha>-1$；一阶导数连续：$\\alpha>-1$。"
     },
     {
       "id": "2025-QZ-08",
       "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第8题",
       "chapter": "第一章 函数与极限",
       "section": "§1.7 函数连续的概念",
-      "statement": "下列陈述正确的是（不定项）\\nA. 若 $f$ 在 $[a,b]$ 上连续，最小值和最大值分别为 $m,M$，则值域为 $[m,M]$；\\nB. 若 $f$ 在 $[a,b]$ 上只有第一类间断点，则 $f$ 在 $[a,b]$ 上有界；\\nC. 若定义在 $[a,b]$ 上的 $f$ 的值域是区间 $[m,n]$，则 $f$ 在 $[a,b]$ 上连续；\\nD. 若 $f$ 在 $(a,b)$ 内连续，且 $f(a+0),f(b-0)$ 均存在，则 $f$ 在 $(a,b)$ 内有界。",
+      "statement": "下列陈述正确的是（不定项）\nA. 若 $f$ 在 $[a,b]$ 上连续，最小值和最大值分别为 $m,M$，则值域为 $[m,M]$；\nB. 若 $f$ 在 $[a,b]$ 上只有第一类间断点，则 $f$ 在 $[a,b]$ 上有界；\nC. 若定义在 $[a,b]$ 上的 $f$ 的值域是区间 $[m,n]$，则 $f$ 在 $[a,b]$ 上连续；\nD. 若 $f$ 在 $(a,b)$ 内连续，且 $f(a+0),f(b-0)$ 均存在，则 $f$ 在 $(a,b)$ 内有界。",
       "type": "多项选择题",
       "topics": [
         "连续函数性质",
@@ -1742,7 +1742,7 @@ const BANK = {
       "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第10题",
       "chapter": "第一章 函数与极限",
       "section": "§1.7 函数连续的概念",
-      "statement": "函数 $f(x)=|x-1|^{1/[x(x-2)]}$ 的第一类间断点个数为（　）。\\nA. 0　B. 1　C. 2　D. 3。",
+      "statement": "函数 $f(x)=|x-1|^{1/[x(x-2)]}$ 的第一类间断点个数为（　）。\nA. 0\nB. 1\nC. 2\nD. 3。",
       "type": "单选题",
       "topics": [
         "间断点分类",
@@ -1883,14 +1883,14 @@ const BANK = {
         "题库易错点 E-001"
       ],
       "added": "2026-10-19",
-      "right_answer": "原式 $\\sim\\frac{x\\cdot x^2}{x^3/2}=2$。"
+      "right_answer": "$2$。"
     },
     {
       "id": "2025-QZ-01",
       "source": "2025–2026 XRY&ZJF 微积分秋冬第一次小测第1题",
       "chapter": "第二章 导数与微分",
       "section": "§2.1 导数的概念",
-      "statement": "设 $f(x)$ 是周期为 $4$ 的偶函数，且 $f(x)=x^2-2x\\ (0\\le x\\le2)$，则 $f'\\left(\\frac72\\right)=$_____。\\nA. $-2$　B. $-1$　C. $2$　D. $1$。",
+      "statement": "设 $f(x)$ 是周期为 $4$ 的偶函数，且 $f(x)=x^2-2x\\ (0\\le x\\le2)$，则 $f'\\left(\\frac72\\right)=$_____。\nA. $-2$\nB. $-1$\nC. $2$\nD. $1$。",
       "type": "单选题",
       "topics": [
         "周期函数",
@@ -1936,7 +1936,7 @@ const BANK = {
       "source": "2025–2026 微积分（甲/H）Ⅰ秋冬期中第10题",
       "chapter": "第二章 导数与微分",
       "section": "§2.2 微分中值定理",
-      "statement": "设函数 $f(x)$ 在 $[0,2]$ 上连续，在 $(0,2)$ 上可导，且 $f(0)=0$，$f(1)=f(2)=e$。证明：\\n（1）存在 $\\xi\\in(0,2)$ 使 $f(\\xi)=2$；\\n（2）存在 $\\xi\\in(0,2)$ 使 $f'(\\xi)+f(\\xi)=e$。",
+      "statement": "设函数 $f(x)$ 在 $[0,2]$ 上连续，在 $(0,2)$ 上可导，且 $f(0)=0$，$f(1)=f(2)=e$。证明：\n（1）存在 $\\xi\\in(0,2)$ 使 $f(\\xi)=2$；\n（2）存在 $\\xi\\in(0,2)$ 使 $f'(\\xi)+f(\\xi)=e$。",
       "type": "证明题",
       "topics": [
         "介值定理",
@@ -1976,7 +1976,7 @@ const BANK = {
         "§4.3 零点定理"
       ],
       "added": "2026-10-19",
-      "right_answer": "（1）$f(0)=0<2<e=f(1)$，由连续函数的介值定理，存在 $\\xi\\in(0,1)\\subset(0,2)$ 使 $f(\\xi)=2$。；（2）令 $F(x)=e^x[f(x)-e]$。因 $f(1)=f(2)=e$，有 $F(1)=F(2)=0$。"
+      "right_answer": "（1）存在 $\\xi\\in(0,2)$，使 $f(\\xi)=2$；（2）存在 $\\xi\\in(0,2)$，使 $f'(\\xi)+f(\\xi)=e$。"
     },
     {
       "id": "2025-MT-04",
@@ -2024,7 +2024,7 @@ const BANK = {
         "题库 §2.4 微分"
       ],
       "added": "2026-10-19",
-      "right_answer": "因此 $dy=-\\dfrac{2xy+y\\cos(xy)}{x^2+x\\cos(xy)-\\frac1{1+y}}\\,dx$。"
+      "right_answer": "$dy=-\\dfrac{2xy+y\\cos(xy)}{x^2+x\\cos(xy)-\\frac1{1+y}}\\,dx$。"
     },
     {
       "id": "2025-MT-05",
@@ -2069,7 +2069,7 @@ const BANK = {
         "§2.3 参数方程与高阶导数"
       ],
       "added": "2026-10-19",
-      "right_answer": "$\\dfrac{d^2x}{dy^2}=\\dfrac{d}{dt}\\left(\\sqrt{1+t^2}\\right)\\Big/\\dfrac{dy}{dt}=\\dfrac{t}{\\sqrt{1+t^2}}\\cdot(1+t^2)=t\\sqrt{1+t^2}$。"
+      "right_answer": "$\\dfrac{d^2x}{dy^2}=t\\sqrt{1+t^2}$。"
     },
     {
       "id": "2025-MT-07",
@@ -2116,7 +2116,7 @@ const BANK = {
         "§2.2 泰勒展开"
       ],
       "added": "2026-10-19",
-      "right_answer": "其中约定 $(-1)!!=1$。"
+      "right_answer": "$y^{(n)}(0)=\\begin{cases}((2m-1)!!)^2,&n=2m+1,\\\\0,&n=2m,\\end{cases}$，其中约定 $(-1)!!=1$。"
     },
     {
       "id": "2025-MT-11",
@@ -2165,7 +2165,7 @@ const BANK = {
         "§2.1 导数定义"
       ],
       "added": "2026-10-19",
-      "right_answer": "由导数定义，$n[f(1/n)-1]=\\dfrac{f(1/n)-f(0)}{1/n}\\to f'(0)=2$。"
+      "right_answer": "$f'(0)=2$，$f''(0)=-5$，$\\displaystyle\\lim_{n\\to\\infty}n\\left[f\\left(\\frac1n\\right)-1\\right]=2$。"
     },
     {
       "id": "2025-MT-06",
@@ -2211,7 +2211,7 @@ const BANK = {
         "§2.5 切线问题"
       ],
       "added": "2026-10-19",
-      "right_answer": "切线方程：$y-e^{\\pi/2}=-(x-0)$，即 $x+y=e^{\\pi/2}$。"
+      "right_answer": "切线方程：$x+y=e^{\\pi/2}$。"
     },
     {
       "id": "2025-MT-12",
@@ -2261,7 +2261,7 @@ const BANK = {
         "§3.6 重要极限"
       ],
       "added": "2026-10-19",
-      "right_answer": "因此 $\\lim(1+a_n)^n=e$。"
+      "right_answer": "（1）唯一正根 $a_n\\in(0,1)$ 存在；（2）$\\displaystyle\\lim_{n\\to\\infty}(1+a_n)^n=e$。"
     }
   ],
   "pitfalls": [
