@@ -443,10 +443,14 @@
         });
         var extras = window.CALCULUS_EXTRA_EXAMPLES || [];
         extras.forEach(function (problem) {
-          var chapter = bookState.chapters[problem.bookChapter - 1];
-          if (chapter && chapter.sections[problem.bookSection]) {
-            chapter.sections[problem.bookSection].examples.push(problem);
-          }
+          var id = String(problem.id || '');
+          problem.section = id.indexOf('2.4-') === 0
+            ? '§2.2 微分'
+            : id.indexOf('2.5-') === 0
+              ? '§3.5 函数图形的凹凸性与拐点'
+              : '§2.1 导数';
+          var target = findBookSection(problem);
+          if (target) target.section.examples.push(problem);
         });
       }
 

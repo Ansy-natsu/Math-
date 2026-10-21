@@ -44,6 +44,8 @@
     });
   });
 
-  html += '<h1>附录：原交互版精读</h1>';
-  window.CALCULUS_BOOK = window.CALCULUS_BOOK.replace('<main>', '<main>' + html);
+  window.CALCULUS_BOOK = window.CALCULUS_BOOK.replace(
+    /<main>[\s\S]*?<\/main>/i,
+    '<main>' + html + '</main>'
+  );
 })();
