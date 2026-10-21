@@ -80,7 +80,106 @@ NOTE_MAP = {
     (6, "附录"): ("第8章 欧氏空间", "§8.2  标准正交基", "附录方法·考前速记"),
 }
 
+NOTE_TEXT_OVERRIDES = {
+    (1, "all"): [
+        r"排列的逆序数是“前大后小”的数对个数，排列符号为 $(-1)^\tau$；一次对换改变奇偶性。",
+        r"$n$ 阶行列式的每一项恰取每行、每列各一个元素；三角行列式取主对角线乘积，反三角还要乘 $(-1)^{n(n-1)/2}$。",
+        r"两行互换变号；某行乘 $k$，行列式乘 $k$；某行加另一行的倍数，行列式不变。列变换同理。",
+        r"按行展开 $D=\sum_j a_{ij}A_{ij}$，其中 $A_{ij}=(-1)^{i+j}M_{ij}$；优先选择零多的行或列。",
+        r"范德蒙德行列式 $\det(x_j^{i-1})=\prod_{i<j}(x_j-x_i)$；Cramer 法则只在方阵且 $D\ne0$ 时直接给出唯一解。",
+    ],
+    (2, "all"): [
+        r"解方程组时只对增广矩阵作初等行变换；交换列相当于交换未知量顺序，必须记录。",
+        r"秩 $r(A)$ 是最大非零子式的阶数，也是阶梯形的非零行数；初等变换不改变秩。",
+        r"$Ax=b$：$r(A)\ne r([A\mid b])$ 时无解；两秩相等时，$r=n$ 有唯一解，$r<n$ 有 $n-r$ 个自由参数。",
+        r"齐次方程组恒有零解，有非零解当且仅当 $r(A)<n$。",
+        r"含参题先找可能消失的主元，再单独代回临界参数，不能漏分类。",
+    ],
+    (3, "all"): [
+        r"矩阵相乘先检查维数；一般 $AB\ne BA$，也不能由 $AB=O$ 推出某个因子为零。",
+        r"$(AB)^T=B^TA^T$，$(AB)^{-1}=B^{-1}A^{-1}$。",
+        r"$A$ 可逆 $\iff |A|\ne0\iff r(A)=n$；求逆可用 $[A\mid I]\to[I\mid A^{-1}]$。",
+        r"$A^*=|A|A^{-1}$（仅可逆时），并恒有 $AA^*=A^*A=|A|I$。",
+        r"左乘初等矩阵作用于行，右乘作用于列；初等变换可逆，因此不改变秩。",
+        r"同型矩阵相抵当且仅当秩相同；标准形为 $\operatorname{diag}(I_r,O)$。",
+    ],
+    (4, "first"): [
+        r"子空间必须含零向量，并对加法和数乘封闭；$Ax=0$ 的解集是子空间，$Ax=b\ne0$ 的解集通常不是。",
+        r"把向量按列排成 $A$：向量组线性无关 $\iff Ax=0$ 只有零解；$\beta$ 可表示 $\iff Ax=\beta$ 有解。",
+        r"求极大无关组时，对列矩阵作行消元，取主元位置对应的原始列。",
+        r"基必须线性无关且张成整个空间；$n$ 维空间中，$n$ 个向量只检验其中一个条件即可。",
+        r"过渡矩阵约定为 $[\text{新基}]=[\text{旧基}]P$，同一向量的坐标满足 $x_{\text{旧}}=Px_{\text{新}}$。",
+    ],
+    (4, "second"): [
+        r"解空间维数 $\dim\ker A=n-r(A)$；非齐次通解等于一个特解加齐次通解。",
+        r"有限维线性空间同构当且仅当维数相同；矩阵、多项式都可先按基坐标化。",
+        r"欧氏空间中 $\cos\theta=\dfrac{\langle u,v\rangle}{\|u\|\|v\|}$；Schmidt 正交化先减投影，再按需单位化。",
+        r"线性映射先查 $T(0)=0$，再查 $T(au+bv)=aT(u)+bT(v)$。",
+        r"矩阵第 $j$ 列是 $T(e_j)$ 的坐标；换基满足 $A_\eta=P^{-1}A_\varepsilon P$。",
+    ],
+    (5, "all"): [
+        r"由 $\det(\lambda I-A)=0$ 求特征值，再由 $(A-\lambda I)x=0$ 求非零特征向量。",
+        r"$A$ 可对角化 $\iff$ 有 $n$ 个线性无关特征向量 $\iff$ 每个特征值几何重数等于代数重数。",
+        r"取 $P$ 的列为特征向量，$\Lambda$ 的对角元按同一顺序排列，则 $P^{-1}AP=\Lambda$。",
+        r"相似保持特征多项式、特征值（含重数）、迹、行列式和秩，但这些量相同不一定推出相似。",
+        r"实对称矩阵一定能正交对角化；重特征值内部需再作 Schmidt 正交化。",
+    ],
+    (5, "second"): [
+        r"$A$ 与 $B$ 相似指存在可逆矩阵 $P$，使 $B=P^{-1}AP$。",
+        r"若 $P^{-1}AP=\Lambda$，则 $A^k=P\Lambda^kP^{-1}$，$f(A)=Pf(\Lambda)P^{-1}$。",
+        r"相似矩阵的迹、行列式、特征多项式、特征值和秩都相同。",
+        r"实对称矩阵正交对角化时，$U^TAU=\Lambda$，$U$ 的列是标准正交特征向量。",
+        r"$U$ 中特征向量的顺序必须与 $\Lambda$ 中特征值的顺序一致。",
+    ],
+    (6, "all"): [
+        r"二次型写成 $f=X^TAX$ 时取对称矩阵；交叉项 $cx_ix_j$ 对应 $a_{ij}=a_{ji}=c/2$。",
+        r"可逆替换 $X=CY$ 给出 $B=C^TAC$，这叫合同；正交替换还满足 $C^{-1}=C^T$。",
+        r"实二次型的合同类型由正、负惯性指数 $(p,q)$ 决定，秩 $r=p+q$。",
+        r"正定可用全部特征值大于零或全部顺序主子式大于零判断；半正定不能只查顺序主子式。",
+        r"做题时先写对称矩阵，再判断题目要求配方、正交化还是只判类型，最后核验替换矩阵与符号。",
+    ],
+    (6, "附录"): [
+        r"插值：设未知系数，用函数值或导数值列线性方程组。",
+        r"流量与配料：先写守恒等式，再补充非负和容量约束。",
+        r"分块消元：使用 Schur 补 $D-CA^{-1}B$ 时不能交换矩阵乘法次序。",
+        r"最小二乘：解 $A^TAX=A^Tb$，并用 $A^Tr=0$ 检查残差。",
+        r"附录三、四、五的练习均按当前章节归类；附录一、二、六没有独立习题组。",
+    ],
+}
+
 SKIP_IMPORT_IDS = {"4.6-8(1)(2)"}
+
+ANSWER_OVERRIDES = {
+    "1.1-1": "两个数域互不包含；素数有无穷多个，因此可得到无穷多个互不相同的数域。",
+    "1.1-2": r"$P(i)$ 是数域；$Q(i)$ 是实部、虚部均为有理数的复数，$R(i)=C(i)=C$；$Z(i)$ 不是数域。",
+    "1.1-3": "（1）两个数域的交仍是数域；（2）两个数域的并一般不是数域。",
+    "1.1-5": r"（1）逆序数 $4$，偶排列；（3）逆序数 $15$，奇排列；（5）逆序数 $10$，偶排列。",
+    "1.1-7": r"（1）$i=3,\ j=6$；（2）$i=7,\ j=3$。",
+    "1.1-9": r"反序排列的逆序数为 $\dfrac{n(n-1)}2-k$。",
+    "2.3-4": r"$k\ne-1$ 且 $k\ne4$。",
+    "3.1-18": r"$C^{1000}=2^{999}C=2^{999}A^TB$。",
+    "4.8-14": r"标准正交基为 $\left\{\dfrac1{\sqrt2},\ \sqrt{\dfrac32}x,\ \sqrt{\dfrac58}(3x^2-1)\right\}$。",
+    "6.4-1": "D",
+}
+
+TEXT_OVERRIDES = {
+    "1.2-1(1)(2)(4)(5)": {
+        "statement": "\n".join([
+            "按行列式定义，计算下列行列式：",
+            r"(1) $\begin{vmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{vmatrix}$",
+            r"(2) $\begin{vmatrix}1&\log_b a\\\log_a b&1\end{vmatrix}$",
+            r"(4) $\begin{vmatrix}a&0&0\\0&b&c\\0&d&e\end{vmatrix}$",
+            r"(5) $\begin{vmatrix}1&2&-1\\3&2&0\\0&-1&1\end{vmatrix}$",
+        ]),
+        "answer": "(1) $1$；(2) $0$；(4) $a(be-cd)$；(5) $-1$。",
+        "solution": "\n".join([
+            r"(1) $\cos^2\theta+\sin^2\theta=1$。",
+            r"(2) 由 $\log_a b\cdot\log_b a=1$，行列式为 $1-1=0$。",
+            r"(4) 非零项为 $abe-acd=a(be-cd)$。",
+            r"(5) 展开后仅有三个非零项，结果为 $2+3-6=-1$。",
+        ]),
+    },
+}
 
 SOLUTION_CUES = {
     "2.2-2": r"^以添一列",
@@ -197,7 +296,15 @@ def build_problem(item):
     )
     statement = clean_text(item["statement"])
     solution = clean_text(item["solution"])
+    special = TEXT_OVERRIDES.get(item["pdfId"])
+    if special:
+        statement = special["statement"]
+        solution = special["solution"]
     problem_type = infer_type(item["title"], statement)
+    answer = special["answer"] if special else ANSWER_OVERRIDES.get(
+        item["pdfId"],
+        answer_from_solution(solution, problem_type),
+    )
     return {
         "id": "CWX-" + item["pdfId"],
         "source": f"陈维新《线性代数》（第二版）{section_code} {item['sectionTitle']}，PDF第{item['page']}页",
@@ -208,7 +315,7 @@ def build_problem(item):
         "topics": [item["sectionTitle"], item["title"]],
         "difficulty": infer_difficulty(problem_type, item["title"]),
         "tags": ["陈维新", "习题精选", section_code],
-        "right_answer": answer_from_solution(solution, problem_type),
+        "right_answer": answer,
         "key_points": [],
         "solutions": [{
             "name": "精选解析",
@@ -225,7 +332,8 @@ def build_note(note, index):
     if not mapping:
         return None
     chapter, section, title = mapping
-    content = clean_text(note["text"])
+    lines = NOTE_TEXT_OVERRIDES.get((note["chapterNo"], note["part"]))
+    content = clean_text(note["text"]) if not lines else ""
     return {
         "id": "CWX-NOTE-" + str(index + 1),
         "title": f"陈维新｜{title}",
@@ -233,7 +341,7 @@ def build_note(note, index):
         "section": section,
         "content": content,
         "formulas": [],
-        "tips": [line for line in content.splitlines() if line.strip()],
+        "tips": lines or [line for line in content.splitlines() if line.strip()],
         "related": [f"陈维新《线性代数》（第二版）PDF第{note['page']}页"],
         "added": "2026-10-21",
     }

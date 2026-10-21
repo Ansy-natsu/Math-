@@ -86,6 +86,8 @@ li{margin:3px 0}
 .pdate{font-size:11px;color:#b8ae9c;margin-left:auto;white-space:nowrap;flex:none}
 .ihd{align-items:baseline}
 .ihd .pst{flex:1;min-width:120px;line-height:1.75}
+.option-grid{display:flex;flex-wrap:wrap;gap:.15em 1.4em;width:100%;margin:.18em 0 .3em}
+.option-cell{display:block;flex:1 1 180px;min-width:min(100%,165px);line-height:1.7}
 .ibody{display:grid;grid-template-columns:1fr 244px;gap:18px;
  padding:2px 0 12px 26px}
 .ibody.hide{display:none}
@@ -166,6 +168,7 @@ mark{background:#fff2a8;padding:0 1px;border-radius:2px}
 <link rel="stylesheet" href="../shared/comments.css">
 <script defer src="../shared/comments.js"></script>
 <script src="data.js"></script>
+<script src="framework-import.js"></script>
 <script src="site-data.js"></script>
 <link rel="stylesheet" href="../shared/paper.css">
 <script defer src="../shared/paper.js" data-site="calculus" data-subject="微积分"></script>
@@ -230,19 +233,36 @@ function saveAnn(){ try{ localStorage.setItem(LS, JSON.stringify(ANN)); }catch(e
 function annOf(k){ return ANN[k] || (ANN[k] = {marks:[],notes:[]}); }
 
 function esc(s){return (s+'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
-/* 公式块内部保持原样；只修复公式外误写的换行，并让 A-D 选项各占一行。 */
+/* 公式块内部保持原样；选项按可用宽度自动等宽换行。 */
 const MATH_TEXT=/(\$\$[\s\S]+?\$\$|\\\[[\s\S]+?\\\]|\\\([\s\S]+?\\\)|\$(?:\\.|[^$\\])+?\$)/g;
-function md(s){
-  const parts=String(s==null?'':s).replace(/\r\n?/g,'\n').split(MATH_TEXT);
-  for(let i=0;i<parts.length;i+=2) parts[i]=parts[i].replace(/\\+n(?![a-z])/g,'\n');
-  const text=parts.filter((_,i)=>i%2===0).join('\n');
-  const matches=text.match(/(?:^|[\s。；;])([A-D])[.、．]\s*/g)||[];
-  const labels=new Set(matches.map(x=>x.trim().charAt(0)));
+function renderInline(value){
+  const parts=String(value==null?'':value).split(MATH_TEXT);
   return parts.map((part,i)=>{
     if(i%2) return esc(part);
-    if(labels.size>=2) part=part.replace(/([^\n])\s*([A-D])[.、．]\s*/g,'$1\n$2. ');
-    return esc(part).replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');
+    return esc(part.replace(/\\+n(?![a-z])/g,'\n'))
+      .replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>')
+      .replace(/\n/g,'<br>');
   }).join('');
+}
+function md(s){
+  const source=String(s==null?'':s).replace(/\r\n?/g,'\n');
+  const blocks=[];
+  const masked=source.replace(MATH_TEXT,m=>{
+    const key='\uE000'+(blocks.length)+'\uE001';
+    blocks.push(m);
+    return key;
+  });
+  const matches=[...masked.matchAll(/(?:^|[\s。；;])\s*[（(]?([A-D])[.、．)）]\s*/g)];
+  const labels=new Set(matches.map(m=>m[1]));
+  if(labels.size<2) return renderInline(source);
+  const restore=text=>text.replace(/\uE000(\d+)\uE001/g,(_,i)=>blocks[Number(i)]||'');
+  const starts=matches.map(m=>m.index+m[0].search(/[A-D]/));
+  let out=renderInline(restore(masked.slice(0,starts[0])))+'<span class="option-grid">';
+  starts.forEach((start,i)=>{
+    const end=i+1<starts.length?starts[i+1]:masked.length;
+    out+='<span class="option-cell">'+renderInline(restore(masked.slice(start,end).trim()))+'</span>';
+  });
+  return out+'</span>';
 }
 function stars(n){return '★'.repeat(n)+'☆'.repeat(5-n);}
 function ulist(a){return a&&a.length?'<ul>'+a.map(x=>'<li>'+md(x)+'</li>').join('')+'</ul>':'';}

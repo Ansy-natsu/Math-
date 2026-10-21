@@ -123,6 +123,8 @@ body.pk-viewing .pk-print{display:block}
 .pk-sheet ul{margin:2px 0 2px 1.4em;padding:0}
 .pk-sheet li{margin:2px 0}
 .pk-sheet .katex{font-size:1.05em}
+.option-grid{display:flex;flex-wrap:wrap;gap:.15em 1.4em;width:100%;margin:.18em 0 .3em}
+.option-cell{display:block;flex:1 1 180px;min-width:min(100%,165px);line-height:1.7}
 
 @media (max-width:640px){
  .pk-sheet{padding:28px 20px;margin:0}

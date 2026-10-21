@@ -322,7 +322,9 @@
   <script defer src="../shared/vendor/katex-0.16.11/katex.min.js"></script>
   <script defer src="../shared/vendor/katex-0.16.11/contrib/auto-render.min.js"></script>
   <script src="data.js"></script>
+  <script src="framework-import.js"></script>
   <script src="book-source.js"></script>
+  <script src="book-extension.js"></script>
   <script src="interactive-extras.js"></script>
 </head>
 <body>
@@ -419,36 +421,24 @@
         });
       }
 
-      function calcBookSection(problem) {
-        var section = String(problem.section || '');
-        var chapter = String(problem.chapter || '');
-        if (chapter.indexOf('第二章') >= 0) {
-          if (section.indexOf('§2.1') === 0) return 0;
-          if (section.indexOf('§2.2') === 0) return 1;
-          if (section.indexOf('§2.3') === 0) return 2;
-          if (section.indexOf('§2.4') === 0) return 4;
-          return 0;
-        }
-        if (section.indexOf('§1.1') === 0) return 0;
-        if (section.indexOf('§1.2') === 0) return 1;
-        if (section.indexOf('§1.3') === 0) return 2;
-        if (section.indexOf('§1.4') === 0) return 3;
-        if (section.indexOf('§1.5') === 0) return 2;
-        if (section.indexOf('§1.6') === 0) return 3;
-        if (section.indexOf('§1.7') === 0 || section.indexOf('§1.8') === 0) return 4;
-        return 0;
+      function findBookSection(problem) {
+        var match = String(problem.section || '').match(/§\s*(\d+)\.(\d+)/);
+        if (!match) return null;
+        var chapter = bookState.chapters[Number(match[1]) - 1];
+        if (!chapter) return null;
+        var prefix = '§' + match[1] + '.' + match[2];
+        var section = chapter.sections.find(function (entry) {
+          return entry.title.indexOf(prefix) === 0;
+        });
+        return section ? { chapter: chapter, section: section } : null;
       }
 
       function assignExamples() {
         var bank = (typeof BANK !== 'undefined' && BANK) ? BANK : {};
         var problems = Array.isArray(bank.problems) ? bank.problems : [];
         problems.forEach(function (problem) {
-          var chapterIndex = String(problem.chapter || '').indexOf('第二章') >= 0 ? 1 : 0;
-          var sectionIndex = calcBookSection(problem);
-          var chapter = bookState.chapters[chapterIndex];
-          if (chapter && chapter.sections[sectionIndex]) {
-            chapter.sections[sectionIndex].examples.push(problem);
-          }
+          var target = findBookSection(problem);
+          if (target) target.section.examples.push(problem);
         });
         var extras = window.CALCULUS_EXTRA_EXAMPLES || [];
         extras.forEach(function (problem) {

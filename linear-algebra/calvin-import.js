@@ -228,7 +228,7 @@
       "source": "陈维新《线性代数》（第二版）1.2 行列式定义，PDF第10页",
       "chapter": "第2章 行列式与矩阵的秩",
       "section": "§2.2  方阵的行列式",
-      "statement": "按行列式定义，计算下列行列式。\n(1)\ncosθ −sinθ\n;\nsinθ cosθ\n(2)\n1 log a\nb ;\nlog b 1\na\n(3)\n0 a 0\nb 0 c ;\n0 d 0\n(4)\na 0 0\n0 b c ;\n0 d e\n(5)\n1 2 −1\n3 2 0 ;\n0 −1 1\n(6)\n1 −1 1\n1 1 −1 .\n−1 1 1\n(1)",
+      "statement": "按行列式定义，计算下列行列式：\n(1) $\\begin{vmatrix}\\cos\\theta&-\\sin\\theta\\\\\\sin\\theta&\\cos\\theta\\end{vmatrix}$\n(2) $\\begin{vmatrix}1&\\log_b a\\\\\\log_a b&1\\end{vmatrix}$\n(4) $\\begin{vmatrix}a&0&0\\\\0&b&c\\\\0&d&e\\end{vmatrix}$\n(5) $\\begin{vmatrix}1&2&-1\\\\3&2&0\\\\0&-1&1\\end{vmatrix}$",
       "type": "计算题",
       "topics": [
         "行列式定义",
@@ -240,13 +240,13 @@
         "习题精选",
         "1.2"
       ],
-      "right_answer": "0 d e 1 2 −1 (5) 3 2 0 的六项中仅三项非零，得 2+3−6= −1 。 0 −1 1",
+      "right_answer": "(1) $1$；(2) $0$；(4) $a(be-cd)$；(5) $-1$。",
       "key_points": [],
       "solutions": [
         {
           "name": "精选解析",
           "steps": [
-            "cosθ −sinθ\n(1) =cos2θ+sin2θ = 1 。\nsinθ cosθ\n1 log a\n(2) b =1−log alog b= 0 ，这里按原题对数有定义，即 a,b>0 且 a,b≠1。\nlog b 1 b a\na\na 0 0\n(4) 0 b c 只有两项非零：abe−acd= a(be−cd) 。\n0 d e\n1 2 −1\n(5) 3 2 0 的六项中仅三项非零，得 2+3−6= −1 。\n0 −1 1"
+            "(1) $\\cos^2\\theta+\\sin^2\\theta=1$。\n(2) 由 $\\log_a b\\cdot\\log_b a=1$，行列式为 $1-1=0$。\n(4) 非零项为 $abe-acd=a(be-cd)$。\n(5) 展开后仅有三个非零项，结果为 $2+3-6=-1$。"
           ]
         }
       ],
