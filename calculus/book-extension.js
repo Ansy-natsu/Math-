@@ -8,6 +8,9 @@
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
     });
   }
+  function md(value) {
+    return esc(value).replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+  }
 
   var groups = new Map();
   sections.forEach(function (section) {
@@ -22,9 +25,9 @@
       html += '<h2 id="' + esc(section.code.replace('§', 'sec-')) + '">' +
         esc(section.code + ' ' + section.title) +
         '<span class="src">苏德矿版《微积分》上册</span></h2>';
-      html += '<h3>核心概念</h3>';
+      html += '<h3>定义与概念</h3>';
       section.points.forEach(function (point) {
-        html += '<div class="p">' + esc(point) + '</div>';
+        html += '<div class="p">' + md(point) + '</div>';
       });
       if (section.formulas && section.formulas.length) {
         html += '<h3>关键公式与定理</h3>';
@@ -35,7 +38,7 @@
       if (section.methods && section.methods.length) {
         html += '<h3>方法与提醒</h3>';
         section.methods.forEach(function (method) {
-          html += '<p class="bullet">• ' + esc(method) + '</p>';
+          html += '<p class="bullet">• ' + md(method) + '</p>';
         });
       }
     });

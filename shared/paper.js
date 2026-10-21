@@ -34,38 +34,14 @@
   // 包括数据里误写成字面量的 \n（但不碰 \neq、\nu 等命令）。
   // 公式内部的换行不能改成 <br>，否则 $$…$$ 会被拆开而无法渲染。
   var MATH = /(\$\$[\s\S]+?\$\$|\\\[[\s\S]+?\\\]|\\\([\s\S]+?\\\)|\$(?:\\.|[^$\\])+?\$)/g;
-  function inlineRich(value) {
-    return esc(String(value == null ? '' : value).replace(/\r\n?/g, '\n')).split(MATH).map(function (part, i) {
+  function rich(value) {
+    return esc(value).split(MATH).map(function (part, i) {
       if (i % 2) return part;
       return part
         .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
-        .replace(/\\+n(?![a-z])/g, '\n')
+        .replace(/\\n(?![a-z])/g, '\n')
         .replace(/\n/g, '<br>');
     }).join('');
-  }
-  function rich(value) {
-    var source = String(value == null ? '' : value).replace(/\r\n?/g, '\n');
-    var blocks = [];
-    var masked = source.replace(MATH, function (match) {
-      var key = '\uE000' + blocks.length + '\uE001';
-      blocks.push(match);
-      return key;
-    });
-    var matches = Array.from(masked.matchAll(/(?:^|[\s。；;])\s*[（(]?([A-D])[.、．)）]\s*/g));
-    var labels = new Set(matches.map(function (match) { return match[1]; }));
-    if (labels.size < 2) return inlineRich(source);
-    var restore = function (text) {
-      return text.replace(/\uE000(\d+)\uE001/g, function (_, index) { return blocks[Number(index)] || ''; });
-    };
-    var starts = matches.map(function (match) {
-      return match.index + match[0].search(/[A-D]/);
-    });
-    var output = inlineRich(restore(masked.slice(0, starts[0]))) + '<span class="option-grid">';
-    starts.forEach(function (start, index) {
-      var end = index + 1 < starts.length ? starts[index + 1] : masked.length;
-      output += '<span class="option-cell">' + inlineRich(restore(masked.slice(start, end).trim())) + '</span>';
-    });
-    return output + '</span>';
   }
   function plain(value) {
     return String(value == null ? '' : value).replace(/\\n(?![a-z])/g, ' ').replace(/\s+/g, ' ');
